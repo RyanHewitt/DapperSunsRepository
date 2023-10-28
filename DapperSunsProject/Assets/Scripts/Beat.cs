@@ -11,7 +11,7 @@ public class Beat : MonoBehaviour
 
     protected virtual void Start()
     {
-        StartMusic();
+        GameManager.instance.beatObjects.Add(this);
     }
 
     protected virtual void Update()
@@ -23,10 +23,9 @@ public class Beat : MonoBehaviour
         }
     }
 
-    void StartMusic()
+    public void StartTimer()
     {
         timer = Time.time;
-        // Start Music Here
     }
 
     protected virtual void DoBeat()

@@ -24,12 +24,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
 
-    void Start()
-    {
-        // For now, syncing beats here. Later, this should be called on the Audio Manager whenever a song is started
-        SyncBeats();
-    }
-
     void Update()
     {
         if (Input.GetButtonDown("Cancel") && menuActive == null)
@@ -37,6 +31,12 @@ public class GameManager : MonoBehaviour
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // For now, syncing beats here. Later, this should be called on the Audio Manager whenever a song is started
+            SyncBeats(120f);
         }
     }
 
@@ -58,10 +58,11 @@ public class GameManager : MonoBehaviour
         menuActive = null;
     }
 
-    public void SyncBeats()
+    public void SyncBeats(float _bpm)
     {
         foreach (Beat beat in beatObjects)
         {
+            beat.SetBPM(_bpm);
             beat.StartTimer();
         }
     }

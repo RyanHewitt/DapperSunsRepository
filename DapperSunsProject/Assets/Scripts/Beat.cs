@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class Beat : MonoBehaviour
 {
-    [SerializeField] float bpm;
-    
+    float bpm;
     float timer;
 
     protected virtual void Start()
@@ -26,6 +25,11 @@ public class Beat : MonoBehaviour
     public void StartTimer()
     {
         timer = Time.time;
+    }
+
+    public void SetBPM(float _bpm)
+    {
+        bpm = _bpm;
     }
 
     protected virtual void DoBeat()

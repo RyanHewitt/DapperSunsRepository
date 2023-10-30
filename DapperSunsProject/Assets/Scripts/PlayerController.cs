@@ -7,9 +7,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    [SerializeField] float playerSpeed;
-    [SerializeField] float jumpHeight;
-    [SerializeField] float gravityValue;
+    [Range(1, 20)][SerializeField] float playerSpeed;
+    [Range(1, 50)][SerializeField] float jumpHeight;
+    [Range(-10, 50)][SerializeField] float gravityValue;
 
     private void Start()
     {

@@ -23,6 +23,7 @@ public class EnemyAi : MonoBehaviour, IDamage
 
     Vector3 playerDirection;
     bool isShooting;
+    bool playerInRange;
 
     // Start is called before the first frame update
     void Start()
@@ -33,20 +34,38 @@ public class EnemyAi : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        playerDirection = GameManager.instance.player.transform.position - transform.position;
-
-        if (!isShooting)
+        if(playerInRange)
         {
-            StartCoroutine(Shoot());
+            playerDirection = GameManager.instance.player.transform.position - transform.position;
+
+            if (!isShooting)
+            {
+                StartCoroutine(Shoot());
+            }
+
+            if (agent.remainingDistance < agent.stoppingDistance)
+            {
+                FaceTarget();
+            }
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
 
-        if (agent.remainingDistance < agent.stoppingDistance)
-        {
-            FaceTarget();
-        }
-        agent.SetDestination(GameManager.instance.player.transform.position);
     }
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
     public void takeDamage(int Amount)
     {
         HP -= Amount;

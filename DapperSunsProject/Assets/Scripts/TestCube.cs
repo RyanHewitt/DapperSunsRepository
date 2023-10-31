@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestCube : Beat
+public class TestCube : Beat, IDamage
 {
+    [Range(1, 10)][SerializeField] int HP;
     bool isBig;
 
    protected override void Start()
@@ -29,5 +30,15 @@ public class TestCube : Beat
             transform.localScale += Vector3.one;
             isBig = !isBig;
         }
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+        }
+
     }
 }

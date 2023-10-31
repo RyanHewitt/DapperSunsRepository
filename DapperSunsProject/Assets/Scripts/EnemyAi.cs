@@ -17,12 +17,13 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int PlayerFaceSpeed;
 
-    //[Header("---Gun stats---")]
-    //[SerializeField] GameObject bullet;
-    //[SerializeField] int shootRate;
+    [Header("---Gun stats---")]
+    [SerializeField] GameObject bullet;
+    [SerializeField] int shootRate;
 
     Vector3 playerDirection;
-    //bool isShooting;
+    bool isShooting;
+    bool playerInRange;
 
     // Start is called before the first frame update
     void Start()
@@ -33,20 +34,38 @@ public class EnemyAi : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-        playerDirection = GameManager.instance.player.transform.position - transform.position;
-
-        //if (!isShooting)
-        //{
-        //    StartCoroutine(Shoot());
-        //}
-
-        if (agent.remainingDistance < agent.stoppingDistance)
+        if(playerInRange)
         {
-            FaceTarget();
+            playerDirection = GameManager.instance.player.transform.position - transform.position;
+
+            if (!isShooting)
+            {
+                StartCoroutine(Shoot());
+            }
+
+            if (agent.remainingDistance < agent.stoppingDistance)
+            {
+                FaceTarget();
+            }
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
-        agent.SetDestination(GameManager.instance.player.transform.position);
+
     }
-    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
     public void takeDamage(int Amount)
     {
         HP -= Amount;
@@ -58,16 +77,16 @@ public class EnemyAi : MonoBehaviour, IDamage
             Destroy(gameObject);
         }
     }
-    //IEnumerator Shoot()
-    //{
-    //    isShooting = true;
+    IEnumerator Shoot()
+    {
+        isShooting = true;
 
-    //    Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, transform.rotation);
 
-    //    yield return new WaitForSeconds(shootRate);
+        yield return new WaitForSeconds(shootRate);
 
-    //    isShooting = false;
-    //}
+        isShooting = false;
+    }
     IEnumerator FlashColor()
     {
         model.material.color = flash;

@@ -17,12 +17,12 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int PlayerFaceSpeed;
 
-    //[Header("---Gun stats---")]
-    //[SerializeField] GameObject bullet;
-    //[SerializeField] int shootRate;
+    [Header("---Gun stats---")]
+    [SerializeField] GameObject bullet;
+    [SerializeField] int shootRate;
 
     Vector3 playerDirection;
-    //bool isShooting;
+    bool isShooting;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +35,10 @@ public class EnemyAi : MonoBehaviour, IDamage
     {
         playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-        //if (!isShooting)
-        //{
-        //    StartCoroutine(Shoot());
-        //}
+        if (!isShooting)
+        {
+            StartCoroutine(Shoot());
+        }
 
         if (agent.remainingDistance < agent.stoppingDistance)
         {
@@ -58,16 +58,16 @@ public class EnemyAi : MonoBehaviour, IDamage
             Destroy(gameObject);
         }
     }
-    //IEnumerator Shoot()
-    //{
-    //    isShooting = true;
+    IEnumerator Shoot()
+    {
+        isShooting = true;
 
-    //    Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(bullet, shootPos.position, transform.rotation);
 
-    //    yield return new WaitForSeconds(shootRate);
+        yield return new WaitForSeconds(shootRate);
 
-    //    isShooting = false;
-    //}
+        isShooting = false;
+    }
     IEnumerator FlashColor()
     {
         model.material.color = flash;

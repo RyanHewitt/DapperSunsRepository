@@ -465,9 +465,11 @@ MonoBehaviour:
   flash: {r: 1, g: 0, b: 0, a: 0}
   returnColor: {r: 1, g: 1, b: 1, a: 0}
   testLocation: {fileID: 0}
-  shootPos: {fileID: 0}
+  shootPos: {fileID: 1345453007}
   HP: 3
   PlayerFaceSpeed: 5
+  bullet: {fileID: 5226062936138798103, guid: 6e295f17f63e2a74993cd3fa12e9c1c7, type: 3}
+  shootRate: 5
 --- !u!136 &709300774
 CapsuleCollider:
   m_ObjectHideFlags: 0

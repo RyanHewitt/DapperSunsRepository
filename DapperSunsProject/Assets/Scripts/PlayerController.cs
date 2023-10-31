@@ -28,9 +28,10 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        move = Input.GetAxis("Horizontal") * transform.right +
+               Input.GetAxis("Vertical") * transform.forward;
+        
         controller.Move(move * Time.deltaTime * playerSpeed);
-
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject screenFlashDmg;
+    [SerializeField] AudioClip audioClip;
 
     public GameObject player;
 
@@ -99,5 +100,6 @@ public class GameManager : MonoBehaviour
             beat.SetBPM(_bpm);
             beat.StartTimer();
         }
+        AudioManager.instance.playAudio(audioClip);
     }
 }

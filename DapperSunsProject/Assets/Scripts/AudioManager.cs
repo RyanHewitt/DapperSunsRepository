@@ -5,16 +5,35 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-    [SerializeField] private AudioSource audioSource;
-    // Start is called before the first frame update
-    private void Awake()
+
+    [SerializeField] AudioSource audioSource;
+
+    bool isPlaying;
+
+    void Awake()
     {
         instance = this;
+        isPlaying = false;
     }
 
     public void playAudio(AudioClip input)
     {
         audioSource.clip = input;
         audioSource.Play();
+        isPlaying = true;
     }
+
+    public void pauseUnpauseAudio()
+    {
+        if (isPlaying)
+        {
+            audioSource.Pause();
+            isPlaying = !isPlaying;
+        }
+        else
+        {
+            audioSource.UnPause();
+            isPlaying = !isPlaying;
+        }
+    }    
 }

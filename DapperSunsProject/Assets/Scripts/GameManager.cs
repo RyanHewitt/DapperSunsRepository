@@ -12,8 +12,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject screenFlashDmg;
     [SerializeField] AudioClip audioClip;
+
+    Vector3 playerSpawnPos;
+
+    float timeScaleOg;
 
     public GameObject player;
 
@@ -21,8 +24,6 @@ public class GameManager : MonoBehaviour
     public bool playerDead;
 
     public List<Beat> beatObjects;
-
-    float timeScaleOg;
 
     void Awake()
     {
@@ -61,12 +62,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetPlayerSpawnPosition()
+    {
+        return playerSpawnPos;
+    }
+
+    public void SetPlayerSpawnPosition(Vector3 pos)
+    {
+        playerSpawnPos = pos;
+    }
+
     public void statePause()
     {
         isPaused = !isPaused;
         Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
+        AudioManager.instance.pauseUnpauseAudio();
     }
 
     public void stateUnpause()
@@ -77,6 +89,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+        AudioManager.instance.pauseUnpauseAudio();
     }
 
     public void popupWin()

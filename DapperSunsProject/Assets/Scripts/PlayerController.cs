@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject playerSpawnPos;
 
     [Header("----- Player Stats -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         HPOriginal = HP;
         GameManager.instance.playerDead = false;
+        GameManager.instance.SetPlayerSpawnPosition(playerSpawnPos.transform.position);
+        spawnPlayer();
     }
 
     void Update()
@@ -83,8 +86,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        //updatePlayerUI();
-        //StartCoroutine(GameManager.instance.playerFlashDamage());
+        updatePlayerUI();
 
         if (HP <= 0)
         {
@@ -93,16 +95,18 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    //public void spawnPlayer()
-    //{
-    //    controller.enabled = false;
-    //    HP = HPOriginal;
-    //    transform.position = GameManager.instance.playerSpawnPos.transform.position;
-    //    controller.enabled = true;
-    //}
+    public void spawnPlayer()
+    {
+        controller.enabled = false;
+        transform.position = GameManager.instance.GetPlayerSpawnPosition();
+        controller.enabled = true;
 
-    //public void updatePlayerUI()
-    //{
-    //    GameManager.instance.PlayerHPBar.fillAmount = (float)HP / HPOriginal;
-    //}
+        HP = HPOriginal;
+        updatePlayerUI();
+    }
+
+    public void updatePlayerUI()
+    {
+
+    }
 }

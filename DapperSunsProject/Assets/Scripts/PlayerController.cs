@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
         {
             StartCoroutine(Shoot());
         }

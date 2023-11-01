@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
@@ -19,6 +18,7 @@ public class GameManager : MonoBehaviour
     float timeScaleOg;
 
     public GameObject player;
+    public GameObject menuActive;
 
     public bool isPaused;
     public bool playerDead;

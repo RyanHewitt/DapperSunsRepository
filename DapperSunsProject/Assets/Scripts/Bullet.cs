@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float life = 3;
     [SerializeField] int damage;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float life = 3;
+
 
     public void Awake()
     {
+        rb.velocity = transform.forward * bulletSpeed;
         Destroy(gameObject, life);
     }
 
@@ -27,7 +31,4 @@ public class Bullet : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-
-
 }

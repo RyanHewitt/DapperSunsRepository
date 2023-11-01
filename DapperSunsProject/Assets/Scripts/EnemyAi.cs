@@ -10,7 +10,6 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Color flash;
     [SerializeField] Color returnColor;
-    [SerializeField] GameObject testLocation;
     [SerializeField] Transform shootPos;
 
     [Header("---Stats---")]
@@ -19,7 +18,7 @@ public class EnemyAi : MonoBehaviour, IDamage
 
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
-    [SerializeField] int shootRate;
+    [SerializeField] float shootRate;
 
     Vector3 playerDirection;
     bool isShooting;

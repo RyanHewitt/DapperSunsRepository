@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,8 +32,13 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && menuActive == null && !playerDead)
+        if (Input.GetButtonDown("Cancel") && !playerDead)
         {
+            if (menuActive != null)
+            {
+                stateUnpause();
+                return;
+            }
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);

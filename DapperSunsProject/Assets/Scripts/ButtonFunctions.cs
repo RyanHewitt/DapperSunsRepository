@@ -20,4 +20,9 @@ public class ButtonFunctions : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void NextLevel()
+    {
+
+    }
 }

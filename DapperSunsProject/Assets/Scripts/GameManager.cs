@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
+    [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject screenFlashDmg;
 
     public GameObject player;
 
     public bool isPaused;
+    public bool playerDead;
 
     public List<Beat> beatObjects;
 
@@ -26,11 +31,20 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel") && menuActive == null)
+        if (Input.GetButtonDown("Cancel") && menuActive == null && !playerDead)
         {
             statePause();
             menuActive = menuPause;
             menuActive.SetActive(isPaused);
+        }
+
+        if (playerDead)
+        {
+            if (Input.anyKeyDown)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                stateUnpause();
+            } 
         }
 
         if (Input.GetKeyDown(KeyCode.B))
@@ -56,6 +70,20 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void popupWin()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+    }
+
+    public void popupLose()
+    {
+        statePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
     }
 
     public void SyncBeats(float _bpm)

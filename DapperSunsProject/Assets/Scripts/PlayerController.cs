@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
@@ -19,17 +20,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
-    private Vector3 move;
-    private Vector3 playerVelocity;
-    private bool groundedPlayer;
-    private int timesjumped;
+    Vector3 move;
+    Vector3 playerVelocity;
+    bool groundedPlayer;
     bool isShooting;
+    int timesjumped;
     int HPOriginal;
 
 
     private void Start()
     {
         HPOriginal = HP;
+        GameManager.instance.playerDead = false;
     }
 
     void Update()
@@ -83,10 +85,12 @@ public class PlayerController : MonoBehaviour
         HP -= amount;
         //updatePlayerUI();
         //StartCoroutine(GameManager.instance.playerFlashDamage());
-        //if (HP <= 0)
-        //{
-        //    GameManager.instance.youLose();
-        //}
+
+        if (HP <= 0)
+        {
+            GameManager.instance.playerDead = true;
+            GameManager.instance.popupLose();
+        }
     }
 
     //public void spawnPlayer()

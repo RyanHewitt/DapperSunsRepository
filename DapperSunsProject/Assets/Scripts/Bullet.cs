@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] float life = 3;
 
-
     public void Awake()
     {
         rb.velocity = transform.forward * bulletSpeed;

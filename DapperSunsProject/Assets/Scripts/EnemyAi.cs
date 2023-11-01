@@ -9,7 +9,7 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Color flash;
-    [SerializeField] Color returnColor;
+    [SerializeField] Material returnColor;
     [SerializeField] Transform shootPos;
 
     [Header("---Stats---")]
@@ -92,7 +92,7 @@ public class EnemyAi : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(0.1f);
 
-        model.material.color = returnColor;
+        model.material = returnColor;
     }
     void FaceTarget()
     {

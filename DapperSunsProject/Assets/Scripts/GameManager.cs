@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuActive != null)
+            if (menuActive == menuPause)
             {
                 stateUnpause();
                 return;

@@ -72,11 +72,10 @@ public class EnemyAi : Beat, IDamage
 
     protected override void DoBeat()
     {
-        //if(playerInRange)
-        //{
-        //    Instantiate(bullet, shootPos.position, transform.rotation);
-        //}
-        Instantiate(bullet, shootPos.position, shootPos.rotation);
+        if (playerInRange)
+        {
+            Instantiate(bullet, shootPos.position, transform.rotation);
+        }
     }
     IEnumerator FlashColor()
     {

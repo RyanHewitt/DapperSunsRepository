@@ -24,13 +24,15 @@ public class PlayerController : Beat, IDamage
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
+    [SerializeField] AudioClip blastPenaltySFX;
 
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
-    bool isShooting;
-    bool canBlast;
-    bool hitBeat;
+    bool isShooting = false;
+    bool canBlast = false;
+    bool hitBeat = false;
+    bool hitPenalty = false;
     int timesjumped;
     int HPOriginal;
 
@@ -54,16 +56,28 @@ public class PlayerController : Beat, IDamage
         }
         else
         {
+            if (canBlast)
+            {
+                hitPenalty = false;
+            }
             canBlast = false;
             hitBeat = false;
         }
 
-        if (Input.GetButtonDown("Shoot2") && canBlast && !isShooting && GameManager.instance.menuActive == null)
+        if (Input.GetButtonDown("Shoot2") && !isShooting && GameManager.instance.menuActive == null)
         {
-            if (!hitBeat)
+            if (!hitPenalty)
             {
-                hitBeat = true;
-                Blast();
+                if (canBlast && !hitBeat)
+                {
+                    hitBeat = true;
+                    Blast();
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BlastPenalty();
+                }
             }
         }
 
@@ -72,6 +86,11 @@ public class PlayerController : Beat, IDamage
             StartCoroutine(Shoot());
         }
 
+        MovePlayer();
+    }
+
+    void MovePlayer()
+    {
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer && playerVelocity.y < 0)
@@ -115,6 +134,11 @@ public class PlayerController : Beat, IDamage
     void Blast()
     {
         AudioManager.instance.playOnce(blastSFX);
+    }
+
+    void BlastPenalty()
+    {
+        AudioManager.instance.playOnce(blastPenaltySFX);
     }
 
     public void takeDamage(int amount)

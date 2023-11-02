@@ -5,6 +5,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int damage;
+    public Rigidbody rb;
+
 
     private void OnCollisionEnter(Collision collision)
     {

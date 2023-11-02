@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
     public GameObject bulletPrefab;
     [Range(10, 100)][SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletLifeTime = 3.0f;
-    public int damage = 25;  // Default damage value
+    [SerializeField] public int damage = 25;  // Default damage value
 
     private Camera playerCamera;
 
@@ -28,7 +28,7 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        bullet.GetComponent<Bullet>().damage = this.damage;  // Assign damage to bullet
+        bullet.GetComponent<Bullet>().damage = this.damage;  
         bullet.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * bulletSpeed;
         Destroy(bullet, bulletLifeTime);
     }

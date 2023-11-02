@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
-    [SerializeField] GameObject playerSpawnPos;
 
     [Header("----- Player Stats -----")]
     [Range(1, 10)][SerializeField] int HP;

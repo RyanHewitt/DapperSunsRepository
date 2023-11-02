@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAi : MonoBehaviour, IDamage
+public class EnemyAi : Beat, IDamage
 {
     [Header("---Components---")]
     [SerializeField] Renderer model;
@@ -25,22 +25,20 @@ public class EnemyAi : MonoBehaviour, IDamage
     bool playerInRange;
 
     // Start is called before the first frame update
-    void Start()
-    {
-      //update goal here
-    }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if(playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            if (!isShooting)
-            {
-                StartCoroutine(Shoot());
-            }
+            //if (!isShooting)
+            //{
+            //    StartCoroutine(Shoot());
+            //}
 
             if (agent.remainingDistance < agent.stoppingDistance)
             {
@@ -76,16 +74,22 @@ public class EnemyAi : MonoBehaviour, IDamage
             Destroy(gameObject);
         }
     }
-    IEnumerator Shoot()
+
+    protected override void DoBeat()
     {
-        isShooting = true;
-
         Instantiate(bullet, shootPos.position, transform.rotation);
-
-        yield return new WaitForSeconds(shootRate);
-
-        isShooting = false;
     }
+
+    //IEnumerator Shoot()
+    //{
+    //    isShooting = true;
+
+    //    Instantiate(bullet, shootPos.position, transform.rotation);
+
+    //    yield return new WaitForSeconds(shootRate);
+
+    //    isShooting = false;
+    //}
     IEnumerator FlashColor()
     {
         model.material.color = flash;

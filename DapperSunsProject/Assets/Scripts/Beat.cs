@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Beat : MonoBehaviour
 {
+    [SerializeField] float steps;
+
     float bpm;
     float timer;
 
@@ -15,7 +17,7 @@ public class Beat : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Time.time - timer > (60f / bpm))
+        if (Time.time - timer > ((60f / bpm) / steps))
         {
             timer = Time.time;
             DoBeat();

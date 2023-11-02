@@ -16,10 +16,13 @@ public class PlayerController : Beat, IDamage
     [Range(1, 50)][SerializeField] float jumpHeight;
     [Range(1, 5)][SerializeField] int jumpMax;
     [Range(-10, 50)][SerializeField] float gravityValue;
+    [Range(0, 1)][SerializeField] float friction;
 
     [Header("----- Gun Stats -----")]
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
+    [SerializeField] int blastDist;
+    [SerializeField] int blastForce;
     [SerializeField] float shootRate;
 
     [Header("----- Audio -----")]
@@ -50,7 +53,7 @@ public class PlayerController : Beat, IDamage
     {
         base.Update();
 
-        if (Time.time - timer < ((60f / bpm) / 5) || Time.time - timer > ((60f / bpm) / 1.25)) // Given 120 bpm, has window of 0.1 seconds before and after the beat
+        if (Time.time - timer < ((60f / bpm) * 0.67f) || Time.time - timer > ((60f / bpm) / 0.34f)) // Given 120 bpm, has window of 0.1 seconds before and after the beat
         {
             canBlast = true;
         }
@@ -109,6 +112,10 @@ public class PlayerController : Beat, IDamage
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
+
+        playerVelocity.x *= friction;
+        playerVelocity.z *= friction;
+
         controller.Move((move * Time.deltaTime * playerSpeed) + (playerVelocity * Time.deltaTime));
     }
 
@@ -134,6 +141,13 @@ public class PlayerController : Beat, IDamage
     void Blast()
     {
         AudioManager.instance.playOnce(blastSFX);
+
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, blastDist))
+        {
+            Vector3 launchDirection = hit.normal;
+            playerVelocity += launchDirection * blastForce;
+        }
     }
 
     void BlastPenalty()

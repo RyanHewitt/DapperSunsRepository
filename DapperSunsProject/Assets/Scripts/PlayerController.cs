@@ -8,7 +8,6 @@ public class PlayerController : Beat, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
-    [SerializeField] GameObject playerSpawnPos;
 
     [Header("----- Player Stats -----")]
     [Range(1, 10)][SerializeField] int HP;
@@ -46,7 +45,6 @@ public class PlayerController : Beat, IDamage
 
         HPOriginal = HP;
         GameManager.instance.playerDead = false;
-        GameManager.instance.SetPlayerSpawnPosition(playerSpawnPos.transform.position);
         spawnPlayer();
     }
 

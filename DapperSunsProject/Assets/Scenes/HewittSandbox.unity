@@ -433,6 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c915d497815746a7dc37af67518e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 2
   HP: 0
 --- !u!1 &1313634792
 GameObject:
@@ -466,6 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c915d497815746a7dc37af67518e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 2
   HP: 0
 --- !u!65 &1313634794
 BoxCollider:
@@ -585,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c915d497815746a7dc37af67518e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 2
   HP: 0
 --- !u!65 &1583314269
 BoxCollider:
@@ -818,6 +821,10 @@ PrefabInstance:
     - target: {fileID: 2200861804999664060, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3307102443313562451, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: _steps
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8066243146842517648, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: m_Pivot.x

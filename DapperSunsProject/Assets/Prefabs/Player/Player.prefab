@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd3fa57a8c79e144aaf66d3a478689a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 1
   controller: {fileID: 5283020408901821959}
   playerSpawnPos: {fileID: 0}
   HP: 1
@@ -194,6 +195,8 @@ MonoBehaviour:
   shootDamage: 1
   shootDist: 5
   shootRate: 0.5
+  blastSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
+  blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
 --- !u!33 &7220864447329886250
 MeshFilter:
   m_ObjectHideFlags: 0

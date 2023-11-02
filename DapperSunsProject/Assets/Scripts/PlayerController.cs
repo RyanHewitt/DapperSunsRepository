@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : Beat, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
@@ -21,29 +22,75 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioClip blastSFX;
+    [SerializeField] AudioClip blastPenaltySFX;
+
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
-    bool isShooting;
+    bool isShooting = false;
+    bool canBlast = false;
+    bool hitBeat = false;
+    bool hitPenalty = false;
     int timesjumped;
     int HPOriginal;
 
-
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         HPOriginal = HP;
         GameManager.instance.playerDead = false;
         GameManager.instance.SetPlayerSpawnPosition(playerSpawnPos.transform.position);
         spawnPlayer();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
+        if (Time.time - timer < ((60f / bpm) / 5) || Time.time - timer > ((60f / bpm) / 1.25)) // Given 120 bpm, has window of 0.1 seconds before and after the beat
+        {
+            canBlast = true;
+        }
+        else
+        {
+            if (canBlast)
+            {
+                hitPenalty = false;
+            }
+            canBlast = false;
+            hitBeat = false;
+        }
+
+        if (Input.GetButtonDown("Shoot2") && !isShooting && GameManager.instance.menuActive == null)
+        {
+            if (!hitPenalty)
+            {
+                if (canBlast && !hitBeat)
+                {
+                    hitBeat = true;
+                    Blast();
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BlastPenalty();
+                }
+            }
+        }
+
         if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
         {
             StartCoroutine(Shoot());
         }
 
+        MovePlayer();
+    }
+
+    void MovePlayer()
+    {
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer && playerVelocity.y < 0)
@@ -64,6 +111,7 @@ public class PlayerController : MonoBehaviour, IDamage
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move((move * Time.deltaTime * playerSpeed) + (playerVelocity * Time.deltaTime));
     }
+
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -81,6 +129,16 @@ public class PlayerController : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void Blast()
+    {
+        AudioManager.instance.playOnce(blastSFX);
+    }
+
+    void BlastPenalty()
+    {
+        AudioManager.instance.playOnce(blastPenaltySFX);
     }
 
     public void takeDamage(int amount)
@@ -108,5 +166,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
 
+    }
+
+    protected override void DoBeat()
+    {
+        
     }
 }

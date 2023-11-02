@@ -22,14 +22,17 @@ public class PlayerController : Beat, IDamage
     [SerializeField] int shootDist;
     [SerializeField] float shootRate;
 
+    [Header("----- Audio -----")]
+    [SerializeField] AudioClip blastSFX;
+
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
     bool isShooting;
     bool canBlast;
+    bool hitBeat;
     int timesjumped;
     int HPOriginal;
-
 
     protected override void Start()
     {
@@ -52,6 +55,16 @@ public class PlayerController : Beat, IDamage
         else
         {
             canBlast = false;
+            hitBeat = false;
+        }
+
+        if (Input.GetButtonDown("Shoot2") && canBlast && !isShooting && GameManager.instance.menuActive == null)
+        {
+            if (!hitBeat)
+            {
+                hitBeat = true;
+                Blast();
+            }
         }
 
         if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
@@ -101,10 +114,7 @@ public class PlayerController : Beat, IDamage
 
     void Blast()
     {
-        if (!isShooting && canBlast)
-        {
-
-        }
+        AudioManager.instance.playOnce(blastSFX);
     }
 
     public void takeDamage(int amount)

@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : Beat, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
@@ -25,20 +26,34 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 playerVelocity;
     bool groundedPlayer;
     bool isShooting;
+    bool canBlast;
     int timesjumped;
     int HPOriginal;
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         HPOriginal = HP;
         GameManager.instance.playerDead = false;
         GameManager.instance.SetPlayerSpawnPosition(playerSpawnPos.transform.position);
         spawnPlayer();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
+        if (Time.time - timer < ((60f / bpm) / 5) || Time.time - timer > ((60f / bpm) / 1.25)) // Given 120 bpm, has window of 0.1 seconds before and after the beat
+        {
+            canBlast = true;
+        }
+        else
+        {
+            canBlast = false;
+        }
+
         if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
         {
             StartCoroutine(Shoot());
@@ -64,6 +79,7 @@ public class PlayerController : MonoBehaviour, IDamage
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move((move * Time.deltaTime * playerSpeed) + (playerVelocity * Time.deltaTime));
     }
+
     IEnumerator Shoot()
     {
         isShooting = true;
@@ -81,6 +97,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    void Blast()
+    {
+        if (!isShooting && canBlast)
+        {
+
+        }
     }
 
     public void takeDamage(int amount)
@@ -108,5 +132,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void updatePlayerUI()
     {
 
+    }
+
+    protected override void DoBeat()
+    {
+        
     }
 }

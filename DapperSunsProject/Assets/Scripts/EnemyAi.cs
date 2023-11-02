@@ -11,6 +11,8 @@ public class EnemyAi : Beat, IDamage
     [SerializeField] Color flash;
     [SerializeField] Material returnColor;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform rotatePos;
+
 
     [Header("---Stats---")]
     [SerializeField] int HP;
@@ -68,10 +70,11 @@ public class EnemyAi : Beat, IDamage
 
     protected override void DoBeat()
     {
-        if(playerInRange)
-        {
-            Instantiate(bullet, shootPos.position, transform.rotation);
-        }
+        //if(playerInRange)
+        //{
+        //    Instantiate(bullet, shootPos.position, transform.rotation);
+        //}
+        Instantiate(bullet, shootPos.position, transform.rotation);
     }
     IEnumerator FlashColor()
     {
@@ -83,6 +86,22 @@ public class EnemyAi : Beat, IDamage
     }
     void FaceTarget()
     {
+        // Calculate the direction to the player
+        Vector3 playerDirection = GameManager.instance.player.transform.position - rotatePos.position;
+
+        // Calculate the vertical rotation angle to look up or down
+        float verticalAngle = -Mathf.Atan2(playerDirection.y, playerDirection.magnitude);
+
+        // Create a rotation quaternion for the vertical rotation
+        Quaternion verticalRotation = Quaternion.AngleAxis(verticalAngle * Mathf.Rad2Deg, Vector3.right);
+
+        // Apply the vertical rotation to the 'rotatePos' object
+        rotatePos.localRotation = verticalRotation;
+
+
+
+
+
         Quaternion Rotation = Quaternion.LookRotation(playerDirection);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Rotation, Time.deltaTime * PlayerFaceSpeed);

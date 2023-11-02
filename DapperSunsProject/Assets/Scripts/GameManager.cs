@@ -32,11 +32,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
 
-    void Start()
-    {
-        SyncBeats(120f);
-    }
-
     void Update()
     {
         if (Input.GetButtonDown("Cancel") && !playerDead)
@@ -60,11 +55,11 @@ public class GameManager : MonoBehaviour
             } 
         }
 
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    // For now, syncing beats here. Later, this should be called on the Audio Manager whenever a song is started
-        //    SyncBeats(120f);
-        //}
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // For now, syncing beats here. Later, this should be called on the Audio Manager whenever a song is started
+            SyncBeats(120f);
+        }
     }
 
     public Vector3 GetPlayerSpawnPosition()

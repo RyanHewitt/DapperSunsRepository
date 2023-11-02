@@ -74,7 +74,7 @@ public class EnemyAi : Beat, IDamage
     {
         if (playerInRange)
         {
-            Instantiate(bullet, shootPos.position, transform.rotation);
+            Instantiate(bullet, shootPos.position, shootPos.rotation);
         }
     }
     IEnumerator FlashColor()

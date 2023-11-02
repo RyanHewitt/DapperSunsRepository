@@ -146,6 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 4
   rb: {fileID: 3288600831564893372}
+  bulletSpeed: 12
+  life: 3
 --- !u!54 &3288600831564893372
 Rigidbody:
   m_ObjectHideFlags: 0

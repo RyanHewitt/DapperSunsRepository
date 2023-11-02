@@ -16,6 +16,7 @@ public class MusicStartTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             AudioManager.instance.playAudio(musicClip);
+            GameManager.instance.SyncBeats(120f);
         }
     }
 }

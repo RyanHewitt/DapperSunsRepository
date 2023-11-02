@@ -16,11 +16,16 @@ public class AudioManager : MonoBehaviour
         isPlaying = false;
     }
 
-    public void playAudio(AudioClip input)
+    public void playAudio(AudioClip input) // Loops
     {
         audioSource.clip = input;
         audioSource.Play();
         isPlaying = true;
+    }
+
+    public void playOnce(AudioClip input) // No loop
+    {
+        audioSource.PlayOneShot(input);
     }
 
     public void pauseUnpauseAudio()

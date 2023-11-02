@@ -9,6 +9,8 @@ public class Spike : Beat
     private Vector3 startsize;
     [SerializeField] float pulse = 1.15f;
     [SerializeField] float returnspeed = 5f;
+    [SerializeField] Color down;
+    [SerializeField] Color up;
 
     protected override void Start()
     {

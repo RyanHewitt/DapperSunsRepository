@@ -28,8 +28,8 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        bullet.GetComponent<Bullet>().damage = this.damage;  
-        bullet.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * bulletSpeed;
+        var bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Initialize(playerCamera.transform.forward * bulletSpeed, damage);
         Destroy(bullet, bulletLifeTime);
     }
 }

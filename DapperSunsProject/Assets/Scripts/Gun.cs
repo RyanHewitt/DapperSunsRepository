@@ -29,7 +29,7 @@ public class Gun : MonoBehaviour
     {
         var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         var bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.Initialize(playerCamera.transform.forward * bulletSpeed, damage);
+        //bulletScript.Initialize(playerCamera.transform.forward * bulletSpeed, damage);
         Destroy(bullet, bulletLifeTime);
     }
 }

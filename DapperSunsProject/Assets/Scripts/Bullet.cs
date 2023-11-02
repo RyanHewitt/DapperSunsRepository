@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int damage;
-    public Rigidbody rb;
+    [SerializeField] int damage;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] float bulletSpeed;
+    [SerializeField] float life = 3;
 
-    public void Initialize(Vector3 velocity, int bulletDamage)
+    public void Awake()
     {
-        damage = bulletDamage;
-        rb.velocity = velocity;
+        rb.velocity = transform.forward * bulletSpeed;
+        Destroy(gameObject, life);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        var target = collision.gameObject.GetComponent<IDamage>();
-        if (target != null)
+        if (other.isTrigger)
         {
-            target.takeDamage(damage);  
+            return;
         }
 
-        
+        IDamage damageable = other.GetComponent<IDamage>();
+        if (damageable != null)
+        {
+            damageable.takeDamage(damage);
+        }
+
         Destroy(gameObject);
     }
 }

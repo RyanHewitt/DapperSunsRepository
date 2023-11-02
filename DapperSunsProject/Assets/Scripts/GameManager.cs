@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
+        playerSpawnPos = GameObject.FindWithTag("Respawn").transform.position;
     }
 
     void Update()

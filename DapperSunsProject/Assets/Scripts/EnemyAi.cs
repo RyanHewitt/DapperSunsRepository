@@ -18,13 +18,9 @@ public class EnemyAi : Beat, IDamage
 
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
-    [SerializeField] float shootRate;
 
     Vector3 playerDirection;
-    bool isShooting;
     bool playerInRange;
-
-    // Start is called before the first frame update
 
     // Update is called once per frame
     protected override void Update()
@@ -34,11 +30,6 @@ public class EnemyAi : Beat, IDamage
         if(playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
-
-            //if (!isShooting)
-            //{
-            //    StartCoroutine(Shoot());
-            //}
 
             if (agent.remainingDistance < agent.stoppingDistance)
             {
@@ -77,19 +68,11 @@ public class EnemyAi : Beat, IDamage
 
     protected override void DoBeat()
     {
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        if(playerInRange)
+        {
+            Instantiate(bullet, shootPos.position, transform.rotation);
+        }
     }
-
-    //IEnumerator Shoot()
-    //{
-    //    isShooting = true;
-
-    //    Instantiate(bullet, shootPos.position, transform.rotation);
-
-    //    yield return new WaitForSeconds(shootRate);
-
-    //    isShooting = false;
-    //}
     IEnumerator FlashColor()
     {
         model.material.color = flash;

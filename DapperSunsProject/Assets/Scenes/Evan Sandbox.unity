@@ -540,7 +540,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5163301293539588003, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5163301293539588003, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalPosition.z
@@ -573,6 +573,10 @@ PrefabInstance:
     - target: {fileID: 5163301293539588003, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: HP
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5380589836303304895, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalPosition.x
@@ -821,6 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c915d497815746a7dc37af67518e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 1
   HP: 0
 --- !u!65 &1697736697
 BoxCollider:
@@ -940,6 +945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77c915d497815746a7dc37af67518e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _steps: 1
   HP: 0
 --- !u!65 &1895289322
 BoxCollider:
@@ -1095,6 +1101,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5211847288204667408, guid: 8f5ff560d1cfd2f4f8aa63ea31f3d521, type: 3}
+      propertyPath: m_Speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1152,6 +1162,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5109071509282132914, guid: 0ed1d1da98f3282488ede5e98c145d3f, type: 3}
+      propertyPath: m_Speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109071509282132914, guid: 0ed1d1da98f3282488ede5e98c145d3f, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184464077183979100, guid: 0ed1d1da98f3282488ede5e98c145d3f, type: 3}
+      propertyPath: _steps
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1168,6 +1190,10 @@ PrefabInstance:
     - target: {fileID: 1330432148730833823, guid: 50c1fe69e8c67ed4ca8f62394600deb7, type: 3}
       propertyPath: m_Name
       value: Enemy heavy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2383807681658229348, guid: 50c1fe69e8c67ed4ca8f62394600deb7, type: 3}
+      propertyPath: m_Speed
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 3584170727463556560, guid: 50c1fe69e8c67ed4ca8f62394600deb7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1208,6 +1234,10 @@ PrefabInstance:
     - target: {fileID: 3584170727463556560, guid: 50c1fe69e8c67ed4ca8f62394600deb7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799982628314621924, guid: 50c1fe69e8c67ed4ca8f62394600deb7, type: 3}
+      propertyPath: _steps
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

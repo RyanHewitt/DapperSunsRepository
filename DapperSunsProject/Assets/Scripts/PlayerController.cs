@@ -28,6 +28,7 @@ public class PlayerController : Beat, IDamage
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
     [SerializeField] AudioClip blastPenaltySFX;
+    [SerializeField] AudioClip shootSFX;
 
     Vector3 move;
     Vector3 playerVelocity;
@@ -53,7 +54,7 @@ public class PlayerController : Beat, IDamage
     {
         base.Update();
 
-        if (Time.time - timer < ((60f / bpm) * 0.67f) || Time.time - timer > ((60f / bpm) / 0.34f)) // Given 120 bpm, has window of 0.1 seconds before and after the beat
+        if (Time.time - timer < ((60f / bpm) * 0.25f) || Time.time - timer > ((60f / bpm) * 0.75f))
         {
             canBlast = true;
         }
@@ -71,7 +72,7 @@ public class PlayerController : Beat, IDamage
         {
             if (!hitPenalty)
             {
-                if (canBlast && !hitBeat)
+                if (canBlast && !hitBeat) // && !hitBeat
                 {
                     hitBeat = true;
                     Blast();
@@ -86,6 +87,7 @@ public class PlayerController : Beat, IDamage
 
         if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
         {
+            AudioManager.instance.playOnce(shootSFX);
             StartCoroutine(Shoot());
         }
 
@@ -94,12 +96,19 @@ public class PlayerController : Beat, IDamage
 
     void MovePlayer()
     {
+        float frictionForce;
+
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
             timesjumped = 0;
+            frictionForce = friction;
+        }
+        else
+        {
+            frictionForce = friction / 2;
         }
 
         move = Input.GetAxis("Horizontal") * transform.right +
@@ -146,7 +155,9 @@ public class PlayerController : Beat, IDamage
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, blastDist))
         {
             Vector3 launchDirection = hit.normal;
-            playerVelocity += launchDirection * blastForce;
+            playerVelocity.x += launchDirection.x * blastForce * 2;
+            playerVelocity.y += launchDirection.y * blastForce;
+            playerVelocity.z += launchDirection.z * blastForce * 2;
         }
     }
 

@@ -833,7 +833,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8608530452862127262, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 651659011}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5566c4115c88da4b934746255913f40, type: 3}
 --- !u!1001 &319592943
@@ -1743,6 +1746,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5662553986146767956, guid: 79ee803e00cf2c04bbe71058387604b6, type: 3}
   m_PrefabInstance: {fileID: 636746178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &651659010
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 851586906}
+    m_Modifications:
+    - target: {fileID: 4271287125891852611, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_Name
+      value: SciFiGunLightBlue Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.37532043
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2728008
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.22783405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+--- !u!4 &651659011 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4271287125892103569, guid: 2b4307b44f6673947b4ead4c4157fb6e, type: 3}
+  m_PrefabInstance: {fileID: 651659010}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &690667099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1265586364829302103, guid: 8f5ff560d1cfd2f4f8aa63ea31f3d521, type: 3}
@@ -2027,6 +2092,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5662553986146767956, guid: 79ee803e00cf2c04bbe71058387604b6, type: 3}
   m_PrefabInstance: {fileID: 826380314}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &851586906 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8608530452862127262, guid: a5566c4115c88da4b934746255913f40, type: 3}
+  m_PrefabInstance: {fileID: 298738984}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &914323996
 GameObject:

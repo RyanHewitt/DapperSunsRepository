@@ -4,30 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] int damage;
-    [SerializeField] Rigidbody rb;
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float life = 3;
+    public int damage;
 
-    public void Awake()
+    private void OnCollisionEnter(Collision collision)
     {
-        rb.velocity = transform.forward * bulletSpeed;
-        Destroy(gameObject, life);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger)
+        var target = collision.gameObject.GetComponent<IDamage>();
+        if (target != null)
         {
-            return;
+            target.takeDamage(damage);
         }
 
-        IDamage damageable = other.GetComponent<IDamage>();
-        if (damageable != null)
-        {
-            damageable.takeDamage(damage);
-        }
-
+        // Optionally, destroy the bullet on collision
         Destroy(gameObject);
     }
 }

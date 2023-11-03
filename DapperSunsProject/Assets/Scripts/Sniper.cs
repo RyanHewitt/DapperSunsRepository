@@ -21,7 +21,7 @@ public class Sniper : MonoBehaviour
             laserLineRenderer.enabled = true;
             laserLineRenderer.SetPosition(0, transform.position);
             laserLineRenderer.SetPosition(1, hit.point);
-            Debug.Log("Ray hit: " + hit.collider.gameObject.name);
+            //Debug.Log("Ray hit: " + hit.collider.gameObject.name);
         }
         else
         {

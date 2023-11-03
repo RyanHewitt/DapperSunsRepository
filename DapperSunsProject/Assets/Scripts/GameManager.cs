@@ -55,12 +55,6 @@ public class GameManager : MonoBehaviour
                 stateUnpause();
             } 
         }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            // For now, syncing beats here. Later, this should be called on the Audio Manager whenever a song is started
-            SyncBeats(120f);
-        }
     }
 
     public Vector3 GetPlayerSpawnPosition()

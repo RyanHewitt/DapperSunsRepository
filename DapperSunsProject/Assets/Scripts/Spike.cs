@@ -6,11 +6,12 @@ using UnityEngine;
 public class Spike : Beat
 {
     [SerializeField] int SpikeDMG;
-    private Vector3 startsize;
     [SerializeField] float pulse = 1.15f;
     [SerializeField] float returnspeed = 5f;
     [SerializeField] Color down;
     [SerializeField] Color up;
+
+    private Vector3 startsize;
 
     protected override void Start()
     {
@@ -24,6 +25,7 @@ public class Spike : Beat
         float newScaleY = Mathf.Lerp(transform.localScale.y, startsize.y, Time.deltaTime * returnspeed);
         transform.localScale = new Vector3(startsize.x, newScaleY, startsize.z);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MusicStartTrigger : MonoBehaviour
 {
     [SerializeField] AudioClip musicClip;
+    [SerializeField] float bpm;
 
     void OnTriggerEnter(Collider other)
     {
@@ -16,7 +17,8 @@ public class MusicStartTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             AudioManager.instance.playAudio(musicClip);
-            GameManager.instance.SyncBeats(120f);
+            GameManager.instance.SyncBeats(bpm);
+            gameObject.SetActive(false);
         }
     }
 }

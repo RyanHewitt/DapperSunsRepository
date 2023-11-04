@@ -179,7 +179,11 @@ public class PlayerController : Beat, IDamage
     public void spawnPlayer()
     {
         controller.enabled = false;
-        transform.position = GameManager.instance.GetPlayerSpawnPosition();
+
+        GameObject spawn = GameManager.instance.GetPlayerSpawn();
+        transform.position = spawn.transform.position;
+        transform.rotation = spawn.transform .rotation;
+
         controller.enabled = true;
 
         HP = HPOriginal;

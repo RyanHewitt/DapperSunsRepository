@@ -13,11 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] AudioClip audioClip;
 
-    Vector3 playerSpawnPos;
-
     float timeScaleOg;
 
     public GameObject player;
+    public GameObject playerSpawn;
     public GameObject menuActive;
 
     public bool isPaused;
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
-        playerSpawnPos = GameObject.FindWithTag("Respawn").transform.position;
+        playerSpawn = GameObject.FindWithTag("Respawn");
     }
 
     void Update()
@@ -57,14 +56,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public Vector3 GetPlayerSpawnPosition()
+    public GameObject GetPlayerSpawn()
     {
-        return playerSpawnPos;
-    }
-
-    public void SetPlayerSpawnPosition(Vector3 pos)
-    {
-        playerSpawnPos = pos;
+        return playerSpawn;
     }
 
     public void statePause()

@@ -389,8 +389,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5163301293539588003}
-  - component: {fileID: 5283020408901821959}
   - component: {fileID: 5170128490206141379}
+  - component: {fileID: 5283020408901821959}
   - component: {fileID: 7220864447329886250}
   - component: {fileID: 4232257910739179442}
   - component: {fileID: 4485975181824167034}
@@ -417,32 +417,6 @@ Transform:
   - {fileID: 8608530452862127262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &5283020408901821959
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8351637192957294273}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5170128490206141379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +445,32 @@ MonoBehaviour:
   blastSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
   shootSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
+--- !u!143 &5283020408901821959
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8351637192957294273}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &7220864447329886250
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -540,7 +540,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.1
+  m_Height: 0.1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

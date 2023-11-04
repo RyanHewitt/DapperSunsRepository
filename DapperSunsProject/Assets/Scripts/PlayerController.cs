@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -133,15 +134,19 @@ public class PlayerController : Beat, IDamage
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
         {
-            IDamage damageable = hit.collider.GetComponent<IDamage>();
-
-            if (hit.transform != transform && damageable != null)
+            if (!hit.collider.isTrigger)
             {
-                damageable.takeDamage(shootDamage);
+                IDamage damageable = hit.collider.GetComponent<IDamage>();
+
+                if (hit.transform != transform && damageable != null)
+                {
+                    damageable.takeDamage(shootDamage);
+                }
             }
         }
 
         yield return new WaitForSeconds(shootRate);
+
         isShooting = false;
     }
 

@@ -254,7 +254,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2117e92772a1e2643a5b850c5723ac9a, type: 2}
+  - {fileID: 2100000, guid: 93a6f30a1ce2fa04f8b2aad4835b7bde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -377,9 +377,9 @@ MonoBehaviour:
   _steps: 1
   gunScreen: {fileID: 1299468377972022940}
   gunRing: {fileID: 3788218531957665656}
-  pulseSpeed: 5
-  onMaterial: {fileID: 2100000, guid: 5daba8f4d3b79ed4581437b8bfcb3abe, type: 2}
-  offMaterial: {fileID: 2100000, guid: 5daba8f4d3b79ed4581437b8bfcb3abe, type: 2}
+  pulseSpeed: 0.5
+  offColor: {r: 0, g: 0.11372549, b: 0, a: 0}
+  onColor: {r: 0, g: 1, b: 0, a: 0}
 --- !u!1 &8351637192957294273
 GameObject:
   m_ObjectHideFlags: 0

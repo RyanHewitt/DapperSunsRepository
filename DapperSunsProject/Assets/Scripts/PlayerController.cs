@@ -20,8 +20,8 @@ public class PlayerController : Beat, IDamage
     [Header("----- Gun Stats -----")]
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
-    [SerializeField] int blastDist;
-    [SerializeField] int blastForce;
+    [SerializeField] int boopDist;
+    [SerializeField] int boopForce;
     [SerializeField] float shootRate;
 
     [Header("----- Audio -----")]
@@ -33,7 +33,7 @@ public class PlayerController : Beat, IDamage
     Vector3 playerVelocity;
     bool groundedPlayer;
     bool isShooting = false;
-    bool canBlast = false;
+    bool canBoop = false;
     bool hitBeat = false;
     bool hitPenalty = false;
     int timesjumped;
@@ -54,15 +54,15 @@ public class PlayerController : Beat, IDamage
 
         if (Time.time - timer < ((60f / bpm) * 0.25f) || Time.time - timer > ((60f / bpm) * 0.75f))
         {
-            canBlast = true;
+            canBoop = true;
         }
         else
         {
-            if (canBlast)
+            if (canBoop)
             {
                 hitPenalty = false;
             }
-            canBlast = false;
+            canBoop = false;
             hitBeat = false;
         }
 
@@ -70,7 +70,7 @@ public class PlayerController : Beat, IDamage
         {
             if (!hitPenalty)
             {
-                if (canBlast && !hitBeat) // && !hitBeat
+                if (canBoop && !hitBeat) // && !hitBeat
                 {
                     hitBeat = true;
                     Blast();
@@ -150,12 +150,12 @@ public class PlayerController : Beat, IDamage
         AudioManager.instance.playOnce(blastSFX);
 
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, blastDist))
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))
         {
             Vector3 launchDirection = hit.normal;
-            playerVelocity.x += launchDirection.x * blastForce * 2;
-            playerVelocity.y += launchDirection.y * blastForce;
-            playerVelocity.z += launchDirection.z * blastForce * 2;
+            playerVelocity.x += launchDirection.x * boopForce * 2;
+            playerVelocity.y += launchDirection.y * boopForce;
+            playerVelocity.z += launchDirection.z * boopForce * 2;
         }
     }
 

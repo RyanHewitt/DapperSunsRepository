@@ -7,36 +7,44 @@ public class BoopGun : Beat
     [SerializeField] GameObject gunScreen;
     [SerializeField] GameObject gunRing;
     [SerializeField] float pulseSpeed;
-    [SerializeField] Material onMaterial;
-    [SerializeField] Material offMaterial;
 
-    Material screenMat;
+    [SerializeField] Color offColor;
+    [SerializeField] Color onColor;
+
+    Color currentColor;
+
     Material ringMat;
+    Material screenMat;
+
+    float elapsedTime;
 
     protected override void Start()
     {
         base.Start();
 
-        gunScreen.GetComponent<MeshRenderer>().material = screenMat;
-        screenMat = offMaterial;
-        screenMat.color = Color.white;
+        ringMat = gunRing.GetComponent<Renderer>().material;
+        currentColor = offColor;
+        ringMat.color = currentColor;
+        ringMat.SetColor("_EmissionColor", currentColor);
 
-        //gunScreen.GetComponent<MeshRenderer>().material = offMaterial;
-
-        ringMat = gunRing.GetComponent<MeshRenderer>().material;
-        ringMat = offMaterial;
-        ringMat.color = Color.white;
+        screenMat = gunScreen.GetComponent<Renderer>().material;
     }
 
     protected override void Update()
     {
         base.Update();
 
-        ringMat.Lerp(onMaterial, offMaterial, pulseSpeed * Time.deltaTime);
+        elapsedTime += Time.deltaTime * pulseSpeed;
+        currentColor = Color.Lerp(currentColor, offColor, elapsedTime);
+        ringMat.color = currentColor;
+        ringMat.SetColor("_EmissionColor", currentColor);
     }
 
     protected override void DoBeat()
     {
-        ringMat = onMaterial;
+        currentColor = onColor;
+        ringMat.color = currentColor;
+        ringMat.SetColor("_EmissionColor", currentColor);
+        elapsedTime = 0;
     }
 }

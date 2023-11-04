@@ -2324,6 +2324,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3757847344683274285, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 93a6f30a1ce2fa04f8b2aad4835b7bde, type: 2}
     - target: {fileID: 5163301293539588003, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.272606
@@ -2367,6 +2371,50 @@ PrefabInstance:
     - target: {fileID: 8351637192957294273, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: onColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: onColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: onColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: endColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: endColor.g
+      value: 0.047002666
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: endColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: offColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: offColor.g
+      value: 0.11372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: offColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: onMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2117e92772a1e2643a5b850c5723ac9a, type: 2}
+    - target: {fileID: 8823712617366499095, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: pulseSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

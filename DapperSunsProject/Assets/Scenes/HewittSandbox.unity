@@ -388,12 +388,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ee6d6879cffe9459f6ff2eff0f352d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _steps: 0.5
+  _steps: 1
   SpikeDMG: 1
-  up: {r: 0, g: 0, b: 0, a: 0}
-  down: {r: 0, g: 0, b: 0, a: 0}
+  up: {r: 1, g: 0, b: 0, a: 0}
+  down: {r: 1, g: 1, b: 1, a: 0}
+  warning: {r: 1, g: 1, b: 0, a: 0}
   spikeObj: {fileID: 1416035420}
-  collider: {fileID: 135296235}
 --- !u!1001 &159585999
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,25 +8,36 @@ public class Spike : Beat
     [SerializeField] int SpikeDMG;
     [SerializeField] Color up;
     [SerializeField] Color down;
+    [SerializeField] Color warning;
     [SerializeField] GameObject spikeObj;
     
     Collider coll;
+
+    Material mat;
 
     Vector3 upPos;
     Vector3 downPos;
 
     bool isUp = false;
 
+    int beatCounter;
+
     protected override void Start()
     {
         base.Start();
 
+        beatCounter = 0;
+
         upPos = spikeObj.transform.position;
-        downPos = new Vector3(upPos.x, upPos.y - 2, upPos.z);
+        downPos = new Vector3(upPos.x, upPos.y - 3, upPos.z);
 
         coll = GetComponent<Collider>();
         coll.enabled = false;
         spikeObj.transform.position = downPos;
+
+        mat = GetComponent<Renderer>().material;
+        mat.color = down;
+        mat.SetColor("_EmissionColor", down);
     }
 
     protected override void Update()
@@ -50,17 +61,31 @@ public class Spike : Beat
 
     protected override void DoBeat()
     {
-        if (isUp)
+        beatCounter++;
+        if (beatCounter == 2) // Warn on second beat
         {
-            spikeObj.transform.position = downPos;
-            coll.enabled = false;
-            isUp = false;
+            mat.color = warning;
+            mat.SetColor("_EmissionColor", warning);
         }
-        else
+        else if (beatCounter % 4 == 0) // Go up or down every fourth beat
         {
-            spikeObj.transform.position = upPos;
-            coll.enabled = true; 
-            isUp = true;
+            if (isUp)
+            {
+                beatCounter = 0;
+                spikeObj.transform.position = downPos;
+                coll.enabled = false;
+                isUp = false;
+                mat.color = down;
+                mat.SetColor("_EmissionColor", down);
+            }
+            else
+            {
+                spikeObj.transform.position = upPos;
+                coll.enabled = true;
+                isUp = true;
+                mat.color = up;
+                mat.SetColor("_EmissionColor", up);
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ public class PlayerController : Beat, IDamage
         {
             if (!hitPenalty)
             {
-                if (canBoop && !hitBeat) // && !hitBeat
+                if (canBoop && !hitBeat)
                 {
                     hitBeat = true;
                     Blast();

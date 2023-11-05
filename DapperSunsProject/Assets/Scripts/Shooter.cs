@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAi : Beat, IDamage
+public class Shooter : Beat, IDamage
 {
     [Header("---Components---")]
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Color flash;
-    [SerializeField] Material returnColor;
+    [SerializeField] GameObject outline;
+    [SerializeField] Color flashColor;
     [SerializeField] Transform shootPos;
-    [SerializeField] Transform rotatePos;
 
     [Header("---Stats---")]
     [SerializeField] int HP;
@@ -21,14 +18,17 @@ public class EnemyAi : Beat, IDamage
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
 
+    Color baseColor;
     Vector3 playerDirection;
+    Material outlineMat;
     bool playerInRange;
 
     protected override void Start()
     {
         base.Start();
 
-        agent.updateRotation = false;
+        outlineMat = outline.GetComponent<Renderer>().material;
+        baseColor = outlineMat.color;
     }
 
     protected override void Update()
@@ -39,16 +39,7 @@ public class EnemyAi : Beat, IDamage
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            //LookVert();
-
-            //if (agent.remainingDistance < agent.stoppingDistance)
-            //{
-            //    FaceTarget();
-            //}
-
             FaceTarget();
-
-            //agent.SetDestination(GameManager.instance.player.transform.position);
         }
 
     }
@@ -89,13 +80,15 @@ public class EnemyAi : Beat, IDamage
         }
     }
 
-    IEnumerator FlashColor() // Change this to outline
+    IEnumerator FlashColor()
     {
-        model.material.color = flash;
+        outlineMat.color = flashColor;
+        outlineMat.SetColor("_EmissionColor", flashColor);
 
         yield return new WaitForSeconds(0.1f);
 
-        model.material = returnColor;
+        outlineMat.color = baseColor;
+        outlineMat.SetColor("_EmissionColor", baseColor);
     }
 
     void FaceTarget()
@@ -115,14 +108,5 @@ public class EnemyAi : Beat, IDamage
             // Combine both rotations
             transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
         }
-    }
-
-    void LookVert()
-    {
-        float verticalAngle = -Mathf.Atan2(playerDirection.y, playerDirection.magnitude);
-
-        Quaternion verticalRotation = Quaternion.AngleAxis(verticalAngle * Mathf.Rad2Deg, Vector3.right);
-
-        transform.rotation = verticalRotation;
     }
 }

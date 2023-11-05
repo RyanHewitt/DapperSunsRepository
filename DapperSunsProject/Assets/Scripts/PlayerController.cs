@@ -9,6 +9,7 @@ public class PlayerController : Beat, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] Transform shootPos;
 
     [Header("----- Player Stats -----")]
     [Range(1, 20)][SerializeField] float playerSpeed;
@@ -19,6 +20,7 @@ public class PlayerController : Beat, IDamage
     [Header("----- Gun Stats -----")]
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
+    [SerializeField] GameObject boopCard;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
@@ -86,7 +88,6 @@ public class PlayerController : Beat, IDamage
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            Debug.Log(hit.distance);
             if (hit.distance < 2)
             {
                 groundedPlayer = true;
@@ -107,7 +108,7 @@ public class PlayerController : Beat, IDamage
             frictionForce = friction / 2;
         }
 
-            move = Input.GetAxis("Horizontal") * transform.right +
+        move = Input.GetAxis("Horizontal") * transform.right +
                Input.GetAxis("Vertical") * transform.forward;
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
@@ -145,6 +146,8 @@ public class PlayerController : Beat, IDamage
                 }
             }
         }
+
+        Instantiate(boopCard, shootPos.position, shootPos.rotation);
     }
 
     void BoopPenalty()
@@ -185,6 +188,6 @@ public class PlayerController : Beat, IDamage
 
     protected override void DoBeat()
     {
-        AudioManager.instance.playOnce(blastSFX);
+        
     }
 }

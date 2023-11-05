@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, life);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
         {

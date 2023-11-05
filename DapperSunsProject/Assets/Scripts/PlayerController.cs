@@ -13,7 +13,6 @@ public class PlayerController : Beat, IDamage
     [Header("----- Player Stats -----")]
     [Range(1, 20)][SerializeField] float playerSpeed;
     [Range(1, 50)][SerializeField] float jumpHeight;
-    [Range(1, 5)][SerializeField] int jumpMax;
     [Range(-10, 50)][SerializeField] float gravityValue;
     [Range(0, 1)][SerializeField] float friction;
 
@@ -32,7 +31,6 @@ public class PlayerController : Beat, IDamage
     bool canBoop = false;
     bool hitBeat = false;
     bool hitPenalty = false;
-    int timesjumped;
     int HP = 1;
 
     protected override void Start()
@@ -85,12 +83,23 @@ public class PlayerController : Beat, IDamage
     {
         float frictionForce;
 
-        groundedPlayer = controller.isGrounded;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        {
+            Debug.Log(hit.distance);
+            if (hit.distance < 2)
+            {
+                groundedPlayer = true;
+            }
+            else
+            {
+                groundedPlayer = false;
+            }
+        }
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
-            timesjumped = 0;
             frictionForce = friction;
         }
         else
@@ -98,13 +107,12 @@ public class PlayerController : Beat, IDamage
             frictionForce = friction / 2;
         }
 
-        move = Input.GetAxis("Horizontal") * transform.right +
+            move = Input.GetAxis("Horizontal") * transform.right +
                Input.GetAxis("Vertical") * transform.forward;
 
-        if (Input.GetButtonDown("Jump") && timesjumped < jumpMax)
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-            timesjumped++;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;

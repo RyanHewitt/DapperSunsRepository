@@ -11,7 +11,6 @@ public class PlayerController : Beat, IDamage
     [SerializeField] CharacterController controller;
 
     [Header("----- Player Stats -----")]
-    [Range(1, 10)][SerializeField] int HP;
     [Range(1, 20)][SerializeField] float playerSpeed;
     [Range(1, 50)][SerializeField] float jumpHeight;
     [Range(1, 5)][SerializeField] int jumpMax;
@@ -19,11 +18,8 @@ public class PlayerController : Beat, IDamage
     [Range(0, 1)][SerializeField] float friction;
 
     [Header("----- Gun Stats -----")]
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDist;
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
-    [SerializeField] float shootRate;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
@@ -33,18 +29,16 @@ public class PlayerController : Beat, IDamage
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
-    bool isShooting = false;
     bool canBoop = false;
     bool hitBeat = false;
     bool hitPenalty = false;
     int timesjumped;
-    int HPOriginal;
+    int HP = 1;
 
     protected override void Start()
     {
         base.Start();
 
-        HPOriginal = HP;
         GameManager.instance.playerDead = false;
         spawnPlayer();
     }
@@ -67,27 +61,21 @@ public class PlayerController : Beat, IDamage
             hitBeat = false;
         }
 
-        if (Input.GetButtonDown("Shoot2") && !isShooting && GameManager.instance.menuActive == null)
+        if (Input.GetButtonDown("Shoot") && GameManager.instance.menuActive == null)
         {
             if (!hitPenalty)
             {
                 if (canBoop && !hitBeat)
                 {
                     hitBeat = true;
-                    Blast();
+                    Boop();
                 }
                 else
                 {
                     hitPenalty = true;
-                    BlastPenalty();
+                    BoopPenalty();
                 }
             }
-        }
-
-        if (Input.GetButton("Shoot") && !isShooting && GameManager.instance.menuActive == null)
-        {
-            AudioManager.instance.playOnce(shootSFX);
-            StartCoroutine(Shoot());
         }
 
         MovePlayer();
@@ -127,30 +115,7 @@ public class PlayerController : Beat, IDamage
         controller.Move((move * Time.deltaTime * playerSpeed) + (playerVelocity * Time.deltaTime));
     }
 
-    IEnumerator Shoot()
-    {
-        isShooting = true;
-
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
-        {
-            if (!hit.collider.isTrigger)
-            {
-                IDamage damageable = hit.collider.GetComponent<IDamage>();
-
-                if (hit.transform != transform && damageable != null)
-                {
-                    damageable.takeDamage(shootDamage);
-                }
-            }
-        }
-
-        yield return new WaitForSeconds(shootRate);
-
-        isShooting = false;
-    }
-
-    void Blast()
+    void Boop()
     {
         AudioManager.instance.playOnce(blastSFX);
 
@@ -161,10 +126,20 @@ public class PlayerController : Beat, IDamage
             playerVelocity.x += launchDirection.x * boopForce * 2;
             playerVelocity.y += launchDirection.y * boopForce;
             playerVelocity.z += launchDirection.z * boopForce * 2;
+
+            if (!hit.collider.isTrigger)
+            {
+                IBoop boopable = hit.collider.GetComponent<IBoop>();
+
+                if (hit.transform != transform && boopable != null)
+                {
+                    boopable.DoBoop(boopForce);
+                }
+            }
         }
     }
 
-    void BlastPenalty()
+    void BoopPenalty()
     {
         AudioManager.instance.playOnce(blastPenaltySFX);
     }
@@ -191,7 +166,7 @@ public class PlayerController : Beat, IDamage
 
         controller.enabled = true;
 
-        HP = HPOriginal;
+        HP = 1;
         updatePlayerUI();
     }
 
@@ -202,6 +177,6 @@ public class PlayerController : Beat, IDamage
 
     protected override void DoBeat()
     {
-        
+        AudioManager.instance.playOnce(blastSFX);
     }
 }

@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class Shooter : Beat, IDamage
+public class Shooter : Beat, IDamage, IBoop
 {
     [Header("---Components---")]
     [SerializeField] GameObject outline;
     [SerializeField] Color flashColor;
     [SerializeField] Transform shootPos;
+    [SerializeField] Rigidbody rb;
 
     [Header("---Stats---")]
     [SerializeField] int HP;
@@ -108,5 +108,10 @@ public class Shooter : Beat, IDamage
             // Combine both rotations
             transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
         }
+    }
+
+    public void DoBoop(float force)
+    {
+        rb.AddForce(-playerDirection * force, ForceMode.Impulse);
     }
 }

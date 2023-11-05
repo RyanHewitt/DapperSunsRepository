@@ -6,27 +6,35 @@ using UnityEngine;
 public class Spike : Beat
 {
     [SerializeField] int SpikeDMG;
-    [SerializeField] float pulse = 1.15f;
-    [SerializeField] float returnspeed = 5f;
-    [SerializeField] Color down;
     [SerializeField] Color up;
+    [SerializeField] Color down;
+    [SerializeField] GameObject spikeObj;
+    
+    Collider coll;
 
-    private Vector3 startsize;
+    Vector3 upPos;
+    Vector3 downPos;
+
+    bool isUp = false;
 
     protected override void Start()
     {
         base.Start();
-        startsize = transform.localScale;
+
+        upPos = spikeObj.transform.position;
+        downPos = new Vector3(upPos.x, upPos.y - 2, upPos.z);
+
+        coll = GetComponent<Collider>();
+        coll.enabled = false;
+        spikeObj.transform.position = downPos;
     }
 
     protected override void Update()
     {
         base.Update();
-        float newScaleY = Mathf.Lerp(transform.localScale.y, startsize.y, Time.deltaTime * returnspeed);
-        transform.localScale = new Vector3(startsize.x, newScaleY, startsize.z);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
         {
@@ -38,10 +46,21 @@ public class Spike : Beat
         {
             damageable.takeDamage(SpikeDMG);
         }
-        
     }
+
     protected override void DoBeat()
     {
-        transform.localScale = new Vector3(startsize.x, startsize.y * pulse, startsize.z);
+        if (isUp)
+        {
+            spikeObj.transform.position = downPos;
+            coll.enabled = false;
+            isUp = false;
+        }
+        else
+        {
+            spikeObj.transform.position = upPos;
+            coll.enabled = true; 
+            isUp = true;
+        }
     }
 }

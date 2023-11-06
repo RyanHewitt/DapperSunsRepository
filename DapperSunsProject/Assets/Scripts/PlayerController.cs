@@ -17,6 +17,11 @@ public class PlayerController : Beat, IDamage
     [Range(-10, 50)][SerializeField] float gravityValue;
     [Range(0, 1)][SerializeField] float friction;
 
+    [Header("----- Dash Stats -----")]
+    [SerializeField] float dashSpeed = 20f;
+    [SerializeField] float dashDuration = 0.5f;
+    [SerializeField] float dashCooldown = 2f;
+
     [Header("----- Gun Stats -----")]
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
@@ -35,6 +40,8 @@ public class PlayerController : Beat, IDamage
     bool hitPenalty = false;
     int HP = 1;
     float groundDist = 1.5f;
+    float dashCooldownTimer = 0f;
+    bool isDashing = false;
 
     protected override void Start()
     {
@@ -79,6 +86,7 @@ public class PlayerController : Beat, IDamage
             }
         }
 
+        DashInput();
         MovePlayer();
     }
 
@@ -89,41 +97,47 @@ public class PlayerController : Beat, IDamage
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            if (hit.distance < groundDist)
+            groundedPlayer = hit.distance < groundDist;
+        }
+
+        if (!isDashing)
+        {
+            if (groundedPlayer && playerVelocity.y < 0)
             {
-                groundedPlayer = true;
+                playerVelocity.y = 0f;
+                frictionForce = friction;
             }
             else
             {
-                groundedPlayer = false;
+                frictionForce = friction / 2;
             }
+
+            move = Input.GetAxis("Horizontal") * transform.right +
+                   Input.GetAxis("Vertical") * transform.forward;
+
+            if (Input.GetButtonDown("Jump") && groundedPlayer)
+            {
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            }
+
+            playerVelocity.y += gravityValue * Time.deltaTime;
+
+            playerVelocity.x *= friction;
+            playerVelocity.z *= friction;
+
+            controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
         }
 
-        if (groundedPlayer && playerVelocity.y < 0)
+        if (isDashing) return;
+
+        if (!groundedPlayer)
         {
-            playerVelocity.y = 0f;
-            frictionForce = friction;
-        }
-        else
-        {
-            frictionForce = friction / 2;
+            playerVelocity.y += gravityValue * Time.deltaTime;
         }
 
-        move = Input.GetAxis("Horizontal") * transform.right +
-               Input.GetAxis("Vertical") * transform.forward;
-
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
-        {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-
-        playerVelocity.x *= friction;
-        playerVelocity.z *= friction;
-
-        controller.Move((move * Time.deltaTime * playerSpeed) + (playerVelocity * Time.deltaTime));
+        controller.Move(playerVelocity * Time.deltaTime);
     }
+
 
     void Boop()
     {
@@ -191,4 +205,42 @@ public class PlayerController : Beat, IDamage
     {
         
     }
+
+     IEnumerator DoDash()
+    {
+        float startTime = Time.time;
+        isDashing = true;
+        Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
+
+        // Disable gravity by storing the current playerVelocity.y
+        float originalYVelocity = playerVelocity.y;
+        playerVelocity.y = 0;
+
+        while (Time.time < startTime + dashDuration)
+        {
+            controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Re-enable gravity
+        playerVelocity.y = originalYVelocity;
+
+        dashCooldownTimer = dashCooldown;
+        isDashing = false;
+    }
+
+
+    void DashInput()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && dashCooldownTimer <= 0 && groundedPlayer)
+        {
+            StartCoroutine(DoDash());
+        }
+
+        if (dashCooldownTimer > 0)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+        }
+    }
+
 }

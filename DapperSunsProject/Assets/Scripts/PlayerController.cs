@@ -173,7 +173,6 @@ public class PlayerController : Beat, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
-        updatePlayerUI();
 
         if (HP <= 0)
         {
@@ -193,21 +192,15 @@ public class PlayerController : Beat, IDamage
         controller.enabled = true;
 
         HP = 1;
-        updatePlayerUI();
-    }
-
-    public void updatePlayerUI()
-    {
-
     }
 
     protected override void DoBeat()
     {
-        //AudioManager.instance.playOnce(blastSFX); Use this to test if audio is going of beat
+        //AudioManager.instance.playOnce(blastSFX); // Use this to test if audio is going of beat
     }
 
      IEnumerator DoDash()
-    {
+     {
         float startTime = Time.time;
         isDashing = true;
         Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
@@ -227,7 +220,7 @@ public class PlayerController : Beat, IDamage
 
         dashCooldownTimer = dashCooldown;
         isDashing = false;
-    }
+     }
 
 
     void DashInput()
@@ -242,5 +235,4 @@ public class PlayerController : Beat, IDamage
             dashCooldownTimer -= Time.deltaTime;
         }
     }
-
 }

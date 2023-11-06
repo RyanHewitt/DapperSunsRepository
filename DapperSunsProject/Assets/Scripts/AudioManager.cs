@@ -40,5 +40,5 @@ public class AudioManager : MonoBehaviour
             audioSource.UnPause();
             isPlaying = !isPlaying;
         }
-    }    
+    }
 }

@@ -68,7 +68,7 @@ public class Shooter : Beat, IDamage, IBoop
 
         if(HP <= 0)
         {
-            Destroy(gameObject); // This needs to be changed
+            gameObject.SetActive(false);
         }
     }
 

@@ -77,7 +77,7 @@ public class EnemyAi : Beat, IDamage
 
         if(HP <= 0)
         {
-            Destroy(gameObject); // This needs to be changed
+            gameObject.SetActive(false);
         }
     }
 

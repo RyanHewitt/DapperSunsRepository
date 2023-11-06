@@ -203,7 +203,7 @@ public class PlayerController : Beat, IDamage
 
     protected override void DoBeat()
     {
-        
+        //AudioManager.instance.playOnce(blastSFX); Use this to test if audio is going of beat
     }
 
      IEnumerator DoDash()

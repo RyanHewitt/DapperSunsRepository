@@ -34,6 +34,7 @@ public class PlayerController : Beat, IDamage
     bool hitBeat = false;
     bool hitPenalty = false;
     int HP = 1;
+    float groundDist = 1.5f;
 
     protected override void Start()
     {
@@ -88,7 +89,7 @@ public class PlayerController : Beat, IDamage
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit))
         {
-            if (hit.distance < 2)
+            if (hit.distance < groundDist)
             {
                 groundedPlayer = true;
             }

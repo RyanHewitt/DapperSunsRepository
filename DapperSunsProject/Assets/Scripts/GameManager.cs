@@ -41,9 +41,12 @@ public class GameManager : MonoBehaviour
                 stateUnpause();
                 return;
             }
-            statePause();
-            menuActive = menuPause;
-            menuActive.SetActive(isPaused);
+            if (menuActive == null)
+            {
+                statePause();
+                menuActive = menuPause;
+                menuActive.SetActive(isPaused);
+            }
         }
 
         if (playerDead)
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 stateUnpause();
-            } 
+            }
         }
     }
 

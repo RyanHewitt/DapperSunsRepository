@@ -37,16 +37,16 @@ public class EnemyAi : MonoBehaviour, IDamage
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            //LookVert();
+            LookVert();
 
-            //if (agent.remainingDistance < agent.stoppingDistance)
-            //{
-            //    FaceTarget();
-            //}
+            if (agent.remainingDistance < agent.stoppingDistance)
+            {
+                FaceTarget();
+            }
 
             FaceTarget();
 
-            //agent.SetDestination(GameManager.instance.player.transform.position);
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
 
     }

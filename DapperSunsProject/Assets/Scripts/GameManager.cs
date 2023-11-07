@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] TMP_Text timerText;
+
+    private float elapsedTime = 0f;
+    public bool isCountingTimer;
 
     public AudioClip audioClip;
     AudioSource audioSource;
@@ -38,7 +43,6 @@ public class GameManager : MonoBehaviour
         timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerSpawn = GameObject.FindWithTag("Respawn");
-        
     }
 
     void Start()
@@ -76,6 +80,9 @@ public class GameManager : MonoBehaviour
                 stateUnpause();
             }
         }
+
+        CheckTimer();
+
     }
 
     void CheckBeat()
@@ -140,9 +147,32 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
+    public void CheckTimer()
+    {
+        if (isCountingTimer)
+        {
+            elapsedTime += Time.deltaTime;
+
+            int minutes = (int)elapsedTime / 60;
+            int seconds = (int)elapsedTime % 60;
+            int milliseconds = (int)((elapsedTime * 1000) % 1000);
+
+            string timerString = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+
+            timerText.text = timerString;
+        }
+    }
+
+    public void StartTimer()
+    {
+        isCountingTimer = true;
+        elapsedTime = 0;
+    }
+
     public void SyncBeats(float _bpm)
     {
         bpm = _bpm;
+        StartTimer();
         AudioManager.instance.playAudio(audioClip);
     }
 

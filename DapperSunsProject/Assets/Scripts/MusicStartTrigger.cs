@@ -16,7 +16,7 @@ public class MusicStartTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            AudioManager.instance.playAudio(musicClip);
+            GameManager.instance.audioClip = musicClip;
             GameManager.instance.SyncBeats(bpm);
             gameObject.SetActive(false);
         }

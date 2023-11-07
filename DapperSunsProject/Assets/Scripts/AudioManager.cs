@@ -6,9 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    [SerializeField] AudioSource audioSource;
+    public AudioSource audioSource;
 
-    bool isPlaying;
+    public bool isPlaying;
 
     void Awake()
     {

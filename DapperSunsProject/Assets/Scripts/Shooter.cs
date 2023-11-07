@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooter : Beat, IDamage, IBoop
+public class Shooter : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Components---")]
     [SerializeField] GameObject outline;
@@ -23,18 +23,15 @@ public class Shooter : Beat, IDamage, IBoop
     Material outlineMat;
     bool playerInRange;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
-
+        GameManager.instance.OnBeatEvent += DoBeat;
         outlineMat = outline.GetComponent<Renderer>().material;
         baseColor = outlineMat.color;
     }
 
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
         if(playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
@@ -72,7 +69,7 @@ public class Shooter : Beat, IDamage, IBoop
         }
     }
 
-    protected override void DoBeat()
+    void DoBeat()
     {
         if (playerInRange)
         {

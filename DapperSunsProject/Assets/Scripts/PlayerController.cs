@@ -22,6 +22,17 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float dashCooldown = 2f;
 
+    [Header("----- Ground Pound Stats -----")]
+    [SerializeField] float groundPoundSpeed = 40f;
+    [SerializeField] float groundPoundCooldown = 2f;
+
+
+    [Header("----- Ground Pound Impact Stats -----")]
+    [SerializeField] float groundPoundRadius = 5f;
+    [SerializeField] private float groundPoundForce = 10f;
+    [SerializeField] private float groundPoundKnockbackForce = 10f;
+    [SerializeField] LayerMask enemyLayer; // Set this to the layer the enemies are on.
+
     [Header("----- Gun Stats -----")]
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
@@ -32,6 +43,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip blastPenaltySFX;
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
+    [SerializeField] AudioClip groundPoundSound;
 
     Vector3 move;
     Vector3 playerVelocity;
@@ -42,10 +54,14 @@ public class PlayerController : MonoBehaviour, IDamage
     int HP = 1;
     float groundDist = 1.5f;
     float dashCooldownTimer = 0f;
+    float groundPoundCooldownTimer = 0f;
+    bool isGroundPounding = false;
+    AudioSource audioSource;
 
     void Start()
     {
         GameManager.instance.playerDead = false;
+        audioSource = GetComponent<AudioSource>();
         spawnPlayer();
     }
 
@@ -65,7 +81,25 @@ public class PlayerController : MonoBehaviour, IDamage
             hitBeat = false;
         }
 
+        if (Input.GetButtonDown("GroundPound") && !groundedPlayer && !isGroundPounding)
+        {
+            StartGroundPound();
+        }
+
+        // Check if the player has initiated a ground pound and has hit the ground
+        if (isGroundPounding && groundedPlayer)
+        {
+            GroundPoundImpact();
+            isGroundPounding = false; // Reset the ground pounding state
+        }
+
+        if (Input.GetButtonDown("GroundPound") && !groundedPlayer && !isGroundPounding)
+        {
+            StartGroundPound();
+        }
+
         ShootInput();
+        GroundPoundInput();
         DashInput();
         MovePlayer();
     }
@@ -113,6 +147,13 @@ public class PlayerController : MonoBehaviour, IDamage
                     BoopPenalty();
                 }
             }
+        }
+
+        if (isGroundPounding)
+        {
+            // If we're ground pounding, we only want to apply the downward velocity
+            playerVelocity.x = 0;
+            playerVelocity.z = 0;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -181,7 +222,7 @@ public class PlayerController : MonoBehaviour, IDamage
         AudioManager.instance.playOnce(blastPenaltySFX);
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3? knockbackDirection = null)
     {
         HP -= amount;
 
@@ -252,4 +293,77 @@ public class PlayerController : MonoBehaviour, IDamage
             dashCooldownTimer -= Time.deltaTime;
         }
     }
+
+    public void GroundPoundInput()
+    {
+        if (Input.GetButtonDown("GroundPound") && !groundedPlayer && !isGroundPounding && groundPoundCooldownTimer <= 0)
+        {
+            StartCoroutine(DoGroundPound());
+        }
+
+        if (groundPoundCooldownTimer > 0)
+        {
+            groundPoundCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    public void StartGroundPound()
+    {
+        // Apply a quick, strong downward force to simulate a ground pound
+        playerVelocity.y = -Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+        isGroundPounding = true; // Set the ground pounding flag
+    }
+
+    public IEnumerator DoGroundPound()
+    {
+        isGroundPounding = true;
+
+        // Disable player horizontal control and gravity influence here if desired
+        float originalGravity = gravityValue;
+        gravityValue = 0;
+
+        // Apply the ground pound speed directly downwards
+        playerVelocity.y = -groundPoundSpeed;
+
+        // Wait until the player hits the ground
+        while (!groundedPlayer)
+        {
+            yield return null;
+        }
+
+        // Apply the ground pound impact logic (e.g., damage enemies, create an impact effect, etc.)
+        GroundPoundImpact();
+
+        // Reset gravity influence
+        gravityValue = originalGravity;
+
+        // Cooldown starts
+        groundPoundCooldownTimer = groundPoundCooldown;
+        isGroundPounding = false;
+    }
+
+    public void GroundPoundImpact()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, groundPoundRadius, enemyLayer);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            EnemyAi enemyAi = hitCollider.GetComponent<EnemyAi>();
+            if (enemyAi != null)
+            {
+                Vector3 knockbackDirection = (hitCollider.transform.position - transform.position).normalized;
+                enemyAi.StartCoroutine(enemyAi.Knockback(knockbackDirection));
+            }
+        }
+        PlayGroundPoundSound();
+    }
+
+     public void PlayGroundPoundSound()
+    {
+        if (groundPoundSound != null)
+        {
+            audioSource.PlayOneShot(groundPoundSound);
+        }
+    }
+
 }

@@ -30,7 +30,7 @@ public class PlayerController : Beat, IDamage
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
     [SerializeField] AudioClip blastPenaltySFX;
-    [SerializeField] AudioClip shootSFX;
+    [SerializeField] AudioClip dashSFX;
 
     Vector3 move;
     Vector3 playerVelocity;
@@ -204,34 +204,35 @@ public class PlayerController : Beat, IDamage
         //AudioManager.instance.playOnce(blastSFX); // Use this to test if audio is going of beat
     }
 
-     IEnumerator DoDash()
-     {
-        float startTime = Time.time;
-        isDashing = true;
-        Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
+    IEnumerator DoDash()
+    {
+       float startTime = Time.time;
+       isDashing = true;
+       Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
 
-        // Disable gravity by storing the current playerVelocity.y
-        float originalYVelocity = playerVelocity.y;
-        playerVelocity.y = 0;
+       // Disable gravity by storing the current playerVelocity.y
+       float originalYVelocity = playerVelocity.y;
+       playerVelocity.y = 0;
 
-        while (Time.time < startTime + dashDuration)
-        {
-            controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
-            yield return null;
-        }
+       while (Time.time < startTime + dashDuration)
+       {
+           controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
+           yield return null;
+       }
 
-        // Re-enable gravity
-        playerVelocity.y = originalYVelocity;
+       // Re-enable gravity
+       playerVelocity.y = originalYVelocity;
 
-        dashCooldownTimer = dashCooldown;
-        isDashing = false;
-     }
+       dashCooldownTimer = dashCooldown;
+       isDashing = false;
+    }
 
 
     void DashInput()
     {
-        if (Input.GetKeyDown(KeyCode.E) && dashCooldownTimer <= 0 && groundedPlayer)
+        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0)
         {
+            AudioManager.instance.playOnce(dashSFX);
             StartCoroutine(DoDash());
         }
 

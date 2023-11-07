@@ -14,8 +14,8 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] Transform rotatePos;
 
     [Header("---GroundPound Stats---")]
-    [SerializeField] float knockbackForce = 5f;
-    [SerializeField] float knockbackDuration = 1f;
+    [SerializeField] float knockbackForce = 10f;
+    [SerializeField] float knockbackDuration = 2f;
 
     [Header("---Stats---")]
     [SerializeField] int HP;
@@ -148,18 +148,12 @@ public class EnemyAi : MonoBehaviour, IDamage
         // Disable the NavMeshAgent while being knocked back
         agent.enabled = false;
 
-        float timer = 0;
-        while (timer < knockbackDuration)
-        {
-            // Here, we apply the knockback force along the direction passed to the coroutine
-            var force = direction * knockbackForce + Vector3.up * (knockbackForce / 2f);
+        // Use the knockbackForce to apply an instant force in the given direction
+        var force = direction * knockbackForce + Vector3.up * (knockbackForce / 2f);
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
 
-            // Apply the force to the rigidbody
-            GetComponent<Rigidbody>().AddForce(force, ForceMode.VelocityChange);
-
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        // Wait for knockbackDuration to end
+        yield return new WaitForSeconds(knockbackDuration);
 
         // Re-enable the NavMeshAgent after the knockback is finished
         agent.enabled = true;

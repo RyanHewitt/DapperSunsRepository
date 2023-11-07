@@ -2347,7 +2347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: jumpHeight
-      value: 8.1
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: playerSpeed
@@ -2355,7 +2355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: gravityValue
-      value: -3.6
+      value: -7.3
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: groundPoundForce
@@ -2367,7 +2367,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: b1cf48bb30962904e8f53cdb21d0ef61, type: 3}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: groundPoundSpeed
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: enemyLayer.m_Bits
@@ -2375,7 +2375,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: groundPoundRadius
-      value: 40
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: groundPoundKnockbackForce
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8351637192957294273, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_Name

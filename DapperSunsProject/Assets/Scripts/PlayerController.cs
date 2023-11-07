@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("----- Ground Pound Impact Stats -----")]
     [SerializeField] float groundPoundRadius = 5f;
-    [SerializeField] private float groundPoundForce = 10f;
     [SerializeField] private float groundPoundKnockbackForce = 10f;
     [SerializeField] LayerMask enemyLayer; // Set this to the layer the enemies are on.
 
@@ -345,14 +344,15 @@ public class PlayerController : MonoBehaviour, IDamage
     public void GroundPoundImpact()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, groundPoundRadius, enemyLayer);
-
         foreach (var hitCollider in hitColliders)
         {
-            EnemyAi enemyAi = hitCollider.GetComponent<EnemyAi>();
-            if (enemyAi != null)
+            // Apply knockback to enemies
+            Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                Vector3 knockbackDirection = (hitCollider.transform.position - transform.position).normalized;
-                enemyAi.StartCoroutine(enemyAi.Knockback(knockbackDirection));
+                Vector3 direction = (hitCollider.transform.position - transform.position).normalized;
+                direction.y = 0; // This ensures the force is applied horizontally
+                rb.AddForce(direction * groundPoundKnockbackForce, ForceMode.Impulse);
             }
         }
         PlayGroundPoundSound();

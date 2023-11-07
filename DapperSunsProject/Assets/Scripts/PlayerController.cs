@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
-    bool canBoop = false;
+    bool canBeat = false;
     bool hitBeat = false;
     bool hitPenalty = false;
     int HP = 1;
@@ -53,35 +53,19 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (GameManager.instance.beatWindow)
         {
-            canBoop = true;
+            canBeat = true;
         }
         else
         {
-            if (canBoop)
+            if (canBeat)
             {
                 hitPenalty = false;
             }
-            canBoop = false;
+            canBeat = false;
             hitBeat = false;
         }
 
-        if (Input.GetButtonDown("Shoot") && GameManager.instance.menuActive == null)
-        {
-            if (!hitPenalty)
-            {
-                if (canBoop && !hitBeat)
-                {
-                    hitBeat = true;
-                    Boop();
-                }
-                else
-                {
-                    hitPenalty = true;
-                    BoopPenalty();
-                }
-            }
-        }
-
+        ShootInput();
         DashInput();
         MovePlayer();
     }
@@ -139,6 +123,25 @@ public class PlayerController : MonoBehaviour, IDamage
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
+    void ShootInput()
+    {
+        if (Input.GetButtonDown("Shoot") && GameManager.instance.menuActive == null)
+        {
+            if (!hitPenalty)
+            {
+                if (canBeat && !hitBeat)
+                {
+                    hitBeat = true;
+                    Boop();
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BoopPenalty();
+                }
+            }
+        }
+    }
 
     void Boop()
     {
@@ -220,10 +223,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DashInput()
     {
-        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0)
+        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0 && GameManager.instance.menuActive == null)
         {
-            AudioManager.instance.playOnce(dashSFX);
-            StartCoroutine(DoDash());
+            if (!hitPenalty)
+            {
+                if (canBeat && !hitBeat)
+                {
+                    hitBeat = true;
+                    AudioManager.instance.playOnce(dashSFX);
+                    StartCoroutine(DoDash());
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BoopPenalty();
+                }
+            }
         }
 
         if (dashCooldownTimer > 0)

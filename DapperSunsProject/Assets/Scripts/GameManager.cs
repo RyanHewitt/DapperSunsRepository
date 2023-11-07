@@ -86,6 +86,14 @@ public class GameManager : MonoBehaviour
                 OnBeatEvent(); 
             }
         }
+        if (sampledTime - floor < 0.25f ||  sampledTime - floor > 0.75f)
+        {
+            beatWindow = true;
+        }
+        else
+        {
+            beatWindow = false;
+        }
     }
 
     public GameObject GetPlayerSpawn()

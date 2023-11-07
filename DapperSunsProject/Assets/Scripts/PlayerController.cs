@@ -99,6 +99,11 @@ public class PlayerController : Beat, IDamage
         {
             groundedPlayer = hit.distance < groundDist;
         }
+        else
+        {
+            groundedPlayer = false;
+        }
+
 
         if (!isDashing)
         {

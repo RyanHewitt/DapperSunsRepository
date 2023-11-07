@@ -18,7 +18,7 @@ public class TestCube : MonoBehaviour, IDamage, IBoop
         playerDirection = GameManager.instance.player.transform.position - agent.transform.position;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3? knockbackDirection = null)
     {
         HP -= amount;
         if (HP <= 0)

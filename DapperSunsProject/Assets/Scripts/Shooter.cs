@@ -57,7 +57,7 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    public void takeDamage(int Amount)
+    public void takeDamage(int Amount, Vector3? knockbackDirection = null)
     {
         HP -= Amount;
 

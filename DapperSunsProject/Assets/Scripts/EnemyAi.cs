@@ -13,6 +13,10 @@ public class EnemyAi : MonoBehaviour, IDamage
     [SerializeField] Transform shootPos;
     [SerializeField] Transform rotatePos;
 
+    [Header("---GroundPound Stats---")]
+    [SerializeField] float knockbackForce = 10f;
+    [SerializeField] float knockbackDuration = 2f;
+
     [Header("---Stats---")]
     [SerializeField] int HP;
     [SerializeField] int PlayerFaceSpeed;
@@ -23,6 +27,7 @@ public class EnemyAi : MonoBehaviour, IDamage
 
     Vector3 playerDirection;
     bool playerInRange;
+    bool isKnockbackActive = false;
 
     void Start()
     {
@@ -33,7 +38,8 @@ public class EnemyAi : MonoBehaviour, IDamage
 
     void Update()
     {
-        if(playerInRange)
+
+        if (playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
@@ -47,6 +53,11 @@ public class EnemyAi : MonoBehaviour, IDamage
             FaceTarget();
 
             agent.SetDestination(GameManager.instance.player.transform.position);
+        }
+
+        if (isKnockbackActive)
+        {
+            return;
         }
 
     }
@@ -67,7 +78,7 @@ public class EnemyAi : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int Amount)
+    public void takeDamage(int Amount, Vector3? knockbackDirection = null)
     {
         HP -= Amount;
 
@@ -76,6 +87,12 @@ public class EnemyAi : MonoBehaviour, IDamage
         if(HP <= 0)
         {
             gameObject.SetActive(false);
+        }
+
+        else if (knockbackDirection.HasValue)
+        {
+            // Apply a knockback effect if a direction is provided
+            StartCoroutine(Knockback(knockbackDirection.Value.normalized));
         }
     }
 
@@ -122,5 +139,24 @@ public class EnemyAi : MonoBehaviour, IDamage
         Quaternion verticalRotation = Quaternion.AngleAxis(verticalAngle * Mathf.Rad2Deg, Vector3.right);
 
         transform.rotation = verticalRotation;
+    }
+
+    public IEnumerator Knockback(Vector3 direction)
+    {
+        isKnockbackActive = true;
+
+        // Disable the NavMeshAgent while being knocked back
+        agent.enabled = false;
+
+        // Use the knockbackForce to apply an instant force in the given direction
+        var force = direction * knockbackForce + Vector3.up * (knockbackForce / 2f);
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+
+        // Wait for knockbackDuration to end
+        yield return new WaitForSeconds(knockbackDuration);
+
+        // Re-enable the NavMeshAgent after the knockback is finished
+        agent.enabled = true;
+        isKnockbackActive = false;
     }
 }

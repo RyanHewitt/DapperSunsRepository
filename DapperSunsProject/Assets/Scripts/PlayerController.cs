@@ -228,7 +228,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DashInput()
     {
-        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0 && GameManager.instance.menuActive == null)
+        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0 &&
+            GameManager.instance.menuActive == null && Input.GetAxis("Vertical") > 0.1f)
         {
             if (!hitPenalty)
             {

@@ -346,12 +346,12 @@ public class PlayerController : MonoBehaviour, IDamage
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, groundPoundRadius, enemyLayer);
         foreach (var hitCollider in hitColliders)
         {
-            // Apply knockback to enemies
+            // Apply a knockback to the enemy
             Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 Vector3 direction = (hitCollider.transform.position - transform.position).normalized;
-                direction.y = 0; // This ensures the force is applied horizontally
+                direction.y = 0; // Optionally, keep the force horizontal
                 rb.AddForce(direction * groundPoundKnockbackForce, ForceMode.Impulse);
             }
         }

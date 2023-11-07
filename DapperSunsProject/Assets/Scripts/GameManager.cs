@@ -38,6 +38,11 @@ public class GameManager : MonoBehaviour
         timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerSpawn = GameObject.FindWithTag("Respawn");
+        
+    }
+
+    void Start()
+    {
         audioSource = AudioManager.instance.audioSource;
     }
 

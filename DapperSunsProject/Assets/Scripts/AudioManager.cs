@@ -30,15 +30,18 @@ public class AudioManager : MonoBehaviour
 
     public void pauseUnpauseAudio()
     {
-        if (isPlaying)
+        if (audioSource.clip)
         {
-            audioSource.Pause();
-            isPlaying = !isPlaying;
-        }
-        else
-        {
-            audioSource.UnPause();
-            isPlaying = !isPlaying;
+            if (isPlaying)
+            {
+                audioSource.Pause();
+                isPlaying = !isPlaying;
+            }
+            else
+            {
+                audioSource.UnPause();
+                isPlaying = !isPlaying;
+            } 
         }
     }
 }

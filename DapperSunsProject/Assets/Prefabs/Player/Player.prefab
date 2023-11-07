@@ -468,12 +468,15 @@ MonoBehaviour:
   jumpHeight: 1
   gravityValue: -9.8
   friction: 0.98
+  dashSpeed: 20
+  dashDuration: 0.5
+  dashCooldown: 2
   boopDist: 8
   boopForce: 10
   boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
   blastSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
-  shootSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
+  dashSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
 --- !u!143 &5283020408901821959
 CharacterController:
   m_ObjectHideFlags: 0

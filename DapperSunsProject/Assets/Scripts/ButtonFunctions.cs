@@ -23,7 +23,7 @@ public class ButtonFunctions : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene("Level 2");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameManager.instance.stateUnpause();
     }
 }

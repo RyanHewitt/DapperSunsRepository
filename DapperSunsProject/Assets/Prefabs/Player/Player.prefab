@@ -406,7 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85112326019ce84d89555ac888b30a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _steps: 1
   gunScreen: {fileID: 1299468377972022940}
   gunRing: {fileID: 3788218531957665656}
   pulseSpeed: 0.5
@@ -461,7 +460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd3fa57a8c79e144aaf66d3a478689a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _steps: 1
   controller: {fileID: 5283020408901821959}
   shootPos: {fileID: 230813569849710475}
   playerSpeed: 8
@@ -476,6 +474,7 @@ MonoBehaviour:
   boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
   blastSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
+  jumpSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   dashSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
 --- !u!143 &5283020408901821959
 CharacterController:

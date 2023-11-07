@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Audio -----")]
     [SerializeField] AudioClip blastSFX;
     [SerializeField] AudioClip blastPenaltySFX;
+    [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
 
     Vector3 move;
@@ -41,7 +42,6 @@ public class PlayerController : MonoBehaviour, IDamage
     int HP = 1;
     float groundDist = 1.5f;
     float dashCooldownTimer = 0f;
-    bool isDashing = false;
 
     void Start()
     {
@@ -84,36 +84,43 @@ public class PlayerController : MonoBehaviour, IDamage
             groundedPlayer = false;
         }
 
-
-        if (!isDashing)
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            if (groundedPlayer && playerVelocity.y < 0)
-            {
-                playerVelocity.y = 0f;
-                frictionForce = friction;
-            }
-            else
-            {
-                frictionForce = friction / 2;
-            }
-
-            move = Input.GetAxis("Horizontal") * transform.right +
-                   Input.GetAxis("Vertical") * transform.forward;
-
-            if (Input.GetButtonDown("Jump") && groundedPlayer)
-            {
-                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-            }
-
-            playerVelocity.y += gravityValue * Time.deltaTime;
-
-            playerVelocity.x *= friction;
-            playerVelocity.z *= friction;
-
-            controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
+            playerVelocity.y = 0f;
+            frictionForce = friction;
+        }
+        else
+        {
+            frictionForce = friction / 2;
         }
 
-        if (isDashing) return;
+        move = Input.GetAxis("Horizontal") * transform.right +
+               Input.GetAxis("Vertical") * transform.forward;
+
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        {
+            if (!hitPenalty)
+            {
+                if (canBeat && !hitBeat)
+                {
+                    hitBeat = true;
+                    AudioManager.instance.playOnce(jumpSFX);
+                    playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BoopPenalty();
+                }
+            }
+        }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+
+        playerVelocity.x *= friction;
+        playerVelocity.z *= friction;
+
+        controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
 
         if (!groundedPlayer)
         {
@@ -201,7 +208,6 @@ public class PlayerController : MonoBehaviour, IDamage
     IEnumerator DoDash()
     {
        float startTime = Time.time;
-       isDashing = true;
        Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
 
        // Disable gravity by storing the current playerVelocity.y
@@ -218,7 +224,6 @@ public class PlayerController : MonoBehaviour, IDamage
        playerVelocity.y = originalYVelocity;
 
        dashCooldownTimer = dashCooldown;
-       isDashing = false;
     }
 
     void DashInput()

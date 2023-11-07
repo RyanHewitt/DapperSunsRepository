@@ -36,11 +36,11 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
+    bool canJump;
     bool canBeat = false;
     bool hitBeat = false;
     bool hitPenalty = false;
     int HP = 1;
-    float groundDist = 1.5f;
     float dashCooldownTimer = 0f;
 
     void Start()
@@ -74,30 +74,22 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         float frictionForce;
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
-        {
-            groundedPlayer = hit.distance < groundDist;
-        }
-        else
-        {
-            groundedPlayer = false;
-        }
-
+        groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
-            frictionForce = friction;
+            canJump = true;
+            frictionForce = friction / 2;
         }
         else
         {
-            frictionForce = friction / 2;
+            frictionForce = friction;
         }
 
         move = Input.GetAxis("Horizontal") * transform.right +
                Input.GetAxis("Vertical") * transform.forward;
 
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        if (Input.GetButtonDown("Jump") && canJump)
         {
             if (!hitPenalty)
             {
@@ -106,6 +98,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     hitBeat = true;
                     AudioManager.instance.playOnce(jumpSFX);
                     playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+                    canJump = false;
                 }
                 else
                 {
@@ -117,8 +110,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         playerVelocity.y += gravityValue * Time.deltaTime;
 
-        playerVelocity.x *= friction;
-        playerVelocity.z *= friction;
+        playerVelocity.x *= frictionForce;
+        playerVelocity.z *= frictionForce;
 
         controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
 
@@ -153,6 +146,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Boop()
     {
         AudioManager.instance.playOnce(blastSFX);
+        canJump = false;
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))

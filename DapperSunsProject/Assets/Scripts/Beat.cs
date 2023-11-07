@@ -20,7 +20,7 @@ public class Beat : MonoBehaviour
 
     protected virtual void Start()
     {
-        GameManager.instance.beatObjects.Add(this);
+        //GameManager.instance.beatObjects.Add(this);
     }
 
     protected virtual void Update()

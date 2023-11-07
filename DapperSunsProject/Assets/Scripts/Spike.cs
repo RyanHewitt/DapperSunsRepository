@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Spike : Beat
+public class Spike : MonoBehaviour
 {
     [SerializeField] int SpikeDMG;
     [SerializeField] Color up;
@@ -22,9 +22,9 @@ public class Spike : Beat
 
     int beatCounter;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        GameManager.instance.OnBeatEvent += DoBeat;
 
         beatCounter = 0;
 
@@ -38,11 +38,6 @@ public class Spike : Beat
         mat = GetComponent<Renderer>().material;
         mat.color = down;
         mat.SetColor("_EmissionColor", down);
-    }
-
-    protected override void Update()
-    {
-        base.Update();
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,7 +54,7 @@ public class Spike : Beat
         }
     }
 
-    protected override void DoBeat()
+    void DoBeat()
     {
         beatCounter++;
         if (beatCounter == 2) // Warn on second beat

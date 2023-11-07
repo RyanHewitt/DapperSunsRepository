@@ -30,8 +30,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused;
     public bool playerDead;
-
-    public List<Beat> beatObjects;
+    public bool beatWindow;
 
     void Awake()
     {
@@ -131,11 +130,6 @@ public class GameManager : MonoBehaviour
     public void SyncBeats(float _bpm)
     {
         bpm = _bpm;
-        foreach (Beat beat in beatObjects)
-        {
-            beat.SetBPM(_bpm);
-            beat.StartTimer();
-        }
         AudioManager.instance.playAudio(audioClip);
     }
 

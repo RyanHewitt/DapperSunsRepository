@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Reticle : Beat
+public class Reticle : MonoBehaviour
 {
     [SerializeField] Image reticleImg;
 
     bool isHighlighted;
 
-    protected override void DoBeat()
+    void Start()
+    {
+        GameManager.instance.OnBeatEvent += DoBeat;
+    }
+
+    void DoBeat()
     {
         if (isHighlighted)
         {

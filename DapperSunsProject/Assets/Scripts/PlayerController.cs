@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerController : Beat, IDamage
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
@@ -43,20 +43,15 @@ public class PlayerController : Beat, IDamage
     float dashCooldownTimer = 0f;
     bool isDashing = false;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
-
-        GameManager.instance.OnBeatEvent += BoopPenalty;
         GameManager.instance.playerDead = false;
         spawnPlayer();
     }
 
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
-        if (Time.time - timer < ((60f / bpm) * 0.25f) || Time.time - timer > ((60f / bpm) * 0.75f))
+        if (GameManager.instance.beatWindow)
         {
             canBoop = true;
         }
@@ -200,11 +195,6 @@ public class PlayerController : Beat, IDamage
         HP = 1;
     }
 
-    protected override void DoBeat()
-    {
-        //AudioManager.instance.playOnce(blastSFX); // Use this to test if audio is going of beat
-    }
-
     IEnumerator DoDash()
     {
        float startTime = Time.time;
@@ -227,7 +217,6 @@ public class PlayerController : Beat, IDamage
        dashCooldownTimer = dashCooldown;
        isDashing = false;
     }
-
 
     void DashInput()
     {

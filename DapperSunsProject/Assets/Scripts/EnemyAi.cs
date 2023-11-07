@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAi : Beat, IDamage
+public class EnemyAi : MonoBehaviour, IDamage
 {
     [Header("---Components---")]
     [SerializeField] Renderer model;
@@ -24,17 +24,15 @@ public class EnemyAi : Beat, IDamage
     Vector3 playerDirection;
     bool playerInRange;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        GameManager.instance.OnBeatEvent += DoBeat;
 
         agent.updateRotation = false;
     }
 
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
         if(playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
@@ -81,7 +79,7 @@ public class EnemyAi : Beat, IDamage
         }
     }
 
-    protected override void DoBeat()
+    void DoBeat()
     {
         if (playerInRange)
         {

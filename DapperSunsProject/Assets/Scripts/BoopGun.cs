@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoopGun : Beat
+public class BoopGun : MonoBehaviour
 {
     [SerializeField] GameObject gunScreen;
     [SerializeField] GameObject gunRing;
@@ -18,9 +18,9 @@ public class BoopGun : Beat
 
     float elapsedTime;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        GameManager.instance.OnBeatEvent += DoBeat;
 
         ringMat = gunRing.GetComponent<Renderer>().material;
         currentColor = offColor;
@@ -30,17 +30,15 @@ public class BoopGun : Beat
         screenMat = gunScreen.GetComponent<Renderer>().material;
     }
 
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
         elapsedTime += Time.deltaTime * pulseSpeed;
         currentColor = Color.Lerp(currentColor, offColor, elapsedTime);
         ringMat.color = currentColor;
         ringMat.SetColor("_EmissionColor", currentColor);
     }
 
-    protected override void DoBeat()
+    void DoBeat()
     {
         currentColor = onColor;
         ringMat.color = currentColor;

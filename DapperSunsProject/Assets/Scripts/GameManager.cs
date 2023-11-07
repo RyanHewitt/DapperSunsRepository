@@ -8,13 +8,24 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("----- UI -----")]
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+
+    [Header("----- Audio -----")]
+    [SerializeField] GameObject audioManager;
     [SerializeField] AudioClip audioClip;
+    AudioSource audioSource;
+
+    float bpm;
+    int lastSampledTime;
 
     float timeScaleOg;
 
+    public delegate void BeatEvent();
+
+    [Header("----- Public -----")]
     public GameObject player;
     public GameObject playerSpawn;
     public GameObject menuActive;
@@ -30,10 +41,13 @@ public class GameManager : MonoBehaviour
         timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerSpawn = GameObject.FindWithTag("Respawn");
+        audioSource = audioManager.GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        CheckBeat();
+
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
             if (menuActive == menuPause)
@@ -55,6 +69,21 @@ public class GameManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 stateUnpause();
+            }
+        }
+    }
+
+    void CheckBeat()
+    {
+        float beatInterval = 60f / bpm;
+        float sampledTime = audioSource.timeSamples / (audioSource.clip.frequency * bpm);
+        int floor = Mathf.FloorToInt(sampledTime);
+        if (floor != lastSampledTime)
+        {
+            lastSampledTime = floor;
+            if (OnBeatEvent != null)
+            {
+                OnBeatEvent(); 
             }
         }
     }
@@ -107,4 +136,6 @@ public class GameManager : MonoBehaviour
         }
         AudioManager.instance.playAudio(audioClip);
     }
+
+    public event BeatEvent OnBeatEvent;
 }

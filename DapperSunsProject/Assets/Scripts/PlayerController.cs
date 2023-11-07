@@ -47,6 +47,7 @@ public class PlayerController : Beat, IDamage
     {
         base.Start();
 
+        GameManager.instance.OnBeatEvent += BoopPenalty;
         GameManager.instance.playerDead = false;
         spawnPlayer();
     }

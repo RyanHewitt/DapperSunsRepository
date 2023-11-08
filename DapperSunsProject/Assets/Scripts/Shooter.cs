@@ -7,6 +7,7 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Components---")]
     [SerializeField] NavMeshAgent agent;
+    [SerializeField] Collider enemyCol;
     [SerializeField] GameObject outline;
     [SerializeField] Color flashColor;
     [SerializeField] Transform shootPos;
@@ -70,6 +71,8 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         baseModel.enabled = true;
         outlineModel.enabled = true;
 
+        enemyCol.enabled = true;
+
         playerInRange = false;
     }
 
@@ -112,6 +115,7 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         agent.enabled = false;
         baseModel.enabled = false;
         outlineModel.enabled = false;
+        enemyCol.enabled = false;
     }
 
     void DoBeat()

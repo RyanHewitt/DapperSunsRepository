@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Shooter : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Components---")]
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject outline;
     [SerializeField] Color flashColor;
     [SerializeField] Transform shootPos;
-    [SerializeField] Rigidbody rb;
 
     [Header("---Stats---")]
     [SerializeField] int HP;
     [SerializeField] int PlayerFaceSpeed;
     [SerializeField] int maxVerticalAngle;
+    [SerializeField] int boopMultiplier;
 
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
@@ -37,8 +39,9 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
             FaceTarget();
-        }
 
+            agent.SetDestination(GameManager.instance.player.transform.position);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -57,9 +60,9 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    public void takeDamage(int Amount, Vector3? knockbackDirection = null)
+    public void takeDamage(int amount)
     {
-        HP -= Amount;
+        HP -= amount;
 
         StartCoroutine(FlashColor());
 
@@ -109,6 +112,7 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
 
     public void DoBoop(float force)
     {
-        rb.AddForce(-playerDirection * force, ForceMode.Impulse);
+        // rb.AddForce(-playerDirection * force, ForceMode.Impulse);
+        agent.velocity += -playerDirection.normalized * force * boopMultiplier;
     }
 }

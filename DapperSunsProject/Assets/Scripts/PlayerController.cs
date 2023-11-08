@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour, IDamage
         AudioManager.instance.playOnce(blastPenaltySFX);
     }
 
-    public void takeDamage(int amount, Vector3? knockbackDirection = null)
+    public void takeDamage(int amount)
     {
         HP -= amount;
 

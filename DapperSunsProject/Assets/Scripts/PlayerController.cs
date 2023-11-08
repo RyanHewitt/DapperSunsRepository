@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
-    [SerializeField] float dashCooldown;
 
     [Header("----- Ground Pound Stats -----")]
     [SerializeField] float slamSpeed;
@@ -46,7 +45,6 @@ public class PlayerController : MonoBehaviour, IDamage
     bool hitPenalty = false;
     bool slamming = false;
     int HP = 1;
-    float dashCooldownTimer = 0f;
 
     void Start()
     {
@@ -233,8 +231,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
        // Re-enable gravity
        playerVelocity.y = originalYVelocity;
-
-       dashCooldownTimer = dashCooldown;
     }
 
     void DashInput()

@@ -20,6 +20,11 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
 
+    Vector3 startPos;
+    int startHP;
+    Renderer baseModel;
+    Renderer outlineModel;
+
     Color baseColor;
     Vector3 playerDirection;
     Material outlineMat;
@@ -28,20 +33,44 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
     void Start()
     {
         GameManager.instance.OnBeatEvent += DoBeat;
+        GameManager.instance.OnRestartEvent += Restart;
+
+        baseModel = GetComponent<Renderer>();
+        outlineModel = outline.GetComponent<Renderer>();
+
         outlineMat = outline.GetComponent<Renderer>().material;
         baseColor = outlineMat.color;
+
+        startPos = transform.position;
+        startHP = HP;
     }
 
     void Update()
     {
-        if(playerInRange)
+        if (agent.isActiveAndEnabled)
         {
-            playerDirection = GameManager.instance.player.transform.position - transform.position;
+            if (playerInRange)
+            {
+                playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            FaceTarget();
+                FaceTarget();
 
-            agent.SetDestination(GameManager.instance.player.transform.position);
+                agent.SetDestination(GameManager.instance.player.transform.position);
+            }
         }
+    }
+
+    void Restart()
+    {
+        transform.position = startPos;
+        agent.enabled = true;
+
+        HP = startHP;
+
+        baseModel.enabled = true;
+        outlineModel.enabled = true;
+
+        playerInRange = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -80,7 +109,9 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseColor);
 
-        gameObject.SetActive(false);
+        agent.enabled = false;
+        baseModel.enabled = false;
+        outlineModel.enabled = false;
     }
 
     void DoBeat()

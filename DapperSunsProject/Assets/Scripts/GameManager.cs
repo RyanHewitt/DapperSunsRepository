@@ -76,13 +76,11 @@ public class GameManager : MonoBehaviour
         {
             if (Input.anyKeyDown)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                stateUnpause();
+                Restart();
             }
         }
 
         CheckTimer();
-
     }
 
     void CheckBeat()
@@ -169,6 +167,16 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0;
     }
 
+    public void Restart()
+    {
+        playerDead = false;
+        if (OnRestartEvent != null)
+        {
+            OnRestartEvent();
+        }
+        stateUnpause();
+    }
+
     public void SyncBeats(float _bpm)
     {
         bpm = _bpm;
@@ -177,4 +185,5 @@ public class GameManager : MonoBehaviour
     }
 
     public event BeatEvent OnBeatEvent;
+    public event BeatEvent OnRestartEvent;
 }

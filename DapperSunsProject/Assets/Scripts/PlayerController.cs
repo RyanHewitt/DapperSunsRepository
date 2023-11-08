@@ -56,24 +56,27 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Update()
     {
-        if (GameManager.instance.beatWindow)
+        if (!GameManager.instance.isPaused)
         {
-            canBeat = true;
-        }
-        else
-        {
-            if (canBeat)
+            if (GameManager.instance.beatWindow)
             {
-                hitPenalty = false;
+                canBeat = true;
             }
-            canBeat = false;
-            hitBeat = false;
-        }
+            else
+            {
+                if (canBeat)
+                {
+                    hitPenalty = false;
+                }
+                canBeat = false;
+                hitBeat = false;
+            }
 
-        MovePlayer();
-        ShootInput();
-        DashInput();
-        SlamInput();
+            MovePlayer();
+            ShootInput();
+            DashInput();
+            SlamInput(); 
+        }
     }
 
     void MovePlayer()
@@ -139,7 +142,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void ShootInput()
     {
-        if (Input.GetButtonDown("Shoot") && GameManager.instance.menuActive == null)
+        if (Input.GetButtonDown("Shoot"))
         {
             if (!hitPenalty)
             {
@@ -236,8 +239,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DashInput()
     {
-        if (Input.GetButtonDown("Dash") && dashCooldownTimer <= 0 &&
-            GameManager.instance.menuActive == null && Input.GetAxis("Vertical") > 0.1f)
+        if (Input.GetButtonDown("Dash") && Input.GetAxis("Vertical") > 0.1f)
         {
             if (!hitPenalty)
             {
@@ -253,11 +255,6 @@ public class PlayerController : MonoBehaviour, IDamage
                     BoopPenalty();
                 }
             }
-        }
-
-        if (dashCooldownTimer > 0)
-        {
-            dashCooldownTimer -= Time.deltaTime;
         }
     }
 

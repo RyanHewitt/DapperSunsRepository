@@ -70,10 +70,10 @@ public class PlayerController : MonoBehaviour, IDamage
             hitBeat = false;
         }
 
+        MovePlayer();
         ShootInput();
         DashInput();
         SlamInput();
-        MovePlayer();
     }
 
     void MovePlayer()
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour, IDamage
             // If we're ground pounding, we only want to apply the downward velocity
             playerVelocity.x = 0;
             playerVelocity.z = 0;
-            //move = Vector3.zero;
+            move = Vector3.zero;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -265,8 +265,20 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Slam") && !groundedPlayer && !slamming)
         {
-            AudioManager.instance.playOnce(slamSound);
-            StartCoroutine(DoSlam());
+            if (!hitPenalty)
+            {
+                if (canBeat && !hitBeat)
+                {
+                    hitBeat = true;
+                    AudioManager.instance.playOnce(slamSound);
+                    StartCoroutine(DoSlam());
+                }
+                else
+                {
+                    hitPenalty = true;
+                    BoopPenalty();
+                }
+            }
         }
     }
 

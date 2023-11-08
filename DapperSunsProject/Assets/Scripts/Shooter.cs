@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Shooter : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Components---")]
+    [SerializeField] NavMeshAgent agent;
     [SerializeField] GameObject outline;
     [SerializeField] Color flashColor;
     [SerializeField] Transform shootPos;
-    [SerializeField] Rigidbody rb;
 
     [Header("---Stats---")]
     [SerializeField] int HP;
     [SerializeField] int PlayerFaceSpeed;
     [SerializeField] int maxVerticalAngle;
+    [SerializeField] int boopMultiplier;
 
     [Header("---Gun stats---")]
     [SerializeField] GameObject bullet;
+
+    Vector3 startPos;
+    int startHP;
+    Renderer baseModel;
+    Renderer outlineModel;
 
     Color baseColor;
     Vector3 playerDirection;
@@ -26,19 +33,44 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
     void Start()
     {
         GameManager.instance.OnBeatEvent += DoBeat;
+        GameManager.instance.OnRestartEvent += Restart;
+
+        baseModel = GetComponent<Renderer>();
+        outlineModel = outline.GetComponent<Renderer>();
+
         outlineMat = outline.GetComponent<Renderer>().material;
         baseColor = outlineMat.color;
+
+        startPos = transform.position;
+        startHP = HP;
     }
 
     void Update()
     {
-        if(playerInRange)
+        if (agent.isActiveAndEnabled)
         {
-            playerDirection = GameManager.instance.player.transform.position - transform.position;
+            if (playerInRange)
+            {
+                playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            FaceTarget();
+                FaceTarget();
+
+                agent.SetDestination(GameManager.instance.player.transform.position);
+            }
         }
+    }
 
+    void Restart()
+    {
+        transform.position = startPos;
+        agent.enabled = true;
+
+        HP = startHP;
+
+        baseModel.enabled = true;
+        outlineModel.enabled = true;
+
+        playerInRange = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -57,27 +89,17 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    public void takeDamage(int Amount)
+    public void takeDamage(int amount)
     {
-        HP -= Amount;
-
-        StartCoroutine(FlashColor());
-
+        HP -= amount;
+        
         if(HP <= 0)
         {
-            gameObject.SetActive(false);
+            StartCoroutine(Death());
         }
     }
 
-    void DoBeat()
-    {
-        if (playerInRange)
-        {
-            Instantiate(bullet, shootPos.position, transform.rotation);
-        }
-    }
-
-    IEnumerator FlashColor()
+    IEnumerator Death()
     {
         outlineMat.color = flashColor;
         outlineMat.SetColor("_EmissionColor", flashColor);
@@ -86,6 +108,18 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
 
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseColor);
+
+        agent.enabled = false;
+        baseModel.enabled = false;
+        outlineModel.enabled = false;
+    }
+
+    void DoBeat()
+    {
+        if (playerInRange)
+        {
+            Instantiate(bullet, shootPos.position, transform.rotation);
+        }
     }
 
     void FaceTarget()
@@ -109,6 +143,7 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
 
     public void DoBoop(float force)
     {
-        rb.AddForce(-playerDirection * force, ForceMode.Impulse);
+        // rb.AddForce(-playerDirection * force, ForceMode.Impulse);
+        agent.velocity += -playerDirection.normalized * force * boopMultiplier;
     }
 }

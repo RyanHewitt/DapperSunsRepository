@@ -293,7 +293,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         // Apply the slam impact logic (e.g., damage enemies, create an impact effect, etc.)
-        //SlamImpact();
+        SlamImpact();
 
         // Reset gravity influence
         gravityValue = originalGravity;
@@ -303,6 +303,18 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void SlamImpact()
     {
-        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, boopDist))
+        {
+            if (!hit.collider.isTrigger)
+            {
+                IBoop boopable = hit.collider.GetComponent<IBoop>();
+
+                if (hit.transform != transform && boopable != null)
+                {
+                    boopable.DoBoop(boopForce);
+                }
+            }
+        }
     }
 }

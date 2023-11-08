@@ -63,24 +63,14 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
     public void takeDamage(int amount)
     {
         HP -= amount;
-
-        StartCoroutine(FlashColor());
-
+        
         if(HP <= 0)
         {
-            gameObject.SetActive(false);
+            StartCoroutine(Death());
         }
     }
 
-    void DoBeat()
-    {
-        if (playerInRange)
-        {
-            Instantiate(bullet, shootPos.position, transform.rotation);
-        }
-    }
-
-    IEnumerator FlashColor()
+    IEnumerator Death()
     {
         outlineMat.color = flashColor;
         outlineMat.SetColor("_EmissionColor", flashColor);
@@ -89,6 +79,16 @@ public class Shooter : MonoBehaviour, IDamage, IBoop
 
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseColor);
+
+        gameObject.SetActive(false);
+    }
+
+    void DoBeat()
+    {
+        if (playerInRange)
+        {
+            Instantiate(bullet, shootPos.position, transform.rotation);
+        }
     }
 
     void FaceTarget()

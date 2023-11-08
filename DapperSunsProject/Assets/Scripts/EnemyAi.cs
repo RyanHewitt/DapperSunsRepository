@@ -78,21 +78,15 @@ public class EnemyAi : MonoBehaviour, IDamage
         }
     }
 
-    public void takeDamage(int Amount, Vector3? knockbackDirection = null)
+    public void takeDamage(int amount)
     {
-        HP -= Amount;
+        HP -= amount;
 
         StartCoroutine(FlashColor());
 
         if(HP <= 0)
         {
             gameObject.SetActive(false);
-        }
-
-        else if (knockbackDirection.HasValue)
-        {
-            // Apply a knockback effect if a direction is provided
-            StartCoroutine(Knockback(knockbackDirection.Value.normalized));
         }
     }
 

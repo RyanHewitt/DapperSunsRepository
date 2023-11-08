@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSound;
 
+    Vector3 startPos;
+    int startHP;
+
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
@@ -48,6 +51,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Start()
     {
+        GameManager.instance.OnRestartEvent += Restart;
+
+        startPos = GameManager.instance.playerSpawn.transform.position;
+        startHP = HP;
+
         GameManager.instance.playerDead = false;
         spawnPlayer();
     }
@@ -75,6 +83,15 @@ public class PlayerController : MonoBehaviour, IDamage
             DashInput();
             SlamInput(); 
         }
+    }
+
+    void Restart()
+    {
+        controller.enabled = false;
+        transform.position = startPos;
+        controller.enabled = true;
+
+        HP = startHP;
     }
 
     void MovePlayer()
@@ -190,7 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage
         AudioManager.instance.playOnce(blastPenaltySFX);
     }
 
-    public void takeDamage(int amount, Vector3? knockbackDirection = null)
+    public void takeDamage(int amount)
     {
         HP -= amount;
 

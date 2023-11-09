@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject SpeedLines;
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuControls;
+    [SerializeField] GameObject menuQuit;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -225,7 +226,20 @@ public class GameManager : MonoBehaviour
         }
         stateUnpause();
     }
+    public void QuitMenu()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuQuit;
+        menuActive.SetActive(true);
+    }
 
+    public void AppQuit()
+    {
+        Application.Quit();
+    }
     public void SyncBeats(float _bpm)
     {
         bpm = _bpm;

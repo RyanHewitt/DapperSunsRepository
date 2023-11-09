@@ -1623,6 +1623,10 @@ PrefabInstance:
       value: BackOptions
       objectReference: {fileID: 0}
     - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: menuQuit
+      value: 
+      objectReference: {fileID: 1244251546}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: menuOptions
       value: 
       objectReference: {fileID: 710347682}
@@ -1630,6 +1634,10 @@ PrefabInstance:
       propertyPath: menuControls
       value: 
       objectReference: {fileID: 2047806257}
+    - target: {fileID: 4640753830287746604, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackOptions
+      objectReference: {fileID: 0}
     - target: {fileID: 8066243146842517648, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1720,6 +1728,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+--- !u!1 &1244251546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1374180950709191833, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+  m_PrefabInstance: {fileID: 1244251545}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1311034869
 PrefabInstance:
   m_ObjectHideFlags: 0

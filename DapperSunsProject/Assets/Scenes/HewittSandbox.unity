@@ -1591,6 +1591,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1899882620006760436, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
   m_PrefabInstance: {fileID: 5474602155556884028}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1962130686 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 8919849123410621664, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
+  m_PrefabInstance: {fileID: 5474602155556884028}
+  m_PrefabAsset: {fileID: 0}
 --- !u!195 &1962130690
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2070,6 +2075,10 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 1962130690}
+    - target: {fileID: 7613654157550710606, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
+      propertyPath: enemyCol
+      value: 
+      objectReference: {fileID: 1962130686}
     - target: {fileID: 7613654157550710606, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: boopMultiplier
       value: 10

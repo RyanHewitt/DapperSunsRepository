@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject SpeedLines;
+    [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuControls;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -130,6 +132,26 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
         AudioManager.instance.pauseUnpauseAudio();
+    }
+
+    public void popupOptions()
+    {
+        if(menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+    
+    public void popupControls()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuControls;
+        menuActive.SetActive(true);
     }
 
     public void popupWin()

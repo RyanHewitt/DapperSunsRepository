@@ -17,8 +17,14 @@ public class ButtonFunctions : MonoBehaviour
 
     public void Options()
     {
-        
+        GameManager.instance.popupOptions();
     }
+
+    public void Controls()
+    {
+        GameManager.instance.popupControls();
+    }
+
     public void Quit()
     {
         Application.Quit();

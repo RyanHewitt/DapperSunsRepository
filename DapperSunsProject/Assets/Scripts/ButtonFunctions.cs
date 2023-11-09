@@ -43,6 +43,11 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.QuitMenu();
     }
+
+    public void MainMenu()
+    {
+        GameManager.instance.MainMenuQuit();
+    }
     public void GameQuit()
     {
         GameManager.instance.AppQuit();

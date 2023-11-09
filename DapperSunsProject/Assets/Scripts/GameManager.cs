@@ -236,6 +236,10 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
+    public void MainMenuQuit()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void AppQuit()
     {
         Application.Quit();

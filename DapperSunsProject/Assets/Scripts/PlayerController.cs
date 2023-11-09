@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator DoDash()
     {
+
        float startTime = Time.time;
        Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
 
@@ -260,6 +261,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     hitBeat = true;
                     AudioManager.instance.playOnce(dashSFX);
+                    StartCoroutine(GameManager.instance.FlashLines(dashDuration));
                     StartCoroutine(DoDash());
                 }
                 else

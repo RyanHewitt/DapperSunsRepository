@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text timerText;
+    [SerializeField] GameObject SpeedLines;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -169,6 +170,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        elapsedTime = 0;
         playerDead = false;
         if (OnRestartEvent != null)
         {
@@ -182,6 +184,13 @@ public class GameManager : MonoBehaviour
         bpm = _bpm;
         StartTimer();
         AudioManager.instance.playAudio(audioClip);
+    }
+
+    public IEnumerator FlashLines(float duration)
+    {
+        SpeedLines.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        SpeedLines.SetActive(false);
     }
 
     public event BeatEvent OnBeatEvent;

@@ -154,6 +154,26 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(true);
     }
 
+    public void BackButtonOptions()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+    }
+    
+    public void BackButtonControls()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+
     public void popupWin()
     {
         statePause();

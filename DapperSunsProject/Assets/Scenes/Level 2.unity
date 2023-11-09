@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1609084144}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Restart
+        m_MethodName: BackControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1881,6 +1881,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2241708914688273692, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackOptions
+      objectReference: {fileID: 0}
     - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: menuOptions
       value: 
@@ -1971,7 +1975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8186228416965126636, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

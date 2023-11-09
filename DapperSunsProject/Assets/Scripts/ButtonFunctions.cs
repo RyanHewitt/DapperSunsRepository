@@ -25,9 +25,14 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.popupControls();
     }
 
-    public void Back()
+    public void BackOptions()
     {
+        GameManager.instance.BackButtonOptions();
+    }
 
+    public void BackControls()
+    {
+        GameManager.instance.BackButtonControls();
     }
 
     public void Quit()

@@ -979,6 +979,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 818190761}
     - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: SpeedLines
+      value: 
+      objectReference: {fileID: 1994791294}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: playerSpawn
       value: 
       objectReference: {fileID: 238500674}
@@ -1067,6 +1071,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+--- !u!1 &1994791294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2077436081908804948, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+  m_PrefabInstance: {fileID: 1912276439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2037232704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8733455097434033506, guid: 0ed1d1da98f3282488ede5e98c145d3f, type: 3}

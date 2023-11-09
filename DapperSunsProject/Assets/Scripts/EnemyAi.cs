@@ -1,65 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyAi : MonoBehaviour, IDamage
+public class EnemyAi : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Components---")]
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Color flash;
-    [SerializeField] Material returnColor;
-    [SerializeField] Transform shootPos;
-    [SerializeField] Transform rotatePos;
-
-    [Header("---GroundPound Stats---")]
-    [SerializeField] float knockbackForce = 10f;
-    [SerializeField] float knockbackDuration = 2f;
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected Collider enemyCol;
+    [SerializeField] protected GameObject outline;
+    [SerializeField] protected Transform shootPos;
+    [SerializeField] protected Color flashColor;
 
     [Header("---Stats---")]
-    [SerializeField] int HP;
-    [SerializeField] int PlayerFaceSpeed;
-    [SerializeField] int maxVerticalAngle;
+    [SerializeField] protected int HP;
+    [SerializeField] protected int PlayerFaceSpeed;
+    [SerializeField] protected int maxVerticalAngle;
+    [SerializeField] protected int boopMultiplier;
 
     [Header("---Gun stats---")]
-    [SerializeField] GameObject bullet;
+    [SerializeField] protected GameObject bullet;
 
-    Vector3 playerDirection;
-    bool playerInRange;
-    bool isKnockbackActive = false;
+    protected Vector3 startPos;
+    protected Vector3 playerDirection;
+    protected int startHP;
+    protected bool playerInRange;
 
-    void Start()
+    protected Renderer baseModel;
+    protected Renderer outlineModel;
+    protected Material outlineMat;
+    protected Color baseColor;
+
+    protected virtual void Start()
     {
         GameManager.instance.OnBeatEvent += DoBeat;
+        GameManager.instance.OnRestartEvent += Restart;
 
-        agent.updateRotation = false;
+        baseModel = GetComponent<Renderer>();
+        outlineModel = outline.GetComponent<Renderer>();
+
+        outlineMat = outline.GetComponent<Renderer>().material;
+        baseColor = outlineMat.color;
+
+        startPos = transform.position;
+        startHP = HP;
     }
 
-    void Update()
+    protected virtual void Update()
     {
 
         if (playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            LookVert();
+            Rotate();
 
-            if (agent.remainingDistance < agent.stoppingDistance)
-            {
-                FaceTarget();
-            }
-
-            FaceTarget();
-
-            agent.SetDestination(GameManager.instance.player.transform.position);
+            Move();
         }
+    }
 
-        if (isKnockbackActive)
-        {
-            return;
-        }
+    protected virtual void Restart()
+    {
+        transform.position = startPos;
+        HP = startHP;
 
+        baseModel.enabled = true;
+        outlineModel.enabled = true;
+
+        enemyCol.enabled = true;
+
+        playerInRange = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -80,77 +89,51 @@ public class EnemyAi : MonoBehaviour, IDamage
 
     public void takeDamage(int amount)
     {
+        Damage(amount);
+    }
+
+    protected virtual void Damage(int amount)
+    {
         HP -= amount;
 
-        StartCoroutine(FlashColor());
-
-        if(HP <= 0)
+        if (HP <= 0)
         {
-            gameObject.SetActive(false);
+            StartCoroutine(Death());
         }
+    }
+
+    protected virtual void Move()
+    {
+
+    }
+
+    protected virtual IEnumerator Death()
+    {
+        yield break;
     }
 
     void DoBeat()
     {
-        if (playerInRange)
-        {
-            Instantiate(bullet, shootPos.position, transform.rotation);
-        }
+        BeatAction();
     }
 
-    IEnumerator FlashColor() // Change this to outline
+    protected virtual void BeatAction()
     {
-        model.material.color = flash;
 
-        yield return new WaitForSeconds(0.1f);
-
-        model.material = returnColor;
     }
 
-    void FaceTarget()
+    protected virtual void Rotate()
     {
-        Vector3 targetDirection = playerDirection;
-        if (targetDirection != Vector3.zero)
-        {
-            // Horizontal rotation (side to side)
-            Quaternion horizontalRotation = Quaternion.LookRotation(targetDirection);
-
-            // Vertical rotation (up and down)
-            float angle = Mathf.Atan2(targetDirection.y, targetDirection.magnitude) * Mathf.Rad2Deg;
-            angle = Mathf.Clamp(angle, -maxVerticalAngle, maxVerticalAngle);
-
-            Quaternion verticalRotation = Quaternion.Euler(-angle, 0, 0);
-
-            // Combine both rotations
-            transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
-        }
+        
     }
 
-    void LookVert()
+    public void DoBoop(float force)
     {
-        float verticalAngle = -Mathf.Atan2(playerDirection.y, playerDirection.magnitude);
-
-        Quaternion verticalRotation = Quaternion.AngleAxis(verticalAngle * Mathf.Rad2Deg, Vector3.right);
-
-        transform.rotation = verticalRotation;
+        BoopImpulse(force);
     }
 
-    public IEnumerator Knockback(Vector3 direction)
+    protected virtual void BoopImpulse(float force)
     {
-        isKnockbackActive = true;
 
-        // Disable the NavMeshAgent while being knocked back
-        agent.enabled = false;
-
-        // Use the knockbackForce to apply an instant force in the given direction
-        var force = direction * knockbackForce + Vector3.up * (knockbackForce / 2f);
-        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
-
-        // Wait for knockbackDuration to end
-        yield return new WaitForSeconds(knockbackDuration);
-
-        // Re-enable the NavMeshAgent after the knockback is finished
-        agent.enabled = true;
-        isKnockbackActive = false;
     }
 }

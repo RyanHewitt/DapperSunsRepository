@@ -10,10 +10,10 @@ public class BoopBullet : MonoBehaviour
 
     void Start()
     {
-        //GameManager.instance.OnRestartEvent += Restart;
+        GameManager.instance.OnRestartEvent += Restart;
         rb.velocity = -transform.forward * bulletSpeed;
         transform.localRotation *= Quaternion.Euler(90, 0, 0);
-        Destroy(gameObject, life);
+        StartCoroutine(DeathTimer());
     }
 
     void Update()
@@ -21,8 +21,18 @@ public class BoopBullet : MonoBehaviour
         //gameObject.transform.localScale *= 2f * Time.deltaTime;
     }
 
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(life);
+        Restart();
+    }
+
     void Restart()
     {
-        Destroy(gameObject);
+        if (gameObject != null)
+        {
+            GameManager.instance.OnRestartEvent -= Restart;
+            Destroy(gameObject);
+        }
     }
 }

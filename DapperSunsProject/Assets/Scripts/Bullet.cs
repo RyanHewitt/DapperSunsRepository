@@ -17,7 +17,6 @@ public class Bullet : MonoBehaviour
             GameManager.instance.OnRestartEvent += Restart;
             rb.velocity = transform.forward * bulletSpeed;
             StartCoroutine(DeathTimer());
-            //Destroy(gameObject, life); 
         }
     }
 

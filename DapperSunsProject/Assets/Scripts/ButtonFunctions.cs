@@ -15,6 +15,10 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.Restart();
     }
 
+    public void Options()
+    {
+        
+    }
     public void Quit()
     {
         Application.Quit();

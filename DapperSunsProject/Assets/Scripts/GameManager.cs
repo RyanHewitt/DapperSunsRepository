@@ -173,6 +173,11 @@ public class GameManager : MonoBehaviour
         menuActive = menuOptions;
         menuActive.SetActive(true);
     }
+    public void BackButtonMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = null;
+    }
 
     public void popupWin()
     {

@@ -34,6 +34,10 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.BackButtonControls();
     }
+    public void BackMenu()
+    {
+        GameManager.instance.BackButtonMenu();
+    }
 
     public void Quit()
     {

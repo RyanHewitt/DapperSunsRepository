@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -9,10 +10,21 @@ public class Bullet : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] float life = 3;
 
-    public void Awake()
+    void Start()
     {
-        rb.velocity = transform.forward * bulletSpeed;
-        Destroy(gameObject, life);
+        if (gameObject != null)
+        {
+            GameManager.instance.OnRestartEvent += Restart;
+            rb.velocity = transform.forward * bulletSpeed;
+            StartCoroutine(DeathTimer());
+            //Destroy(gameObject, life); 
+        }
+    }
+
+    IEnumerator DeathTimer()
+    {
+        yield return new WaitForSeconds(life);
+        Restart();
     }
 
     void OnTriggerEnter(Collider other)
@@ -28,6 +40,15 @@ public class Bullet : MonoBehaviour
             damageable.takeDamage(damage);
         }
 
-        Destroy(gameObject);
+        Restart();
+    }
+
+    void Restart()
+    {
+        if (gameObject != null)
+        {
+            GameManager.instance.OnRestartEvent -= Restart;
+            Destroy(gameObject);
+        }
     }
 }

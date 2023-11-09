@@ -8,8 +8,9 @@ public class BoopBullet : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] float life;
 
-    void Awake()
+    void Start()
     {
+        //GameManager.instance.OnRestartEvent += Restart;
         rb.velocity = -transform.forward * bulletSpeed;
         transform.localRotation *= Quaternion.Euler(90, 0, 0);
         Destroy(gameObject, life);
@@ -18,5 +19,10 @@ public class BoopBullet : MonoBehaviour
     void Update()
     {
         //gameObject.transform.localScale *= 2f * Time.deltaTime;
+    }
+
+    void Restart()
+    {
+        Destroy(gameObject);
     }
 }

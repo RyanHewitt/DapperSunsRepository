@@ -15,7 +15,7 @@ public class Sniper : MonoBehaviour
         RaycastHit hit;
 
         // Check if the ray hits an object.
-        if (Physics.Raycast(ray, out hit) && hit.collider.CompareTag("Player"))
+        if (Physics.Raycast(ray, out hit))
         {
             // Enable the laser and set its positions.
             laserLineRenderer.enabled = true;

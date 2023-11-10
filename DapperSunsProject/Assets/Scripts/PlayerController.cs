@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform headPos;
 
     [Header("----- Player Stats -----")]
     [Range(1, 20)][SerializeField] float playerSpeed;
@@ -78,8 +79,8 @@ public class PlayerController : MonoBehaviour, IDamage
                 hitBeat = false;
             }
 
-            MovePlayer();
             ShootInput();
+            MovePlayer();
             DashInput();
             SlamInput(); 
         }
@@ -136,6 +137,8 @@ public class PlayerController : MonoBehaviour, IDamage
             move = Vector3.zero;
         }
 
+        CheckHeadHit();
+
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         playerVelocity.x *= frictionForce;
@@ -149,6 +152,15 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    void CheckHeadHit()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.2f))
+        {
+            playerVelocity.y = -playerVelocity.y;
+        }
     }
 
     void ShootInput()

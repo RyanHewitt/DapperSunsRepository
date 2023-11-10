@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Restart()
     {
         SpawnPlayer();
+        playerVelocity = Vector3.zero;
     }
 
     void MovePlayer()

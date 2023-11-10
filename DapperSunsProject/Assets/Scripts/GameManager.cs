@@ -29,12 +29,12 @@ public class GameManager : MonoBehaviour
     int lastSampledTime;
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
+    GameObject playerSpawn;
 
     public delegate void BeatEvent();
 
     [Header("----- Public -----")]
     public GameObject player;
-    public GameObject playerSpawn;
 
     public bool isPaused;
     public bool playerDead;

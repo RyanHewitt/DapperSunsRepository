@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSound;
 
-    Vector3 startPos;
+    Transform startPos;
     int startHP;
 
     Vector3 move;
@@ -53,11 +53,11 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         GameManager.instance.OnRestartEvent += Restart;
 
-        startPos = GameManager.instance.playerSpawn.transform.position;
+        startPos = GameManager.instance.GetPlayerSpawn().transform;
         startHP = HP;
 
         GameManager.instance.playerDead = false;
-        spawnPlayer();
+        SpawnPlayer();
     }
 
     void Update()
@@ -87,11 +87,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Restart()
     {
-        controller.enabled = false;
-        transform.position = startPos;
-        controller.enabled = true;
-
-        HP = startHP;
+        SpawnPlayer();
     }
 
     void MovePlayer()
@@ -218,13 +214,12 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    public void spawnPlayer()
+    public void SpawnPlayer()
     {
         controller.enabled = false;
 
-        GameObject spawn = GameManager.instance.GetPlayerSpawn();
-        transform.position = spawn.transform.position;
-        transform.rotation = spawn.transform .rotation;
+        transform.position = startPos.position;
+        transform.rotation = startPos.rotation;
 
         controller.enabled = true;
 

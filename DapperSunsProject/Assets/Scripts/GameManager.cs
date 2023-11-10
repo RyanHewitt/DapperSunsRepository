@@ -118,7 +118,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        AudioManager.instance.pauseUnpauseAudio();
+        //AudioManager.instance.pauseUnpauseAudio();
+        AudioManager.instance.audioSource.Pause();
     }
 
     public void StateUnpause()
@@ -127,7 +128,8 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScaleOg;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        AudioManager.instance.pauseUnpauseAudio();
+        //AudioManager.instance.pauseUnpauseAudio();
+        AudioManager.instance.audioSource.UnPause();
     }
 
     public void PopupPause()
@@ -166,7 +168,8 @@ public class GameManager : MonoBehaviour
 
     public void PopupLose()
     {
-        StatePause();
+        //StatePause();
+        isPaused = true;
         menuStack.Push(menuLose);
         menuStack.Peek().SetActive(true);
     }
@@ -227,7 +230,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckTimer()
     {
-        if (isCountingTimer)
+        if (!isPaused && isCountingTimer)
         {
             elapsedTime += Time.deltaTime;
 

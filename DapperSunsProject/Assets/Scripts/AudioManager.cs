@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     public AudioSource audioSource;
+    public AudioLowPassFilter lowPassFilter;
 
     public bool isPlaying;
 
@@ -16,14 +17,14 @@ public class AudioManager : MonoBehaviour
         isPlaying = false;
     }
 
-    public void playAudio(AudioClip input) // Loops
+    public void playAudio(AudioClip input)
     {
         audioSource.clip = input;
         audioSource.Play();
         isPlaying = true;
     }
 
-    public void playOnce(AudioClip input) // No loop
+    public void playOnce(AudioClip input)
     {
         audioSource.PlayOneShot(input);
     }
@@ -43,5 +44,10 @@ public class AudioManager : MonoBehaviour
                 isPlaying = !isPlaying;
             } 
         }
+    }
+
+    public void Muffle()
+    {
+        //lowPassFilter.cutoffFrequency
     }
 }

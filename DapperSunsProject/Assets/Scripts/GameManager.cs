@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text timerText;
-    [SerializeField] GameObject SpeedLines;
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuQuit;
+    [SerializeField] GameObject SpeedLines;
+    [SerializeField] TMP_Text timerText;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -30,12 +30,13 @@ public class GameManager : MonoBehaviour
 
     float timeScaleOg;
 
+    Stack<GameObject> menuStack = new Stack<GameObject>();
+
     public delegate void BeatEvent();
 
     [Header("----- Public -----")]
     public GameObject player;
     public GameObject playerSpawn;
-    public GameObject menuActive;
 
     public bool isPaused;
     public bool playerDead;
@@ -63,16 +64,13 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuActive == menuPause)
+            if (menuStack.Count > 0)
             {
-                stateUnpause();
-                return;
+                Back();
             }
-            if (menuActive == null)
+            else if (SceneManager.GetActiveScene().name != "MainMenu")
             {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(isPaused);
+                PopupPause();
             }
         }
 
@@ -115,7 +113,7 @@ public class GameManager : MonoBehaviour
         return playerSpawn;
     }
 
-    public void statePause()
+    public void StatePause()
     {
         isPaused = !isPaused;
         Time.timeScale = 0f;
@@ -124,74 +122,105 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.pauseUnpauseAudio();
     }
 
-    public void stateUnpause()
+    public void StateUnpause()
     {
         isPaused = !isPaused;
         Time.timeScale = timeScaleOg;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
+        menuStack.Clear();
         AudioManager.instance.pauseUnpauseAudio();
     }
 
-    public void popupOptions()
+    public void PopupPause()
     {
-        if(menuActive != null)
+        StatePause();
+        menuStack.Push(menuPause);
+        menuStack.Peek().SetActive(true);
+    }
+
+    public void PopupOptions()
+    {
+        if (menuStack.Count > 0)
         {
-            menuActive.SetActive(false);
+            menuStack.Peek().SetActive(false); 
         }
-        menuActive = menuOptions;
-        menuActive.SetActive(true);
+        menuStack.Push(menuOptions);
+        menuStack.Peek().SetActive(true);
     }
     
-    public void popupControls()
+    public void PopupControls()
     {
-        if (menuActive != null)
+        if (menuStack.Count > 0)
         {
-            menuActive.SetActive(false);
+            menuStack.Peek().SetActive(false);
         }
-        menuActive = menuControls;
-        menuActive.SetActive(true);
+        menuStack.Push(menuControls);
+        menuStack.Peek().SetActive(true);
     }
 
-    public void BackButtonOptions()
+    public void PopupWin()
     {
-        if (menuActive != null)
-        {
-            menuActive.SetActive(false);
-        }
-        menuActive = menuPause;
-        menuActive.SetActive(true);
-    }
-    
-    public void BackButtonControls()
-    {
-        if (menuActive != null)
-        {
-            menuActive.SetActive(false);
-        }
-        menuActive = menuOptions;
-        menuActive.SetActive(true);
-    }
-    public void BackButtonMenu()
-    {
-        menuActive.SetActive(false);
-        menuActive = null;
+        StatePause();
+        menuStack.Push(menuWin);
+        menuStack.Peek().SetActive(true);
     }
 
-    public void popupWin()
+    public void PopupLose()
     {
-        statePause();
-        menuActive = menuWin;
-        menuActive.SetActive(true);
+        StatePause();
+        menuStack.Push(menuLose);
+        menuStack.Peek().SetActive(true);
     }
 
-    public void popupLose()
+    public void PopupQuit()
     {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(menuQuit);
+        menuStack.Peek().SetActive(true);
+    }
+
+    public void Back()
+    {
+        menuStack.Peek().SetActive(false);
+        menuStack.Pop();
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(true);
+        }
+        else if (isPaused)
+        {
+            StateUnpause();
+        }
+    }
+
+    public void Restart()
+    {
+        elapsedTime = 0;
+        playerDead = false;
+        if (OnRestartEvent != null)
+        {
+            OnRestartEvent();
+        }
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+    }
+
+    public void ToMainMenu()
+    {
+        menuStack.Clear();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void AppQuit()
+    {
+        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
     }
 
     public void CheckTimer()
@@ -216,34 +245,6 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0;
     }
 
-    public void Restart()
-    {
-        elapsedTime = 0;
-        playerDead = false;
-        if (OnRestartEvent != null)
-        {
-            OnRestartEvent();
-        }
-        stateUnpause();
-    }
-    public void QuitMenu()
-    {
-        if (menuActive != null)
-        {
-            menuActive.SetActive(false);
-        }
-        menuActive = menuQuit;
-        menuActive.SetActive(true);
-    }
-
-    public void MainMenuQuit()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
-    public void AppQuit()
-    {
-        Application.Quit();
-    }
     public void SyncBeats(float _bpm)
     {
         bpm = _bpm;

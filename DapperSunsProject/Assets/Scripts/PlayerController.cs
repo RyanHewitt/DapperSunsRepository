@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (HP <= 0)
         {
             GameManager.instance.playerDead = true;
-            GameManager.instance.popupLose();
+            GameManager.instance.PopupLose();
         }
     }
 

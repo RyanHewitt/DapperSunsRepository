@@ -5,11 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    public void Resume()
-    {
-        GameManager.instance.stateUnpause();
-    }
-
     public void Restart()
     {
         GameManager.instance.Restart();
@@ -17,45 +12,37 @@ public class ButtonFunctions : MonoBehaviour
 
     public void Options()
     {
-        GameManager.instance.popupOptions();
+        GameManager.instance.PopupOptions();
     }
 
     public void Controls()
     {
-        GameManager.instance.popupControls();
+        GameManager.instance.PopupControls();
     }
 
-    public void BackOptions()
+    public void Back()
     {
-        GameManager.instance.BackButtonOptions();
-    }
-
-    public void BackControls()
-    {
-        GameManager.instance.BackButtonControls();
-    }
-    public void BackMenu()
-    {
-        GameManager.instance.BackButtonMenu();
+        GameManager.instance.Back();
     }
 
     public void Quit()
     {
-        GameManager.instance.QuitMenu();
+        GameManager.instance.PopupQuit();
     }
 
-    public void MainMenu()
-    {
-        GameManager.instance.MainMenuQuit();
-    }
     public void GameQuit()
     {
         GameManager.instance.AppQuit();
     }
 
+    public void ToMainMenu()
+    {
+        GameManager.instance.ToMainMenu();
+    }
+
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        GameManager.instance.stateUnpause();
+        GameManager.instance.StateUnpause();
     }
 }

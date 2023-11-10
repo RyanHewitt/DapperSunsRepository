@@ -13,7 +13,7 @@ public class LevelEndTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            GameManager.instance.popupWin();
+            GameManager.instance.PopupWin();
         }
     }
 }

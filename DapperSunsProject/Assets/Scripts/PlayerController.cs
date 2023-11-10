@@ -147,10 +147,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
 
-        if (!groundedPlayer)
-        {
-            playerVelocity.y += gravityValue * Time.deltaTime;
-        }
+        //if (!groundedPlayer)
+        //{
+        //    playerVelocity.y += gravityValue * Time.deltaTime;
+        //}
 
         controller.Move(playerVelocity * Time.deltaTime);
     }
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void CheckHeadHit()
     {
         RaycastHit hit;
-        if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.2f))
+        if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.4f))
         {
             playerVelocity.y = -playerVelocity.y;
         }
@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
 
        float startTime = Time.time;
-       Vector3 dashDirection = move; // Assuming move is the direction you want to dash in.
+       Vector3 dashDirection = transform.forward; // Assuming move is the direction you want to dash in.
 
        // Disable gravity by storing the current playerVelocity.y
        float originalYVelocity = playerVelocity.y;

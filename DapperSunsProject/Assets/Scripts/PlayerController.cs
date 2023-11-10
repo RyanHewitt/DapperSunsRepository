@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamage
     bool hitPenalty = false;
     bool slamming = false;
     int HP = 1;
+    float originalGravity;
 
     void Start()
     {
@@ -59,6 +60,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         GameManager.instance.playerDead = false;
         SpawnPlayer();
+
+        originalGravity = gravityValue;
     }
 
     void Update()
@@ -90,6 +93,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         SpawnPlayer();
         playerVelocity = Vector3.zero;
+        slamming = false;
+        gravityValue = originalGravity;
     }
 
     void MovePlayer()
@@ -138,19 +143,17 @@ public class PlayerController : MonoBehaviour, IDamage
             move = Vector3.zero;
         }
 
-        CheckHeadHit();
-
-        playerVelocity.y += gravityValue * Time.deltaTime;
-
         playerVelocity.x *= frictionForce;
         playerVelocity.z *= frictionForce;
 
         controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
 
-        //if (!groundedPlayer)
-        //{
-        //    playerVelocity.y += gravityValue * Time.deltaTime;
-        //}
+        CheckHeadHit();
+
+        if (!groundedPlayer)
+        {
+            playerVelocity.y += gravityValue * Time.deltaTime;
+        }
 
         controller.Move(playerVelocity * Time.deltaTime);
     }
@@ -160,7 +163,10 @@ public class PlayerController : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.4f))
         {
-            playerVelocity.y = -playerVelocity.y;
+            if (hit.transform.position != transform.position)
+            {
+                playerVelocity.y = -playerVelocity.y; 
+            }
         }
     }
 
@@ -307,7 +313,6 @@ public class PlayerController : MonoBehaviour, IDamage
         slamming = true;
 
         // Disable player horizontal control and gravity influence here if desired
-        float originalGravity = gravityValue;
         gravityValue = 0;
 
         // Apply the ground pound speed directly downwards

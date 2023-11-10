@@ -6,6 +6,7 @@ public class BoopGun : MonoBehaviour
 {
     [SerializeField] GameObject gunScreen;
     [SerializeField] GameObject gunRing;
+    [SerializeField] GameObject gunSpeaker;
     [SerializeField] float pulseSpeed;
 
     [SerializeField] Color offColor;
@@ -33,16 +34,22 @@ public class BoopGun : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime * pulseSpeed;
+
         currentColor = Color.Lerp(currentColor, offColor, elapsedTime);
         ringMat.color = currentColor;
         ringMat.SetColor("_EmissionColor", currentColor);
+
+        gunSpeaker.transform.localScale = Vector3.Lerp(gunSpeaker.transform.localScale, Vector3.one, elapsedTime);
     }
 
     void DoBeat()
     {
+        elapsedTime = 0;
+
         currentColor = onColor;
         ringMat.color = currentColor;
         ringMat.SetColor("_EmissionColor", currentColor);
-        elapsedTime = 0;
+
+        gunSpeaker.transform.localScale *= 1.1f;
     }
 }

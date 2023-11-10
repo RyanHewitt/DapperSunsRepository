@@ -21,6 +21,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [SerializeField] protected GameObject bullet;
 
     protected Vector3 startPos;
+    protected Quaternion startRot;
     protected Vector3 playerDirection;
     protected int startHP;
     protected bool playerInRange;
@@ -42,6 +43,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         baseColor = outlineMat.color;
 
         startPos = transform.position;
+        startRot = transform.rotation;
         startHP = HP;
     }
 
@@ -61,6 +63,9 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     protected virtual void Restart()
     {
         transform.position = startPos;
+        transform.rotation = startRot;
+        rb.velocity = Vector3.zero;
+
         HP = startHP;
 
         baseModel.enabled = true;

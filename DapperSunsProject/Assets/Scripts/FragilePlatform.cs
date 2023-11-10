@@ -8,8 +8,9 @@ public class FragilePlatform : MonoBehaviour, IBoop
     [SerializeField] private float _breakTime = 3f;
     [SerializeField] Collider col;
     [SerializeField] Renderer model;
+    [SerializeField] GameObject outline;
 
-    Renderer childModel;
+    int breakCount;
 
     public float breakTime
     {
@@ -19,7 +20,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     void Start()
     {
-        childModel = GetComponentsInChildren<Renderer>()[1];
+        GameManager.instance.OnRestartEvent += Restart;
     }
 
     public void DoBoop(float force)
@@ -29,14 +30,28 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     IEnumerator Break()
     {
+        breakCount++;
         col.enabled = false;
         model.enabled = false;
-        childModel.enabled = false;
+        outline.SetActive(false);
 
         yield return new WaitForSeconds(breakTime);
 
+        if (breakCount == 1)
+        {
+            Restart();
+            breakCount--;
+        }
+        else
+        {
+            breakCount--;
+        }
+    }
+
+    void Restart()
+    {
         col.enabled = true;
         model.enabled = true;
-        childModel.enabled = true;
+        outline.SetActive(true);
     }
 }

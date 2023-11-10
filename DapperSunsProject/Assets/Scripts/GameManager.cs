@@ -28,8 +28,6 @@ public class GameManager : MonoBehaviour
     float bpm;
     int lastSampledTime;
 
-    float timeScaleOg;
-
     Stack<GameObject> menuStack = new Stack<GameObject>();
 
     public delegate void BeatEvent();
@@ -42,10 +40,11 @@ public class GameManager : MonoBehaviour
     public bool playerDead;
     public bool beatWindow;
 
+    public float timeScaleOg;
+
     void Awake()
     {
         instance = this;
-        timeScaleOg = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerSpawn = GameObject.FindWithTag("Respawn");
     }
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
 
     public void StatePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
@@ -124,11 +123,10 @@ public class GameManager : MonoBehaviour
 
     public void StateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOg;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuStack.Clear();
         AudioManager.instance.pauseUnpauseAudio();
     }
 
@@ -213,7 +211,11 @@ public class GameManager : MonoBehaviour
 
     public void ToMainMenu()
     {
-        menuStack.Clear();
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        StatePause();
         SceneManager.LoadScene("MainMenu");
     }
 

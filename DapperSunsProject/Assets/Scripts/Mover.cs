@@ -19,7 +19,8 @@ public class Mover : MonoBehaviour
     void Start()
     {
         GameManager.instance.OnBeatEvent += DoBeat;
-        
+        GameManager.instance.OnRestartEvent += Restart;
+
         nextIndex = 1;
 
         box.transform.position = positions[nextIndex - 1].transform.position;
@@ -49,5 +50,15 @@ public class Mover : MonoBehaviour
             startPos = endPos;
             endPos = positions[nextIndex].transform.position;
         }
+    }
+
+    void Restart()
+    {
+        nextIndex = 1;
+        elapsedtime = 0;
+
+        box.transform.position = positions[nextIndex - 1].transform.position;
+        startPos = positions[nextIndex - 1].transform.position;
+        endPos = positions[nextIndex].transform.position;
     }
 }

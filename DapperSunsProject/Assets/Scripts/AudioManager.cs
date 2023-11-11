@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
@@ -18,6 +19,19 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.clip = input;
         audioSource.Play();
+    }
+
+    public void Play3D(AudioClip clip, Vector3 pos)
+    {
+        GameObject audioSourceObject = new GameObject("3DAudio");
+        AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
+
+        audioSourceObject.transform.position = pos;
+        audioSource.clip = clip;
+        audioSource.spatialBlend = 1.0f;
+        audioSource.Play();
+
+        Destroy(audioSourceObject, clip.length);
     }
 
     public void playOnce(AudioClip input)

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
+    [SerializeField] int dashCooldown;
 
     [Header("----- Ground Pound Stats -----")]
     [SerializeField] float slamSpeed;
@@ -49,11 +50,13 @@ public class PlayerController : MonoBehaviour, IDamage
     bool hitPenalty = false;
     bool slamming = false;
     int HP = 1;
+    int dashCounter;
     float originalGravity;
 
     void Start()
     {
         GameManager.instance.OnRestartEvent += Restart;
+        GameManager.instance.OnBeatEvent += DoBeat;
 
         startPos = GameManager.instance.GetPlayerSpawn().transform;
         startHP = HP;
@@ -70,6 +73,14 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (GameManager.instance.beatWindow)
             {
+                if (!canBeat) // First beat in window
+                {
+                    if (dashCounter > 0)
+                    {
+                        dashCounter--;
+                    }
+                }
+
                 canBeat = true;
             }
             else
@@ -245,33 +256,13 @@ public class PlayerController : MonoBehaviour, IDamage
         HP = 1;
     }
 
-    IEnumerator DoDash()
-    {
-
-       float startTime = Time.time;
-       Vector3 dashDirection = transform.forward; // Assuming move is the direction you want to dash in.
-
-       // Disable gravity by storing the current playerVelocity.y
-       float originalYVelocity = playerVelocity.y;
-       playerVelocity.y = 0;
-
-       while (Time.time < startTime + dashDuration)
-       {
-           controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
-           yield return null;
-       }
-
-       // Re-enable gravity
-       playerVelocity.y = originalYVelocity;
-    }
-
     void DashInput()
     {
         if (Input.GetButtonDown("Dash") && Input.GetAxis("Vertical") > 0.1f)
         {
             if (!hitPenalty)
             {
-                if (canBeat && !hitBeat)
+                if (canBeat && !hitBeat && dashCounter <= 0)
                 {
                     hitBeat = true;
                     AudioManager.instance.playOnce(dashSFX);
@@ -284,6 +275,20 @@ public class PlayerController : MonoBehaviour, IDamage
                     BoopPenalty();
                 }
             }
+        }
+    }
+
+    IEnumerator DoDash()
+    {
+        float startTime = Time.time;
+        Vector3 dashDirection = transform.forward;
+        playerVelocity.y = 0;
+        dashCounter = dashCooldown;           
+
+        while (Time.time < startTime + dashDuration)
+        {
+            controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
@@ -348,5 +353,10 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
             }
         }
+    }
+
+    void DoBeat()
+    {
+        
     }
 }

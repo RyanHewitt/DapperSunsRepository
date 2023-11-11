@@ -10,6 +10,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [SerializeField] protected GameObject outline;
     [SerializeField] protected Transform shootPos;
     [SerializeField] protected Color flashColor;
+    [SerializeField] protected AudioClip ShootAudio;
 
     [Header("---Stats---")]
     [SerializeField] protected int HP;

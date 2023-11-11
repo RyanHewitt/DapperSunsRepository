@@ -46,7 +46,7 @@ public class Shooter : EnemyAi
 
     protected override void BeatAction()
     {
-        if (playerInRange)
+        if (playerInRange && !GameManager.instance.playerDead)
         {
             AudioManager.instance.Play3D(ShootAudio, transform.position);
             Instantiate(bullet, shootPos.position, transform.rotation);

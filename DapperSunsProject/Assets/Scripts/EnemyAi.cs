@@ -125,7 +125,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void BeatAction()
     {
-
+        
     }
 
     protected virtual void Rotate()

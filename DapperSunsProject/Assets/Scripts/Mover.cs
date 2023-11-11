@@ -8,43 +8,47 @@ using UnityEngine.UIElements;
 public class Mover : MonoBehaviour
 {
     [SerializeField] GameObject box;
-    [SerializeField] GameObject Pos1;
-    [SerializeField] GameObject Pos2;
+    [SerializeField] GameObject[] positions;
     [SerializeField] float speed;
     [SerializeField] float moveAmount;
 
+    int nextIndex;
     float elapsedtime;
     Vector3 startPos;
     Vector3 endPos;
 
-    // Start is called before the first frame update
     void Start()
     {
-        GameManager.instance.OnBeatEvent += doBeat;
-        box.transform.position = Pos1.transform.position;
-        startPos = Pos1.transform.position;
-        endPos = Pos2.transform.position;
+        GameManager.instance.OnBeatEvent += DoBeat;
+        
+        nextIndex = 1;
+
+        box.transform.position = positions[nextIndex - 1].transform.position;
+        startPos = positions[nextIndex - 1].transform.position;
+        endPos = positions[nextIndex].transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
-
+        elapsedtime += speed * Time.deltaTime;
+        box.transform.position = Vector3.Lerp(startPos, endPos, elapsedtime);
     }
 
-    void doBeat()
+    void DoBeat()
     {
-        elapsedtime += moveAmount;
-        if (elapsedtime < 1)
+        elapsedtime = 0;
+
+        if (nextIndex + 1 >= positions.Length)
         {
-            box.transform.position = Vector3.Lerp(startPos, endPos, elapsedtime);
+            nextIndex = 0;
+            startPos = endPos;
+            endPos = positions[nextIndex].transform.position;
         }
         else
         {
-            elapsedtime = 0;
-            Vector3 temp = startPos;
+            nextIndex++;
             startPos = endPos;
-            endPos = temp;
+            endPos = positions[nextIndex].transform.position;
         }
     }
 }

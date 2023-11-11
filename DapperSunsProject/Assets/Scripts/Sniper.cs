@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sniper : MonoBehaviour
+public class Sniper : Shooter
 {
     public LineRenderer laserLineRenderer;
     public Transform _sniper;
 
-    void Update()
+    protected void Update()
     {
+        base.Update();
         Vector3 aimDirection = _sniper.forward;
 
         Ray ray = new Ray(transform.position, aimDirection);

@@ -198,13 +198,13 @@ public class PlayerController : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))
         {
-            Vector3 launchDirection = hit.normal;
-            playerVelocity.x += launchDirection.x * boopForce * 2;
-            playerVelocity.y += launchDirection.y * boopForce;
-            playerVelocity.z += launchDirection.z * boopForce * 2;
-
-            if (!hit.collider.isTrigger)
+            if (!hit.collider.isTrigger && hit.transform.position != transform.position)
             {
+                Vector3 launchDirection = hit.normal;
+                playerVelocity.x += launchDirection.x * boopForce * 2;
+                playerVelocity.y += launchDirection.y * boopForce;
+                playerVelocity.z += launchDirection.z * boopForce * 2;
+
                 IBoop boopable = hit.collider.GetComponent<IBoop>();
 
                 if (hit.transform != transform && boopable != null)

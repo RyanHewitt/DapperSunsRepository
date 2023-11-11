@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6667264523950814579}
+  - component: {fileID: 1778775657570366990}
   - component: {fileID: 797694241855974136}
   - component: {fileID: 3373279052901072553}
-  - component: {fileID: 1778775657570366990}
   - component: {fileID: 7507596039001454347}
   m_Layer: 0
   m_Name: BoopBullet
@@ -35,6 +35,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1778775657570366990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074908838442069400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03de63a5bd23d9c40a0504c6164af485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 7507596039001454347}
+  model: {fileID: 3373279052901072553}
+  bulletSpeed: 20
+  life: 0.5
+  scaleFactor: 5
+  fadeSpeed: 2
 --- !u!33 &797694241855974136
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85,21 +103,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1778775657570366990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8074908838442069400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03de63a5bd23d9c40a0504c6164af485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 7507596039001454347}
-  bulletSpeed: 50
-  life: 0.5
 --- !u!54 &7507596039001454347
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -48,6 +48,7 @@ public class Shooter : EnemyAi
     {
         if (playerInRange)
         {
+            AudioManager.instance.Play3D(ShootAudio, transform.position);
             Instantiate(bullet, shootPos.position, transform.rotation);
         }
     }

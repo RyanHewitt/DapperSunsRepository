@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sniper : MonoBehaviour
+public class Sniper : Shooter
 {
     public LineRenderer laserLineRenderer;
-    public Transform _sniper;
-
-    void Update()
+    public Transform LazerPosition;
+    [SerializeField] int stepsOriginal = 3;
+    private int steps;
+    protected override void Start()
     {
-        Vector3 aimDirection = _sniper.forward;
+        base.Start();
+        steps = stepsOriginal;
+    }
+    protected override void Update()
+    {
+        base.Update();
+
+        Vector3 aimDirection = LazerPosition.forward;
 
         Ray ray = new Ray(transform.position, aimDirection);
         RaycastHit hit;
@@ -27,6 +35,20 @@ public class Sniper : MonoBehaviour
         {
             // Disable the laser if it doesn't hit anything.
             laserLineRenderer.enabled = false;
+        }
+    }
+    protected override void Restart()
+    {
+        base.Restart();
+        steps = stepsOriginal;
+    }
+    protected override void BeatAction()
+    {
+        steps--;
+        if(steps <= 0)
+        {
+            base.BeatAction();
+            steps = stepsOriginal;
         }
     }
 }

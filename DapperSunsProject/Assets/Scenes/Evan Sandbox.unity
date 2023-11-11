@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1899882620006760436, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.404625
+      value: -19.93
       objectReference: {fileID: 0}
     - target: {fileID: 1899882620006760436, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: m_LocalPosition.y
@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1899882620006760436, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.297691
+      value: -18.3
       objectReference: {fileID: 0}
     - target: {fileID: 1899882620006760436, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: m_LocalRotation.w
@@ -174,10 +174,6 @@ PrefabInstance:
     - target: {fileID: 5953315364160881558, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
       propertyPath: m_Name
       value: BasicShooter
-      objectReference: {fileID: 0}
-    - target: {fileID: 8919849123410621664, guid: 804a175e397e7dc4bb82a21899a34b61, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1926,6 +1922,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   shootPos: {fileID: 2823136552053877121}
   flashColor: {r: 1, g: 0, b: 0, a: 0}
+  ShootAudio: {fileID: 0}
   HP: 2
   PlayerFaceSpeed: 5
   maxVerticalAngle: 0

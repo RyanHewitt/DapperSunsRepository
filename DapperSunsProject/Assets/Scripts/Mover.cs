@@ -11,6 +11,7 @@ public class Mover : MonoBehaviour
     [SerializeField] GameObject Pos1;
     [SerializeField] GameObject Pos2;
     [SerializeField] float speed;
+    [SerializeField] float moveAmount;
 
     float elapsedtime;
     Vector3 startPos;
@@ -19,6 +20,7 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameManager.instance.OnBeatEvent += doBeat;
         box.transform.position = Pos1.transform.position;
         startPos = Pos1.transform.position;
         endPos = Pos2.transform.position;
@@ -27,7 +29,12 @@ public class Mover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        elapsedtime += Time.deltaTime * speed;
+
+    }
+
+    void doBeat()
+    {
+        elapsedtime += moveAmount;
         if (elapsedtime < 1)
         {
             box.transform.position = Vector3.Lerp(startPos, endPos, elapsedtime);

@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSound;
+    [SerializeField] AudioClip Death;
 
     Transform startPos;
     int startHP;
@@ -236,6 +237,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        AudioManager.instance.playOnce(Death);
 
         if (HP <= 0)
         {

@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip blastPenaltySFX;
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
-    [SerializeField] AudioClip slamSound;
-    [SerializeField] AudioClip Death;
+    [SerializeField] AudioClip slamSFX;
+    [SerializeField] AudioClip deathSFX;
 
     Transform startPos;
 
@@ -236,10 +236,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         HP -= amount;
 
-        AudioManager.instance.playOnce(Death);
-
         if (HP <= 0)
         {
+            AudioManager.instance.audioSource.PlayOneShot(deathSFX);
             GameManager.instance.playerDead = true;
             GameManager.instance.PopupLose();
         }
@@ -302,7 +301,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (canBeat && !hitBeat)
                 {
                     hitBeat = true;
-                    AudioManager.instance.playOnce(slamSound);
+                    AudioManager.instance.playOnce(slamSFX);
                     StartCoroutine(DoSlam());
                 }
                 else

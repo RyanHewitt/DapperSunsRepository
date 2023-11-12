@@ -31,6 +31,8 @@ public class Shooter : EnemyAi
 
     protected override IEnumerator Death()
     {
+        yield return base.Death();
+
         outlineMat.color = flashColor;
         outlineMat.SetColor("_EmissionColor", flashColor);
 

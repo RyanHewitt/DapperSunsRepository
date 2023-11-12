@@ -10,7 +10,6 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [SerializeField] protected GameObject outline;
     [SerializeField] protected Transform shootPos;
     [SerializeField] protected Color flashColor;
-    [SerializeField] protected AudioClip ShootAudio;
 
     [Header("---Stats---")]
     [SerializeField] protected int HP;
@@ -20,6 +19,10 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     [Header("---Gun stats---")]
     [SerializeField] protected GameObject bullet;
+
+    [Header("---Audio---")]
+    [SerializeField] protected AudioClip ShootAudio;
+    [SerializeField] protected AudioClip deathAudio;
 
     protected Vector3 startPos;
     protected Quaternion startRot;
@@ -114,6 +117,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual IEnumerator Death()
     {
+        AudioManager.instance.Play3D(deathAudio, transform.position);
         yield break;
     }
 

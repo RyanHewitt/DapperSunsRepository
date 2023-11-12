@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip Death;
 
     Transform startPos;
-    int startHP;
 
     Vector3 move;
     Vector3 playerVelocity;
@@ -60,7 +59,6 @@ public class PlayerController : MonoBehaviour, IDamage
         GameManager.instance.OnBeatEvent += DoBeat;
 
         startPos = GameManager.instance.GetPlayerSpawn().transform;
-        startHP = HP;
 
         GameManager.instance.playerDead = false;
         SpawnPlayer();

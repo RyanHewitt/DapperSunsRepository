@@ -92,7 +92,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d35bfd6af951a0e479874c836106c24a, type: 2}
+  - {fileID: 2100000, guid: 9881b96499899754e9c9e484fdd97747, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -680,6 +680,7 @@ MonoBehaviour:
   jumpSFX: {fileID: 8300000, guid: 298f834f7f478fc408c8aa6cb07d4619, type: 3}
   dashSFX: {fileID: 8300000, guid: 8859dadd25f673040a369826333442a9, type: 3}
   slamSound: {fileID: 8300000, guid: b1cf48bb30962904e8f53cdb21d0ef61, type: 3}
+  Death: {fileID: 8300000, guid: 36abdebbdde211f41bb1e69a7a278914, type: 3}
 --- !u!143 &5283020408901821959
 CharacterController:
   m_ObjectHideFlags: 0

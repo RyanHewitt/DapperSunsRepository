@@ -50,7 +50,6 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void Update()
     {
-
         if (playerInRange)
         {
             playerDirection = GameManager.instance.player.transform.position - transform.position;
@@ -77,7 +76,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         playerInRange = false;
     }
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -85,7 +84,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -125,12 +124,12 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void BeatAction()
     {
-        
+
     }
 
     protected virtual void Rotate()
     {
-        
+
     }
 
     public void DoBoop(float force)

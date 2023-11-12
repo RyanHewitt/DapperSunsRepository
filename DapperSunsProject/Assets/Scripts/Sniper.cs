@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Sniper : Shooter
 {
+    [SerializeField] int stepsOriginal = 3;
+
+    private int steps;
+
     public LineRenderer laserLineRenderer;
     public Transform LazerPosition;
-    [SerializeField] int stepsOriginal = 3;
-    private int steps;
+
     protected override void Start()
     {
         base.Start();
         steps = stepsOriginal;
+        laserLineRenderer.enabled = true;
     }
+
     protected override void Update()
     {
         base.Update();
@@ -26,29 +31,50 @@ public class Sniper : Shooter
         if (Physics.Raycast(ray, out hit))
         {
             // Enable the laser and set its positions.
-            laserLineRenderer.enabled = true;
             laserLineRenderer.SetPosition(0, transform.position);
             laserLineRenderer.SetPosition(1, hit.point);
-            //Debug.Log("Ray hit: " + hit.collider.gameObject.name);
         }
         else
         {
-            // Disable the laser if it doesn't hit anything.
-            laserLineRenderer.enabled = false;
+            laserLineRenderer.SetPosition(0, transform.position);
+            laserLineRenderer.SetPosition(1, transform.position + transform.forward * 9999);
         }
     }
+
     protected override void Restart()
     {
         base.Restart();
         steps = stepsOriginal;
+        laserLineRenderer.enabled = true;
     }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            steps = stepsOriginal;
+        }
+        base.OnTriggerEnter(other);
+    }
+
+    protected override IEnumerator Death()
+    {
+        laserLineRenderer.enabled = false;
+        return base.Death();
+    }
+
     protected override void BeatAction()
     {
-        steps--;
-        if(steps <= 0)
+        if(playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            base.BeatAction();
-            steps = stepsOriginal;
+            steps--;
+            if (steps <= 0)
+            {
+                steps = stepsOriginal;
+
+                AudioManager.instance.Play3D(ShootAudio, transform.position);
+                Instantiate(bullet, shootPos.position, transform.rotation);
+            }
         }
     }
 }

@@ -220,12 +220,12 @@ MonoBehaviour:
   enemyCol: {fileID: 8919849123410621664}
   outline: {fileID: 5374043851085644285}
   shootPos: {fileID: 4101349549511556180}
-  flashColor: {r: 1, g: 0, b: 0, a: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
   ShootAudio: {fileID: 8300000, guid: 4c39ad5b144ed7a478ac191515e29778, type: 3}
   HP: 3
-  PlayerFaceSpeed: 5
+  PlayerFaceSpeed: 10
   maxVerticalAngle: 0
-  boopMultiplier: 5
+  boopMultiplier: 2
   bullet: {fileID: 5226062936138798103, guid: 9b783d749124b4846b75eb87eacda02e, type: 3}
   laserLineRenderer: {fileID: 4511426732849130356}
   LazerPosition: {fileID: 2122871370101012084}

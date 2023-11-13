@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [SerializeField] int sensitivity;
+    [Range(100, 2500)][SerializeField] int sensitivity;
     [SerializeField] int lockVertMin;
     [SerializeField] int lockVertMax;
 
@@ -42,7 +42,7 @@ public class cameraController : MonoBehaviour
             transform.localRotation = Quaternion.Euler(xRot, 0, 0);
 
             // rotate the player on the Y-axis
-            transform.parent.Rotate(Vector3.up * mouseX); 
+            transform.parent.Rotate(Vector3.up * mouseX);
         }
     }
 }

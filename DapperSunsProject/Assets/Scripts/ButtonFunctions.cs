@@ -40,6 +40,10 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.ToMainMenu();
     }
 
+    public void SensitivityMenu()
+    {
+        GameManager.instance.Sensitivity();
+    }
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

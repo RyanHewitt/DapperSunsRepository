@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuQuit;
     [SerializeField] GameObject SpeedLines;
     [SerializeField] TMP_Text timerText;
+    [SerializeField] GameObject menuSensitivity;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -219,6 +220,15 @@ public class GameManager : MonoBehaviour
         }
         StatePause();
         SceneManager.LoadScene("MainMenu");
+    }
+    public void Sensitivity()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(menuSensitivity);
+        menuStack.Peek().SetActive(true);
     }
 
     public void AppQuit()

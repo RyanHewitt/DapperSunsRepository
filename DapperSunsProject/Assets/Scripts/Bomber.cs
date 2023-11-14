@@ -113,7 +113,7 @@ public class Bomber : EnemyAi
     void StartExplosionCountdown()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-        if (distanceToPlayer <= 2.0f) // Check if still close to the player
+        if (distanceToPlayer <= explosionRadius) // Check if still close to the player
         {
             Explode();
         }

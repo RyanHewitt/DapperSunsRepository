@@ -5,9 +5,12 @@ using UnityEngine;
 public class Bomber : EnemyAi
 {
     [Header("---Bomber Stats---")]
-    public float detectionRadius = 5.0f; // Radius to detect the player
-    public float moveSpeed = 3.0f;       // Speed at which the bomber moves towards the player
-    public int explosionDamage = 50;     // Damage inflicted by the explosion
+    [SerializeField] float explosionRadius = 5.0f; // Radius to detect the player
+    [SerializeField] float moveSpeed = 3.0f;       // Speed at which the bomber moves towards the player
+    [SerializeField] int explosionDamage = 50;     // Damage inflicted by the explosion
+
+    bool startCountdown;
+    int counter;
 
     [Header("---Explosion Effects---")]
     public AudioClip explosionAudioClip;
@@ -21,25 +24,19 @@ public class Bomber : EnemyAi
     {
         base.Update();
 
-        if (playerInRange)
+        if (playerInRange && enemyCol.enabled)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-            if (distanceToPlayer <= detectionRadius)
-            {
-                Move();
-
-                // Start the explosion countdown when the player is close enough
-                if (!IsInvoking(nameof(StartExplosionCountdown)))
-                {
-                    Invoke(nameof(StartExplosionCountdown), 3.0f); // Wait for 3 seconds
-                }
-            }
+            startCountdown = true;
         }
+
     }
 
     protected override void Restart()
     {
         base.Restart();
+
+        startCountdown = false;
+        counter = 0;
     }
 
     protected override void Move()
@@ -70,11 +67,19 @@ public class Bomber : EnemyAi
         enemyCol.enabled = false;
 
         Explode();
+       
     }
 
     protected override void BeatAction()
     {
-        
+        if(startCountdown)
+        {
+            counter++;
+            if(counter >= 4)
+            {
+              StartCoroutine(Death());
+            }
+        }
     }
 
     protected override void BoopImpulse(float force, bool slam = false)
@@ -84,41 +89,31 @@ public class Bomber : EnemyAi
 
     void Explode()
     {
-        if (explosionAudioClip != null)
-        {
-            AudioSource.PlayClipAtPoint(explosionAudioClip, transform.position);
-        }
+        AudioManager.instance.Play3D(explosionAudioClip, transform.position);
+    
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 
         // Check if the player is close enough to be damaged and knocked back
-        if (distanceToPlayer <= 1.0f) // Adjust this value based on the desired explosion radius
+        if (distanceToPlayer <= explosionRadius) // Adjust this value based on the desired explosion radius
         {
             // Damage the player
             GameManager.instance.player.GetComponent<IDamage>().takeDamage(explosionDamage);
 
             // Knockback the player
-            Rigidbody playerRb = GameManager.instance.player.GetComponent<Rigidbody>();
-            if (playerRb != null)
-            {
-                Vector3 knockbackDirection = (GameManager.instance.player.transform.position - transform.position).normalized;
-                float knockbackForce = 500; // Adjust this value to set the knockback strength
-                playerRb.AddForce(knockbackDirection * knockbackForce);
-            }
+            
         }
 
 
-        //add Audio
+        startCountdown = false;
+        counter = 0;
 
         //add effects
-
-
-        StartCoroutine(Death());
     }
 
     void StartExplosionCountdown()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-        if (distanceToPlayer <= 1.0f) // Check if still close to the player
+        if (distanceToPlayer <= 2.0f) // Check if still close to the player
         {
             Explode();
         }

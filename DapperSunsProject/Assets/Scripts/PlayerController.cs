@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSFX;
     [SerializeField] AudioClip deathSFX;
+    [SerializeField] AudioClip damageSFX;
 
     Transform startPos;
 
@@ -232,6 +233,12 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        if (damageSFX != null)
+        {
+            AudioManager.instance.Play3D(damageSFX, transform.position);
+        }
+
 
         if (HP <= 0)
         {

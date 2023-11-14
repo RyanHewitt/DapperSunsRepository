@@ -23,7 +23,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
         GameManager.instance.OnRestartEvent += Restart;
     }
 
-    public void DoBoop(float force)
+    public void DoBoop(float force, bool slam = false)
     {
         StartCoroutine(Break());
     }

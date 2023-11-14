@@ -349,7 +349,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
                 if (hit.transform != transform && boopable != null)
                 {
-                    boopable.DoBoop(boopForce);
+                    boopable.DoBoop(boopForce, true);
                     playerVelocity.y += boopForce;
                 }
             }

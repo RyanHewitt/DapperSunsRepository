@@ -52,8 +52,11 @@ public class Heavy : EnemyAi
         }
     }
 
-    protected override void BoopImpulse(float force)
+    protected override void BoopImpulse(float force, bool slam = false)
     {
-        // IF PLAYER IS IN TOP TRIGGER, DAMAGE ENEMY
+        if (slam)
+        {
+            Damage(1);
+        }
     }
 }

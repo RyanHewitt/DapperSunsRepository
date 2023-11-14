@@ -74,7 +74,7 @@ public class Shooter : EnemyAi
         }
     }
 
-    protected override void BoopImpulse(float force)
+    protected override void BoopImpulse(float force, bool slam = false)
     {
         rb.AddForce(-playerDirection * force * boopMultiplier, ForceMode.Impulse);
     }

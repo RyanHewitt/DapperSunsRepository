@@ -13,7 +13,7 @@ public class EndGameTrigger : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
-            
+            GameManager.instance.PopupEndGame();
         }
     }
 }

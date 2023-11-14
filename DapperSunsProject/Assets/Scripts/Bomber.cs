@@ -5,15 +5,16 @@ using UnityEngine;
 public class Bomber : EnemyAi
 {
     [Header("---Bomber Stats---")]
-    [SerializeField] float explosionRadius = 5.0f; // Radius to detect the player
-    [SerializeField] float moveSpeed = 3.0f;       // Speed at which the bomber moves towards the player
-    [SerializeField] int explosionDamage = 50;     // Damage inflicted by the explosion
+    [SerializeField] float explosionRadius; // Radius of explosion
+    [SerializeField] float moveSpeed;       // Speed at which the bomber moves towards the player
+    [SerializeField] int explosionForce;    // Force inflicted by the explosion
 
     bool startCountdown;
     int counter;
 
     [Header("---Explosion Effects---")]
-    public AudioClip explosionAudioClip;
+    [SerializeField] AudioClip explosionSound;
+    [SerializeField] AudioClip countSound;
 
     protected override void Start()
     {
@@ -28,7 +29,6 @@ public class Bomber : EnemyAi
         {
             startCountdown = true;
         }
-
     }
 
     protected override void Restart()
@@ -45,15 +45,32 @@ public class Bomber : EnemyAi
         transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
     }
 
+    protected override void Rotate()
+    {
+        Vector3 targetDirection = playerDirection;
+        if (targetDirection != Vector3.zero)
+        {
+            // Horizontal rotation (side to side)
+            Quaternion horizontalRotation = Quaternion.LookRotation(targetDirection);
+
+            // Vertical rotation (up and down)
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.magnitude) * Mathf.Rad2Deg;
+            angle = Mathf.Clamp(angle, -maxVerticalAngle, maxVerticalAngle);
+
+            Quaternion verticalRotation = Quaternion.Euler(-angle, 0, 0);
+
+            // Combine both rotations
+            transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
+        }
+    }
+
     protected override void Damage(int amount)
     {
         base.Damage(amount);
     }
 
-    protected override IEnumerator Death()
+    IEnumerator Flash()
     {
-        yield return base.Death();
-
         outlineMat.color = flashColor;
         outlineMat.SetColor("_EmissionColor", flashColor);
 
@@ -61,13 +78,19 @@ public class Bomber : EnemyAi
 
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseColor);
+    }
+
+    protected override IEnumerator Death()
+    {
+        yield return base.Death();
+
+        StartCoroutine(Flash());
 
         baseModel.enabled = false;
         outlineModel.enabled = false;
         enemyCol.enabled = false;
 
         Explode();
-       
     }
 
     protected override void BeatAction()
@@ -75,9 +98,12 @@ public class Bomber : EnemyAi
         if(startCountdown)
         {
             counter++;
-            if(counter >= 4)
+            AudioManager.instance.Play3D(countSound, transform.position);
+            StartCoroutine(Flash());
+
+            if (counter >= 4)
             {
-              StartCoroutine(Death());
+                StartCoroutine(Death());
             }
         }
     }
@@ -89,34 +115,17 @@ public class Bomber : EnemyAi
 
     void Explode()
     {
-        AudioManager.instance.Play3D(explosionAudioClip, transform.position);
+        AudioManager.instance.Play3D(explosionSound, transform.position);
     
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 
-        // Check if the player is close enough to be damaged and knocked back
-        if (distanceToPlayer <= explosionRadius) // Adjust this value based on the desired explosion radius
+        // Check if the player is close enough to be knocked back
+        if (distanceToPlayer <= explosionRadius)
         {
-            // Damage the player
-            GameManager.instance.player.GetComponent<IDamage>().takeDamage(explosionDamage);
-
-            // Knockback the player
-            
+            GameManager.instance.playerScript.DoBoop(playerDirection * explosionForce);
         }
-
 
         startCountdown = false;
         counter = 0;
-
-        //add effects
     }
-
-    void StartExplosionCountdown()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-        if (distanceToPlayer <= explosionRadius) // Check if still close to the player
-        {
-            Explode();
-        }
-    }
-
 }

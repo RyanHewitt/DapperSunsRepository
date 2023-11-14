@@ -210,10 +210,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (!hit.collider.isTrigger && hit.transform.position != transform.position)
             {
-                Vector3 launchDirection = hit.normal;
-                playerVelocity.x += launchDirection.x * boopForce * 2;
-                playerVelocity.y += launchDirection.y * boopForce;
-                playerVelocity.z += launchDirection.z * boopForce * 2;
+                DoBoop(hit.normal);
 
                 IBoop boopable = hit.collider.GetComponent<IBoop>();
 
@@ -359,5 +356,12 @@ public class PlayerController : MonoBehaviour, IDamage
     void DoBeat()
     {
         
+    }
+
+    public void DoBoop(Vector3 direction)
+    {
+        playerVelocity.x += direction.x * boopForce * 2;
+        playerVelocity.y += direction.y * boopForce;
+        playerVelocity.z += direction.z * boopForce * 2;
     }
 }

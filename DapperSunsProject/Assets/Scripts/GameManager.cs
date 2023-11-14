@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -36,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     [Header("----- Public -----")]
     public GameObject player;
+    public PlayerController playerScript;
 
     public bool isPaused;
     public bool playerDead;
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Respawn");
     }
 

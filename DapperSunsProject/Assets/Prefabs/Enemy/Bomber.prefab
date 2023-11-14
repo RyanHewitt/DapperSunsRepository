@@ -144,6 +144,10 @@ MonoBehaviour:
   bullet: {fileID: 0}
   ShootAudio: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
   deathAudio: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
+  detectionRadius: 5
+  moveSpeed: 3
+  explosionDamage: 50
+  explosionAudioClip: {fileID: 8300000, guid: 3fc319f390e9efb478bbe50e6f56b640, type: 3}
 --- !u!33 &5823173415196343981
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -38,6 +38,8 @@ public class Spike : MonoBehaviour
         mat = GetComponent<Renderer>().material;
         mat.color = down;
         mat.SetColor("_EmissionColor", down);
+
+        spikeObj.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -72,6 +74,8 @@ public class Spike : MonoBehaviour
                 isUp = false;
                 mat.color = down;
                 mat.SetColor("_EmissionColor", down);
+
+                spikeObj.SetActive(false);
             }
             else
             {
@@ -80,6 +84,8 @@ public class Spike : MonoBehaviour
                 isUp = true;
                 mat.color = up;
                 mat.SetColor("_EmissionColor", up);
+
+                spikeObj.SetActive(true);
             }
         }
     }

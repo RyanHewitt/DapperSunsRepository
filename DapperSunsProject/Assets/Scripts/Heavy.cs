@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Heavy : EnemyAi
 {
+    [SerializeField] Transform[] shootPositions;
+    [SerializeField] int steps;
+
+    int currentStep;
+
     protected override void Start()
     {
         base.Start();
@@ -45,10 +50,19 @@ public class Heavy : EnemyAi
     {
         if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            AudioManager.instance.Play3D(ShootAudio, transform.position);
+            currentStep++;
+            if (steps <= currentStep)
+            {
+                AudioManager.instance.Play3D(ShootAudio, transform.position);
 
-            //Shoot bullets on all four sides of enemy
-            //Instantiate(bullet, shootPos.position, transform.rotation);
+                //Shoot bullets on all four sides of enemy
+                foreach (Transform pos in shootPositions)
+                {
+                    Instantiate(bullet, pos.position, pos.rotation);
+                }
+
+                currentStep = 0;
+            }
         }
     }
 

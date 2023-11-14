@@ -273,6 +273,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         SpeedLines.SetActive(false);
     }
+    public void setSensitivity()
+    {
+        
+    }
 
     public event BeatEvent OnBeatEvent;
     public event BeatEvent OnRestartEvent;

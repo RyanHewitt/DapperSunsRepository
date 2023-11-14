@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] GameObject boopCard;
 
     [Header("----- Audio -----")]
-    [SerializeField] AudioClip blastSFX;
+    [SerializeField] AudioClip boopSFX;
     [SerializeField] AudioClip blastPenaltySFX;
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Boop()
     {
-        AudioManager.instance.playOnce(blastSFX);
+        AudioManager.instance.audioSource.PlayOneShot(boopSFX);
         canJump = false;
 
         RaycastHit hit;
@@ -350,6 +350,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (hit.transform != transform && boopable != null)
                 {
                     boopable.DoBoop(boopForce);
+                    playerVelocity.y += boopForce;
                 }
             }
         }

@@ -95,13 +95,24 @@ public class Bomber : EnemyAi
 
     protected override void BeatAction()
     {
-        if(startCountdown)
+
+        if (startCountdown)
         {
+
+            if (counter == 0)
+            {
+                // Play explosion audio if the clip is assigned
+                if (explosionSound != null)
+                {
+                    AudioManager.instance.Play3D(explosionSound, transform.position);
+                }
+            }
+
             counter++;
             AudioManager.instance.Play3D(countSound, transform.position);
             StartCoroutine(Flash());
 
-            if (counter >= 4)
+            if (counter >= 6)
             {
                 StartCoroutine(Death());
             }

@@ -8,6 +8,7 @@ public class Bomber : EnemyAi
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] float moveSpeed;       // Speed at which the bomber moves towards the player
     [SerializeField] int explosionForce;    // Force inflicted by the explosion
+    [SerializeField] int countdown;
 
     bool startCountdown;
     int counter;
@@ -98,21 +99,11 @@ public class Bomber : EnemyAi
 
         if (startCountdown)
         {
-
-            if (counter == 0)
-            {
-                // Play explosion audio if the clip is assigned
-                if (explosionSound != null)
-                {
-                    AudioManager.instance.Play3D(explosionSound, transform.position);
-                }
-            }
-
             counter++;
             AudioManager.instance.Play3D(countSound, transform.position);
             StartCoroutine(Flash());
 
-            if (counter >= 6)
+            if (counter >= countdown)
             {
                 StartCoroutine(Death());
             }

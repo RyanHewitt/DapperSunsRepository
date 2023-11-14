@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -65,9 +66,13 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuStack.Count > 0)
+            if (menuStack.Count > 0 && menuStack.Peek() != menuWin)
             {
                 Back();
+            }
+            else if (menuStack.Count > 0 && menuStack.Peek() == menuWin)
+            {
+                return;
             }
             else if (SceneManager.GetActiveScene().name != "MainMenu")
             {
@@ -272,10 +277,6 @@ public class GameManager : MonoBehaviour
         SpeedLines.SetActive(true);
         yield return new WaitForSeconds(duration);
         SpeedLines.SetActive(false);
-    }
-    public void setSensitivity()
-    {
-        
     }
 
     public event BeatEvent OnBeatEvent;

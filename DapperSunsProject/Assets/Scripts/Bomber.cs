@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Bomber : EnemyAi
 {
+    [Header("---Bomber Stats---")]
+    [SerializeField] float explosionRadius; // Radius of explosion
+    [SerializeField] float moveSpeed;       // Speed at which the bomber moves towards the player
+    [SerializeField] int explosionForce;    // Force inflicted by the explosion
+
+    bool startCountdown;
+    int counter;
+
+    [Header("---Explosion Effects---")]
+    [SerializeField] AudioClip explosionSound;
+    [SerializeField] AudioClip countSound;
+
     protected override void Start()
     {
         base.Start();
@@ -12,16 +24,44 @@ public class Bomber : EnemyAi
     protected override void Update()
     {
         base.Update();
+
+        if (playerInRange && enemyCol.enabled)
+        {
+            startCountdown = true;
+        }
     }
 
     protected override void Restart()
     {
         base.Restart();
+
+        startCountdown = false;
+        counter = 0;
     }
 
     protected override void Move()
     {
-        // IF PLAYER IN RANGE MOVE TOWARD THEM
+        Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
+        transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+    }
+
+    protected override void Rotate()
+    {
+        Vector3 targetDirection = playerDirection;
+        if (targetDirection != Vector3.zero)
+        {
+            // Horizontal rotation (side to side)
+            Quaternion horizontalRotation = Quaternion.LookRotation(targetDirection);
+
+            // Vertical rotation (up and down)
+            float angle = Mathf.Atan2(targetDirection.y, targetDirection.magnitude) * Mathf.Rad2Deg;
+            angle = Mathf.Clamp(angle, -maxVerticalAngle, maxVerticalAngle);
+
+            Quaternion verticalRotation = Quaternion.Euler(-angle, 0, 0);
+
+            // Combine both rotations
+            transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
+        }
     }
 
     protected override void Damage(int amount)
@@ -29,10 +69,8 @@ public class Bomber : EnemyAi
         base.Damage(amount);
     }
 
-    protected override IEnumerator Death()
+    IEnumerator Flash()
     {
-        yield return base.Death();
-
         outlineMat.color = flashColor;
         outlineMat.SetColor("_EmissionColor", flashColor);
 
@@ -40,6 +78,13 @@ public class Bomber : EnemyAi
 
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseColor);
+    }
+
+    protected override IEnumerator Death()
+    {
+        yield return base.Death();
+
+        StartCoroutine(Flash());
 
         baseModel.enabled = false;
         outlineModel.enabled = false;
@@ -50,7 +95,28 @@ public class Bomber : EnemyAi
 
     protected override void BeatAction()
     {
-        
+
+        if (startCountdown)
+        {
+
+            if (counter == 0)
+            {
+                // Play explosion audio if the clip is assigned
+                if (explosionSound != null)
+                {
+                    AudioManager.instance.Play3D(explosionSound, transform.position);
+                }
+            }
+
+            counter++;
+            AudioManager.instance.Play3D(countSound, transform.position);
+            StartCoroutine(Flash());
+
+            if (counter >= 6)
+            {
+                StartCoroutine(Death());
+            }
+        }
     }
 
     protected override void BoopImpulse(float force, bool slam = false)
@@ -60,6 +126,17 @@ public class Bomber : EnemyAi
 
     void Explode()
     {
+        AudioManager.instance.Play3D(explosionSound, transform.position);
+    
+        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 
+        // Check if the player is close enough to be knocked back
+        if (distanceToPlayer <= explosionRadius)
+        {
+            GameManager.instance.playerScript.DoBoop(playerDirection * explosionForce);
+        }
+
+        startCountdown = false;
+        counter = 0;
     }
 }

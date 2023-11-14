@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSFX;
     [SerializeField] AudioClip deathSFX;
+    [SerializeField] AudioClip damageSFX;
 
     Transform startPos;
 
@@ -210,10 +211,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (!hit.collider.isTrigger && hit.transform.position != transform.position)
             {
-                Vector3 launchDirection = hit.normal;
-                playerVelocity.x += launchDirection.x * boopForce * 2;
-                playerVelocity.y += launchDirection.y * boopForce;
-                playerVelocity.z += launchDirection.z * boopForce * 2;
+                DoBoop(hit.normal);
 
                 IBoop boopable = hit.collider.GetComponent<IBoop>();
 
@@ -235,6 +233,12 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+
+        if (damageSFX != null)
+        {
+            AudioManager.instance.Play3D(damageSFX, transform.position);
+        }
+
 
         if (HP <= 0)
         {
@@ -359,5 +363,12 @@ public class PlayerController : MonoBehaviour, IDamage
     void DoBeat()
     {
         
+    }
+
+    public void DoBoop(Vector3 direction)
+    {
+        playerVelocity.x += direction.x * boopForce * 2;
+        playerVelocity.y += direction.y * boopForce;
+        playerVelocity.z += direction.z * boopForce * 2;
     }
 }

@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4608507559821478376}
   - component: {fileID: 6190940918535843635}
   - component: {fileID: 8648375026369521250}
+  - component: {fileID: 5789817543989437246}
   m_Layer: 0
   m_Name: ParcticlePulser
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   objectToPlayOn: {fileID: 3072125205335868683}
   life: 1
   StepsOrig: 4
+--- !u!114 &5789817543989437246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466162506206495584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046ff5e25b8afe74b8acc8549e8a587f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulse: 3
+  returnspeed: 5
 --- !u!1 &8352100211092540509
 GameObject:
   m_ObjectHideFlags: 0

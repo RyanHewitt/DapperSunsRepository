@@ -102,6 +102,11 @@ public class Bomber : EnemyAi
             counter++;
             AudioManager.instance.Play3D(countSound, transform.position);
             StartCoroutine(Flash());
+            if (counter == 0)
+            {
+                
+                AudioManager.instance.Play3D(countSound, transform.position);
+            }
 
             if (counter >= countdown)
             {
@@ -117,7 +122,6 @@ public class Bomber : EnemyAi
 
     void Explode()
     {
-        AudioManager.instance.Play3D(explosionSound, transform.position);
     
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 

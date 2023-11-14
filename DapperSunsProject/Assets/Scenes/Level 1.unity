@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.29936957, g: 0.29936957, b: 0.29936957, a: 1}
+  m_IndirectSpecularColor: {r: 0.19949695, g: 0.29936957, b: 0.22085583, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2365,6 +2365,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: damageSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 74fe6149b18923f44aaea225ebc55223, type: 3}
     - target: {fileID: 8351637192957294273, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_Name
       value: Player

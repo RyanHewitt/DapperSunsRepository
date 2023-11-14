@@ -8,7 +8,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Collider enemyCol;
     [SerializeField] protected GameObject outline;
-    [SerializeField] protected Transform shootPos;
+    
     [SerializeField] protected Color flashColor;
 
     [Header("---Stats---")]

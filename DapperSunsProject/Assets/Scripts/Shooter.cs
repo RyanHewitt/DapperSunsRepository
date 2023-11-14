@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shooter : EnemyAi
 {
+    [Header("---Shooter---")]
+    [SerializeField] protected Transform shootPos;
     protected override void Start()
     {
         base.Start();

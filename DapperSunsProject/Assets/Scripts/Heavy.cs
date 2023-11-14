@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Heavy : EnemyAi
 {
+    [Header("---Heavy---")]
     [SerializeField] Transform[] shootPositions;
     [SerializeField] int steps;
 

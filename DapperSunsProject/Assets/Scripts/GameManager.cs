@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public bool playerDead;
     public bool beatWindow;
 
+    public float beatTime;
     public float timeScaleOg;
 
     void Awake()
@@ -105,7 +106,10 @@ public class GameManager : MonoBehaviour
                 OnBeatEvent(); 
             }
         }
-        if (sampledTime - floor < 0.25f ||  sampledTime - floor > 0.75f)
+
+        beatTime = sampledTime - floor;
+
+        if (beatTime < 0.25f || beatTime > 0.75f)
         {
             beatWindow = true;
         }

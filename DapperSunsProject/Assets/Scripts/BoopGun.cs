@@ -28,7 +28,7 @@ public class BoopGun : MonoBehaviour
         ringMat.color = currentColor;
         ringMat.SetColor("_EmissionColor", currentColor);
 
-        screenMat = gunScreen.GetComponent<Renderer>().material;
+        screenMat = gunScreen.GetComponent<MeshRenderer>().material;
     }
 
     void Update()
@@ -40,6 +40,8 @@ public class BoopGun : MonoBehaviour
         ringMat.SetColor("_EmissionColor", currentColor);
 
         gunSpeaker.transform.localScale = Vector3.Lerp(gunSpeaker.transform.localScale, Vector3.one, elapsedTime);
+
+        screenMat.mainTextureOffset = Vector2.Lerp(Vector2.zero, Vector2.down, GameManager.instance.beatTime - 0.25f);
     }
 
     void DoBeat()

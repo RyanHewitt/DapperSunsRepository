@@ -355,6 +355,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     boopable.DoBoop(boopForce, true);
                     playerVelocity.y += boopForce;
+                    canJump = false;
                 }
             }
         }
@@ -370,5 +371,7 @@ public class PlayerController : MonoBehaviour, IDamage
         playerVelocity.x += direction.x * boopForce * 2;
         playerVelocity.y += direction.y * boopForce;
         playerVelocity.z += direction.z * boopForce * 2;
+
+        canJump = false;
     }
 }

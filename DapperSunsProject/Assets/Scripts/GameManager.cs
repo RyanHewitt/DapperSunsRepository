@@ -253,6 +253,22 @@ public class GameManager : MonoBehaviour
         menuStack.Push(tutorialMenu);
         menuStack.Peek().SetActive(true);
     }
+    public void ToTutorial()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        SceneManager.LoadScene("Tutorial");
+    }
+    public void RejectTutorial()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        SceneManager.LoadScene("Level 1");
+    }
 
     public void CheckTimer()
     {

@@ -48,4 +48,12 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.TutorialQuestion();
     }
+    public void YesTutorial()
+    {
+        GameManager.instance.ToTutorial();
+    }
+    public void NoTutorial()
+    {
+        GameManager.instance.RejectTutorial();
+    }
 }

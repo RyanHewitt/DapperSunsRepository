@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8700189838832869779}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: NextLevel
+        m_MethodName: TutorialMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1745,7 +1745,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8700189838832869779}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: GameQuit
+        m_MethodName: NoTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2012,7 +2012,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8700189838832869779}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Back
+        m_MethodName: YesTutorial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5566,10 +5566,10 @@ RectTransform:
   - {fileID: 6816764164287716516}
   - {fileID: 3857407747996000172}
   - {fileID: 2008237456}
+  - {fileID: 191028037}
   - {fileID: 7961144521711124355}
   - {fileID: 6587867925461146838}
   - {fileID: 6924261337708415526}
-  - {fileID: 191028037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

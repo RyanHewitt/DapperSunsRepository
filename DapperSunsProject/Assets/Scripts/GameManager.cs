@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject SpeedLines;
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
+    [SerializeField] GameObject tutorialMenu;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -242,6 +243,15 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
         UnityEditor.EditorApplication.isPlaying = false;
+    }
+    public void TutorialQuestion()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        menuStack.Push(tutorialMenu);
+        menuStack.Peek().SetActive(true);
     }
 
     public void CheckTimer()

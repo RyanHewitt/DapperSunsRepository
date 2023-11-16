@@ -244,8 +244,10 @@ public class GameManager : MonoBehaviour
         {
             Back();
         }
-        StatePause();
         SceneManager.LoadScene("MainMenu");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        isPaused = true;
     }
 
     public void AppQuit()

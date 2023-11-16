@@ -27,7 +27,7 @@ public class cameraController : MonoBehaviour
 
             if (invertY)
             {
-                xRot = +mouseY;
+                xRot += mouseY;
             }
             else
             {

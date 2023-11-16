@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
     GameObject playerSpawn;
-    GameObject mainmenu;
 
     public delegate void BeatEvent();
 
@@ -59,6 +58,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = AudioManager.instance.audioSource;
+
     }
 
     void Update()

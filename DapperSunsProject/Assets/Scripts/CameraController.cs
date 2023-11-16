@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-    [Range(100, 32000)]public int sensitivity;
     [SerializeField] int lockVertMin;
     [SerializeField] int lockVertMax;
 
@@ -22,8 +21,8 @@ public class cameraController : MonoBehaviour
         if (!GameManager.instance.isPaused)
         {
             // get input
-            float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensitivity;
-            float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * GameManager.instance.playerScript.sensitivity;
+            float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * GameManager.instance.playerScript.sensitivity;
 
             if (invertY)
             {
@@ -44,10 +43,5 @@ public class cameraController : MonoBehaviour
             // rotate the player on the Y-axis
             transform.parent.Rotate(Vector3.up * mouseX);
         }
-    }
-
-    public void UpdateSensitivty(float newSensitivity)
-    {
-        sensitivity = (int)newSensitivity;
     }
 }

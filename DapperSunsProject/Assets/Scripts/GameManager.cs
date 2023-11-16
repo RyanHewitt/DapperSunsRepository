@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
+    [SerializeField] Slider sensitivitySlider;
 
 
     private float elapsedTime = 0f;
@@ -58,7 +60,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = AudioManager.instance.audioSource;
-
+        sensitivitySlider.value = playerScript.sensitivity;
     }
 
     void Update()
@@ -319,6 +321,11 @@ public class GameManager : MonoBehaviour
         SpeedLines.SetActive(true);
         yield return new WaitForSeconds(duration);
         SpeedLines.SetActive(false);
+    }
+
+    public void SetSensitivity()
+    {
+        playerScript.sensitivity = sensitivitySlider.value;
     }
 
     public event BeatEvent OnBeatEvent;

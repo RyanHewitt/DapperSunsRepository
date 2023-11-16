@@ -68,11 +68,11 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuStack.Count > 0 && menuStack.Peek() != menuWin)
+            if (menuStack.Count > 0 && menuStack.Peek() != menuWin && menuStack.Peek() != menuEndGame)
             {
                 Back();
             }
-            else if (menuStack.Count > 0 && menuStack.Peek() == menuWin)
+            else if (menuStack.Count > 0 && menuStack.Peek() == menuWin || menuStack.Peek() == menuEndGame)
             {
                 return;
             }

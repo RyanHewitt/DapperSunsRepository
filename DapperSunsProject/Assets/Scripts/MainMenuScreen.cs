@@ -5,19 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScreen : MonoBehaviour
 {
-    public void Play()
+    public bool isPaused;
+    public void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void Options()
-    {
-
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-        Debug.Log("Player has quit the game");
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        GameManager.instance.onMainMenuScript(gameObject);
     }
 }

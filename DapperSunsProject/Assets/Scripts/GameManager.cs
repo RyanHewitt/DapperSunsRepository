@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
 
+
     private float elapsedTime = 0f;
     public bool isCountingTimer;
 
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
     GameObject playerSpawn;
+    GameObject mainmenu;
 
     public delegate void BeatEvent();
 
@@ -63,20 +65,35 @@ public class GameManager : MonoBehaviour
     {
         if (AudioManager.instance.audioSource.isPlaying)
         {
-            CheckBeat(); 
+            CheckBeat();
         }
 
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuStack.Count > 0 && menuStack.Peek() != menuWin && menuStack.Peek() != menuEndGame)
+            if (menuStack.Count > 0)
             {
-                Back();
+                if (menuStack.Peek() == menuWin)
+                {
+                    return;
+                }
+                else if (menuStack.Peek() == menuEndGame)
+                {
+                    return;
+                }
+                else
+                {
+                    Back();
+                }
             }
-            else if (menuStack.Count > 0 && menuStack.Peek() == menuWin || menuStack.Peek() == menuEndGame)
-            {
-                return;
-            }
-            else if (SceneManager.GetActiveScene().name != "MainMenu")
+            //if (menuStack.Count > 0 && menuStack.Peek() != menuWin && menuStack.Peek() != menuEndGame)
+            //{
+            //    Back();
+            //}
+            //else if (menuStack.Count > 0 && menuStack.Peek() == menuWin || menuStack.Peek() == menuEndGame)
+            //{
+            //    return;
+            //}
+            if (SceneManager.GetActiveScene().name != "MainMenu")
             {
                 PopupPause();
             }
@@ -104,7 +121,7 @@ public class GameManager : MonoBehaviour
             lastSampledTime = floor;
             if (OnBeatEvent != null)
             {
-                OnBeatEvent(); 
+                OnBeatEvent();
             }
         }
 
@@ -154,12 +171,12 @@ public class GameManager : MonoBehaviour
     {
         if (menuStack.Count > 0)
         {
-            menuStack.Peek().SetActive(false); 
+            menuStack.Peek().SetActive(false);
         }
         menuStack.Push(menuOptions);
         menuStack.Peek().SetActive(true);
     }
-    
+
     public void PopupControls()
     {
         if (menuStack.Count > 0)
@@ -209,7 +226,7 @@ public class GameManager : MonoBehaviour
         {
             menuStack.Peek().SetActive(true);
         }
-        else if (isPaused)
+        else if (isPaused && SceneManager.GetActiveScene().name != "MainMenu")
         {
             StateUnpause();
         }
@@ -242,7 +259,9 @@ public class GameManager : MonoBehaviour
     public void AppQuit()
     {
         Application.Quit();
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
     public void TutorialQuestion()
     {
@@ -260,6 +279,7 @@ public class GameManager : MonoBehaviour
             Back();
         }
         SceneManager.LoadScene("Tutorial");
+        StateUnpause();
     }
     public void RejectTutorial()
     {
@@ -268,11 +288,12 @@ public class GameManager : MonoBehaviour
             Back();
         }
         SceneManager.LoadScene("Level 1");
+        StateUnpause();
     }
 
     public void CheckTimer()
     {
-        if (!isPaused && isCountingTimer)
+        if (!isPaused && isCountingTimer && timerText != null)
         {
             elapsedTime += Time.deltaTime;
 
@@ -304,6 +325,12 @@ public class GameManager : MonoBehaviour
         SpeedLines.SetActive(true);
         yield return new WaitForSeconds(duration);
         SpeedLines.SetActive(false);
+    }
+    public void onMainMenuScript(GameObject _mainmenu)
+    {
+        mainmenu = _mainmenu;
+        isPaused = true;
+        Time.timeScale = 0f;
     }
 
     public event BeatEvent OnBeatEvent;

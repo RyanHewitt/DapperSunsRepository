@@ -16,14 +16,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(1, 20)][SerializeField] float playerSpeed;
     [Range(1, 50)][SerializeField] float jumpHeight;
     [Range(-10, 50)][SerializeField] float gravityValue;
-    [Range(0, 1)][SerializeField] float friction;
+    [Range(0, 1)][SerializeField] float frictionAir;
+    [Range(0, 1)][SerializeField] float frictionGround;
 
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
     [SerializeField] int dashCooldown;
 
-    [Header("----- Ground Pound Stats -----")]
+    [Header("----- Slam Stats -----")]
     [SerializeField] float slamSpeed;
 
     [Header("----- Gun Stats -----")]
@@ -42,12 +43,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
     GameObject ghost;
     Transform startPos;
-    ControllerColliderHit controllerHit;
-    Collider controllerCol;
 
     Vector3 translation;
     Vector3 move;
     Vector3 playerVelocity;
+    Vector3 boopVelocity;
+    Vector3 boopVelocityOg;
+    Vector3 jumpVelocity;
+    Vector3 jumpVelocityOg;
     bool groundedPlayer;
     bool canBeat = false;
     bool hitBeat = false;
@@ -57,6 +60,9 @@ public class PlayerController : MonoBehaviour, IDamage
     int HP = 1;
     int dashCounter;
     float originalGravity;
+    float frictionForce;
+    float boopElapsedTime;
+    float jumpElapsedTime;
 
     void Start()
     {
@@ -119,12 +125,14 @@ public class PlayerController : MonoBehaviour, IDamage
         ghost.transform.parent = ground;
         ghost.transform.position = transform.position;
         groundedPlayer = true;
+        frictionForce = frictionGround;
     }
 
     public void Unground()
     {
         groundedPlayer = false;
         ghost.transform.parent = null;
+        frictionForce = frictionAir;
     }
 
     void Restart()
@@ -132,25 +140,19 @@ public class PlayerController : MonoBehaviour, IDamage
         Destroy(ghost);
         ghost = new GameObject("ghost");
         SpawnPlayer();
+
         playerVelocity = Vector3.zero;
+        jumpVelocity = Vector3.zero;
+        boopVelocity = Vector3.zero;
+        jumpElapsedTime = 1;
+        boopElapsedTime = 1;
+
         slamming = false;
         gravityValue = originalGravity;
     }
 
     void MovePlayer()
     {
-        float frictionForce;
-
-        if (groundedPlayer)
-        {
-            playerVelocity.y = 0f;
-            frictionForce = friction / 2;
-        }
-        else
-        {
-            frictionForce = friction;
-        }
-
         move = Input.GetAxis("Horizontal") * transform.right +
                Input.GetAxis("Vertical") * transform.forward;
 
@@ -161,9 +163,11 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (canBeat && !hitBeat)
                 {
                     hitBeat = true;
-                    AudioManager.instance.playOnce(jumpSFX);
-                    playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-                    groundedPlayer = false;
+                    AudioManager.instance.audioSource.PlayOneShot(jumpSFX);
+
+                    jumpVelocity.y += jumpHeight;
+                    jumpVelocityOg = jumpVelocity;
+                    jumpElapsedTime = 0f;
                 }
                 else
                 {
@@ -173,6 +177,11 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
+        boopElapsedTime += Time.deltaTime;
+        boopVelocity = Vector3.Lerp(boopVelocityOg, Vector3.zero, boopElapsedTime);
+        Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
+        boopVector *= frictionForce;
+
         if (!dashing && !slamming)
         {
             playerVelocity.x *= frictionForce;
@@ -180,7 +189,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             translation = (ghost.transform.position - transform.position);
 
-            controller.Move(((move * playerSpeed + playerVelocity) * Time.deltaTime) + translation);
+            controller.Move(((move * playerSpeed + playerVelocity + boopVector) * Time.deltaTime) + translation);
         }
 
         CheckHeadHit();
@@ -189,8 +198,17 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             playerVelocity.y += gravityValue * Time.deltaTime;
         }
+        else
+        {
+            playerVelocity.y = 0f;
+        }
 
-        controller.Move(playerVelocity * Time.deltaTime);
+        boopVector = new Vector3(0, boopVelocity.y, 0);
+
+        jumpElapsedTime += Time.deltaTime;
+        jumpVelocity = Vector3.Lerp(jumpVelocityOg, Vector3.zero, jumpElapsedTime);
+
+        controller.Move((playerVelocity + boopVector + jumpVelocity) * Time.deltaTime);
     }
 
     void CheckHeadHit()
@@ -228,7 +246,6 @@ public class PlayerController : MonoBehaviour, IDamage
     void Boop()
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
-        groundedPlayer = false;
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))
@@ -332,7 +349,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (canBeat && !hitBeat)
                 {
                     hitBeat = true;
-                    AudioManager.instance.playOnce(slamSFX);
                     StartCoroutine(DoSlam());
                 }
                 else
@@ -361,6 +377,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         // Apply the slam impact logic (e.g., damage enemies, create an impact effect, etc.)
+        AudioManager.instance.audioSource.PlayOneShot(slamSFX);
         SlamImpact();
 
         // Reset gravity influence
@@ -381,7 +398,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (hit.transform != transform && boopable != null)
                 {
                     boopable.DoBoop(boopForce, true);
-                    playerVelocity.y += boopForce;
+                    DoBoop(Vector3.up / 2);
                     groundedPlayer = false;
                 }
             }
@@ -395,10 +412,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void DoBoop(Vector3 direction)
     {
-        playerVelocity.x += direction.x * boopForce * 2;
-        playerVelocity.y += direction.y * boopForce;
-        playerVelocity.z += direction.z * boopForce * 2;
-
-        groundedPlayer = false;
+        playerVelocity.y = 0;
+        boopVelocity = direction * boopForce;
+        boopVelocityOg = boopVelocity;
+        boopElapsedTime = 0f;
     }
 }

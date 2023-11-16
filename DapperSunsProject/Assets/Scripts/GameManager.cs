@@ -85,15 +85,7 @@ public class GameManager : MonoBehaviour
                     Back();
                 }
             }
-            //if (menuStack.Count > 0 && menuStack.Peek() != menuWin && menuStack.Peek() != menuEndGame)
-            //{
-            //    Back();
-            //}
-            //else if (menuStack.Count > 0 && menuStack.Peek() == menuWin || menuStack.Peek() == menuEndGame)
-            //{
-            //    return;
-            //}
-            if (SceneManager.GetActiveScene().name != "MainMenu")
+            else if (SceneManager.GetActiveScene().name != "MainMenu")
             {
                 PopupPause();
             }

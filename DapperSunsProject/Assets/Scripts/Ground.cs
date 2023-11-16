@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
+    Collider col;
+
+    void Update()
+    {
+        if (!col.enabled)
+        {
+
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)

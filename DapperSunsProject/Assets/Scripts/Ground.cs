@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
-    Collider col;
+    bool colliding;
+    int counter;
 
-    void Update()
+    void FixedUpdate()
     {
-        if (!col.enabled)
+        if (colliding)
         {
-
+            counter++;
+            if (counter == 3)
+            {
+                colliding = false;
+                GameManager.instance.playerScript.Unground();
+            }
         }
     }
 
@@ -31,6 +37,20 @@ public class Ground : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        if (other.isTrigger)
+        {
+            return;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            colliding = true;
+            counter = 0;
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if (other.isTrigger)
@@ -41,6 +61,7 @@ public class Ground : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Unground");
+            colliding = false;
             GameManager.instance.playerScript.Unground();
         }
     }

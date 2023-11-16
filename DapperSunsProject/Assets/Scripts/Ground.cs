@@ -29,7 +29,6 @@ public class Ground : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Ground");
             if (transform.parent != null)
             {
                 GameManager.instance.playerScript.Ground(transform.parent.transform); 
@@ -60,7 +59,6 @@ public class Ground : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Unground");
             colliding = false;
             GameManager.instance.playerScript.Unground();
         }

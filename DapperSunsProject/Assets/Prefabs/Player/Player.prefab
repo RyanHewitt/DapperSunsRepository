@@ -833,15 +833,16 @@ MonoBehaviour:
   shootPos: {fileID: 230813569849710475}
   headPos: {fileID: 1451994654362099324}
   playerSpeed: 6
-  jumpHeight: 2
+  jumpHeight: 20
   gravityValue: -10
-  friction: 0.98
+  frictionAir: 0.9
+  frictionGround: 0.2
   dashSpeed: 50
   dashDuration: 0.2
   dashCooldown: 2
   slamSpeed: 50
   boopDist: 10
-  boopForce: 10
+  boopForce: 30
   boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
   boopSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}

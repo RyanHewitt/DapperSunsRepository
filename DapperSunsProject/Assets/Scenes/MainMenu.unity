@@ -684,7 +684,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2495563464662599119}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetSensitivity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &444767590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4743,6 +4755,7 @@ MonoBehaviour:
   timerText: {fileID: 0}
   menuEndGame: {fileID: 0}
   tutorialMenu: {fileID: 191028036}
+  sensitivitySlider: {fileID: 442966527}
   isCountingTimer: 0
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
   player: {fileID: 1083996024}

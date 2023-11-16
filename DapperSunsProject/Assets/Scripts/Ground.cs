@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ground : MonoBehaviour
 {
+    [SerializeField] bool shouldParent;
+
     bool colliding;
     int counter;
 
@@ -29,9 +31,13 @@ public class Ground : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            if (transform.parent != null)
+            if (shouldParent)
             {
                 GameManager.instance.playerScript.Ground(transform.parent.transform); 
+            }
+            else
+            {
+                GameManager.instance.playerScript.Ground(null);
             }
         }
     }

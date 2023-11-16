@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject SpeedLines;
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
+    [SerializeField] GameObject tutorialMenu;
+
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -31,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
     GameObject playerSpawn;
+    GameObject mainmenu;
 
     public delegate void BeatEvent();
 
@@ -62,20 +65,35 @@ public class GameManager : MonoBehaviour
     {
         if (AudioManager.instance.audioSource.isPlaying)
         {
-            CheckBeat(); 
+            CheckBeat();
         }
 
         if (Input.GetButtonDown("Cancel") && !playerDead)
         {
-            if (menuStack.Count > 0 && menuStack.Peek() != menuWin)
+            if (menuStack.Count > 0)
             {
-                Back();
+                if (menuStack.Peek() == menuWin)
+                {
+                    return;
+                }
+                else if (menuStack.Peek() == menuEndGame)
+                {
+                    return;
+                }
+                else
+                {
+                    Back();
+                }
             }
-            else if (menuStack.Count > 0 && menuStack.Peek() == menuWin)
-            {
-                return;
-            }
-            else if (SceneManager.GetActiveScene().name != "MainMenu")
+            //if (menuStack.Count > 0 && menuStack.Peek() != menuWin && menuStack.Peek() != menuEndGame)
+            //{
+            //    Back();
+            //}
+            //else if (menuStack.Count > 0 && menuStack.Peek() == menuWin || menuStack.Peek() == menuEndGame)
+            //{
+            //    return;
+            //}
+            if (SceneManager.GetActiveScene().name != "MainMenu")
             {
                 PopupPause();
             }
@@ -103,7 +121,7 @@ public class GameManager : MonoBehaviour
             lastSampledTime = floor;
             if (OnBeatEvent != null)
             {
-                OnBeatEvent(); 
+                OnBeatEvent();
             }
         }
 
@@ -153,12 +171,12 @@ public class GameManager : MonoBehaviour
     {
         if (menuStack.Count > 0)
         {
-            menuStack.Peek().SetActive(false); 
+            menuStack.Peek().SetActive(false);
         }
         menuStack.Push(menuOptions);
         menuStack.Peek().SetActive(true);
     }
-    
+
     public void PopupControls()
     {
         if (menuStack.Count > 0)
@@ -208,7 +226,7 @@ public class GameManager : MonoBehaviour
         {
             menuStack.Peek().SetActive(true);
         }
-        else if (isPaused)
+        else if (isPaused && SceneManager.GetActiveScene().name != "MainMenu")
         {
             StateUnpause();
         }
@@ -241,12 +259,41 @@ public class GameManager : MonoBehaviour
     public void AppQuit()
     {
         Application.Quit();
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+    public void TutorialQuestion()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        menuStack.Push(tutorialMenu);
+        menuStack.Peek().SetActive(true);
+    }
+    public void ToTutorial()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        SceneManager.LoadScene("Tutorial");
+        StateUnpause();
+    }
+    public void RejectTutorial()
+    {
+        while (menuStack.Count > 0)
+        {
+            Back();
+        }
+        SceneManager.LoadScene("Level 1");
+        StateUnpause();
     }
 
     public void CheckTimer()
     {
-        if (!isPaused && isCountingTimer)
+        if (!isPaused && isCountingTimer && timerText != null)
         {
             elapsedTime += Time.deltaTime;
 

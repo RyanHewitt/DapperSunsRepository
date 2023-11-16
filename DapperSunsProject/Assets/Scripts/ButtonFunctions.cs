@@ -44,4 +44,16 @@ public class ButtonFunctions : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameManager.instance.StateUnpause();
     }
+    public void TutorialMenu()
+    {
+        GameManager.instance.TutorialQuestion();
+    }
+    public void YesTutorial()
+    {
+        GameManager.instance.ToTutorial();
+    }
+    public void NoTutorial()
+    {
+        GameManager.instance.RejectTutorial();
+    }
 }

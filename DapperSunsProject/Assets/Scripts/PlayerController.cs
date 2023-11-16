@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip jumpSFX;
     [SerializeField] AudioClip dashSFX;
     [SerializeField] AudioClip slamSFX;
+    [SerializeField] AudioClip slamStartSFX;
     [SerializeField] AudioClip deathSFX;
     [SerializeField] AudioClip damageSFX;
 
@@ -349,6 +350,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (canBeat && !hitBeat)
                 {
                     hitBeat = true;
+                    AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
                     StartCoroutine(DoSlam());
                 }
                 else

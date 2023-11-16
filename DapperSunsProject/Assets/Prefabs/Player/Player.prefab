@@ -411,7 +411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a357c7ea7b7f6dc4f870dc6e724b1277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 600
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
@@ -853,6 +852,7 @@ MonoBehaviour:
   deathSFX: {fileID: 8300000, guid: 36abdebbdde211f41bb1e69a7a278914, type: 3}
   damageSFX: {fileID: 8300000, guid: 74fe6149b18923f44aaea225ebc55223, type: 3}
   sensitivity: 1000
+  settings: {fileID: 11400000, guid: 1ea55ba00fda5b946aaea4056a542b86, type: 2}
 --- !u!143 &5283020408901821959
 CharacterController:
   m_ObjectHideFlags: 0

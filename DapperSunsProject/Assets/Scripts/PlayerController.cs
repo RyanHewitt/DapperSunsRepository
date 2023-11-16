@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip damageSFX;
 
     [Range(100, 2500)] public float sensitivity;
+    public SettingsObject settings;
 
     GameObject ghost;
     Transform startPos;

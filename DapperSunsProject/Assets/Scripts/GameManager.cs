@@ -60,7 +60,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         audioSource = AudioManager.instance.audioSource;
-        sensitivitySlider.value = playerScript.sensitivity;
+
+        sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
+        playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+
+        //sensitivitySlider.value = playerScript.settings.sensitivity;
+        //playerScript.sensitivity = playerScript.settings.sensitivity;
     }
 
     void Update()
@@ -326,6 +331,8 @@ public class GameManager : MonoBehaviour
     public void SetSensitivity()
     {
         playerScript.sensitivity = sensitivitySlider.value;
+        PlayerPrefs.SetFloat("Sensitivity", playerScript.sensitivity);
+        //playerScript.settings.sensitivity = sensitivitySlider.value;
     }
 
     public event BeatEvent OnBeatEvent;

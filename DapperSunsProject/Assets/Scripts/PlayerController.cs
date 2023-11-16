@@ -129,6 +129,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void Restart()
     {
+        Destroy(ghost);
+        ghost = new GameObject("ghost");
         SpawnPlayer();
         playerVelocity = Vector3.zero;
         slamming = false;

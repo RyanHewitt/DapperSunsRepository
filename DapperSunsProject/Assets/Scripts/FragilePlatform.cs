@@ -6,6 +6,7 @@ using UnityEngine;
 public class FragilePlatform : MonoBehaviour, IBoop
 {
     [SerializeField] private float _breakTime = 3f;
+    [SerializeField] Collider trigger;
     [SerializeField] Collider col;
     [SerializeField] Renderer model;
     [SerializeField] GameObject outline;
@@ -32,6 +33,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
     {
         breakCount++;
         col.enabled = false;
+        trigger.enabled = false;
         model.enabled = false;
         outline.SetActive(false);
 
@@ -51,6 +53,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
     void Restart()
     {
         col.enabled = true;
+        trigger.enabled = true;
         model.enabled = true;
         outline.SetActive(true);
     }

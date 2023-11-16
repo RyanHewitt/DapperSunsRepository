@@ -102,8 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   box: {fileID: 289817657901941477}
-  Pos1: {fileID: 7499367272829304719}
-  Pos2: {fileID: 8975042167262575732}
+  positions:
+  - {fileID: 7499367272829304719}
+  - {fileID: 8975042167262575732}
   speed: 5
   moveAmount: 0.09
 --- !u!65 &4138258255802762621

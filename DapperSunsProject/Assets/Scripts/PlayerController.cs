@@ -40,16 +40,20 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] AudioClip deathSFX;
     [SerializeField] AudioClip damageSFX;
 
+    GameObject ghost;
     Transform startPos;
+    ControllerColliderHit controllerHit;
+    Collider controllerCol;
 
+    Vector3 translation;
     Vector3 move;
     Vector3 playerVelocity;
     bool groundedPlayer;
-    bool canJump;
     bool canBeat = false;
     bool hitBeat = false;
     bool hitPenalty = false;
     bool slamming = false;
+    bool dashing = false;
     int HP = 1;
     int dashCounter;
     float originalGravity;
@@ -60,6 +64,8 @@ public class PlayerController : MonoBehaviour, IDamage
         GameManager.instance.OnBeatEvent += DoBeat;
 
         startPos = GameManager.instance.GetPlayerSpawn().transform;
+        ghost = new GameObject("ghost");
+        ghost.transform.position = startPos.position;
 
         GameManager.instance.playerDead = false;
         SpawnPlayer();
@@ -92,12 +98,33 @@ public class PlayerController : MonoBehaviour, IDamage
                 canBeat = false;
                 hitBeat = false;
             }
+        }
+    }
 
+    void LateUpdate()
+    {
+        if (!GameManager.instance.isPaused)
+        {
             ShootInput();
             MovePlayer();
             DashInput();
-            SlamInput(); 
+            SlamInput();
+
+            ghost.transform.position = transform.position; 
         }
+    }
+
+    public void Ground(Transform ground)
+    {
+        ghost.transform.parent = ground;
+        ghost.transform.position = transform.position;
+        groundedPlayer = true;
+    }
+
+    public void Unground()
+    {
+        groundedPlayer = false;
+        ghost.transform.parent = null;
     }
 
     void Restart()
@@ -112,11 +139,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         float frictionForce;
 
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        if (groundedPlayer)
         {
             playerVelocity.y = 0f;
-            canJump = true;
             frictionForce = friction / 2;
         }
         else
@@ -127,7 +152,7 @@ public class PlayerController : MonoBehaviour, IDamage
         move = Input.GetAxis("Horizontal") * transform.right +
                Input.GetAxis("Vertical") * transform.forward;
 
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             if (!hitPenalty)
             {
@@ -136,7 +161,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     hitBeat = true;
                     AudioManager.instance.playOnce(jumpSFX);
                     playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-                    canJump = false;
+                    groundedPlayer = false;
                 }
                 else
                 {
@@ -146,18 +171,15 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        if (slamming)
+        if (!dashing && !slamming)
         {
-            // If we're ground pounding, we only want to apply the downward velocity
-            playerVelocity.x = 0;
-            playerVelocity.z = 0;
-            move = Vector3.zero;
+            playerVelocity.x *= frictionForce;
+            playerVelocity.z *= frictionForce;
+
+            translation = (ghost.transform.position - transform.position);
+
+            controller.Move(((move * playerSpeed + playerVelocity) * Time.deltaTime) + translation);
         }
-
-        playerVelocity.x *= frictionForce;
-        playerVelocity.z *= frictionForce;
-
-        controller.Move((move * playerSpeed + playerVelocity) * Time.deltaTime);
 
         CheckHeadHit();
 
@@ -204,7 +226,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Boop()
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
-        canJump = false;
+        groundedPlayer = false;
 
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))
@@ -236,9 +258,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (damageSFX != null)
         {
-            AudioManager.instance.Play3D(damageSFX, transform.position);
+            AudioManager.instance.audioSource.PlayOneShot(damageSFX);
         }
-
 
         if (HP <= 0)
         {
@@ -252,6 +273,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         controller.enabled = false;
 
+        ghost.transform.position = startPos.position;
         transform.position = startPos.position;
         transform.rotation = startPos.rotation;
 
@@ -284,16 +306,19 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator DoDash()
     {
+        dashing = true;
+
         float startTime = Time.time;
         Vector3 dashDirection = transform.forward;
         playerVelocity.y = 0;
-        dashCounter = dashCooldown;           
+        dashCounter = dashCooldown;
 
         while (Time.time < startTime + dashDuration)
         {
             controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
             yield return null;
         }
+        dashing = false;
     }
 
     void SlamInput()
@@ -355,7 +380,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     boopable.DoBoop(boopForce, true);
                     playerVelocity.y += boopForce;
-                    canJump = false;
+                    groundedPlayer = false;
                 }
             }
         }
@@ -372,6 +397,6 @@ public class PlayerController : MonoBehaviour, IDamage
         playerVelocity.y += direction.y * boopForce;
         playerVelocity.z += direction.z * boopForce * 2;
 
-        canJump = false;
+        groundedPlayer = false;
     }
 }

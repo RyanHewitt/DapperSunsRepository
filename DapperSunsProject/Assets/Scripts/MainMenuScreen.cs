@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuScreen : MonoBehaviour
 {
-    public bool isPaused;
     public void Start()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
-        GameManager.instance.onMainMenuScript(gameObject);
+        GameManager.instance.isPaused = true;
     }
 }

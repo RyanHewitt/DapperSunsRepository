@@ -326,12 +326,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         SpeedLines.SetActive(false);
     }
-    public void onMainMenuScript(GameObject _mainmenu)
-    {
-        mainmenu = _mainmenu;
-        isPaused = true;
-        Time.timeScale = 0f;
-    }
 
     public event BeatEvent OnBeatEvent;
     public event BeatEvent OnRestartEvent;

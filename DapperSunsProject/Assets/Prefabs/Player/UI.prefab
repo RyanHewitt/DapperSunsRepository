@@ -4342,10 +4342,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: cameraController, Assembly-CSharp
-        m_MethodName: UpdateSensitivty
-        m_Mode: 0
+      - m_Target: {fileID: 2495563465553279361}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SetSensitivity
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6259,6 +6259,7 @@ MonoBehaviour:
   timerText: {fileID: 2440317367790356902}
   menuEndGame: {fileID: 3531149627015644098}
   tutorialMenu: {fileID: 0}
+  sensitivitySlider: {fileID: 4664377096969265997}
   isCountingTimer: 0
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
   player: {fileID: 0}

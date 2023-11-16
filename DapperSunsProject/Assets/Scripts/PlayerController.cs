@@ -403,7 +403,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 {
                     boopable.DoBoop(boopForce, true);
                     DoBoop(Vector3.up / 2);
-                    groundedPlayer = false;
+                    //groundedPlayer = false;
                 }
             }
         }

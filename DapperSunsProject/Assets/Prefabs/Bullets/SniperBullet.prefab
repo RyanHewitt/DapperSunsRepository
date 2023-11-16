@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2958308150222427618
 Transform:
   m_ObjectHideFlags: 0
@@ -107,8 +107,8 @@ GameObject:
   - component: {fileID: 3288600831564893372}
   - component: {fileID: 1053502472015180994}
   - component: {fileID: 5612832931724260637}
-  - component: {fileID: 5744517849047801437}
   - component: {fileID: 7283682336245122811}
+  - component: {fileID: 4065238620407682377}
   m_Layer: 0
   m_Name: SniperBullet
   m_TagString: Untagged
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   rb: {fileID: 3288600831564893372}
-  bulletSpeed: 30
+  bulletSpeed: 100
   life: 3
 --- !u!54 &3288600831564893372
 Rigidbody:
@@ -225,27 +225,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5744517849047801437
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5226062936138798103}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &7283682336245122811
 TrailRenderer:
   serializedVersion: 3
@@ -359,3 +338,26 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!136 &4065238620407682377
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5226062936138798103}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 5.102663
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.28}

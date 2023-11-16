@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Sniper : Shooter
 {
-    [SerializeField] int stepsOriginal = 3;
+    //[SerializeField] int stepsOriginal = 3;
 
-    private int steps;
+
+
 
     public LineRenderer laserLineRenderer;
     public Transform LazerPosition;
@@ -14,7 +15,6 @@ public class Sniper : Shooter
     protected override void Start()
     {
         base.Start();
-        steps = stepsOriginal;
         laserLineRenderer.enabled = true;
     }
 
@@ -44,7 +44,6 @@ public class Sniper : Shooter
     protected override void Restart()
     {
         base.Restart();
-        steps = stepsOriginal;
         laserLineRenderer.enabled = true;
     }
 
@@ -65,16 +64,6 @@ public class Sniper : Shooter
 
     protected override void BeatAction()
     {
-        if(playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
-        {
-            steps--;
-            if (steps <= 0)
-            {
-                steps = stepsOriginal;
-
-                AudioManager.instance.Play3D(ShootAudio, transform.position);
-                Instantiate(bullet, shootPos.position, transform.rotation);
-            }
-        }
+        base.BeatAction();
     }
 }

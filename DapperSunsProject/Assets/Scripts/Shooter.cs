@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class Shooter : EnemyAi
 {
     [Header("---Shooter---")]
+    [SerializeField] protected int stepsOriginal;
     [SerializeField] protected Transform shootPos;
+    protected int steps;
     protected override void Start()
     {
         base.Start();
+        steps = stepsOriginal;
     }
 
     protected override void Update()
@@ -19,6 +23,7 @@ public class Shooter : EnemyAi
     protected override void Restart()
     {
         base.Restart();
+        steps = stepsOriginal;
     }
 
     protected override void Move()
@@ -52,8 +57,15 @@ public class Shooter : EnemyAi
     {
         if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            AudioManager.instance.Play3D(ShootAudio, transform.position);
-            Instantiate(bullet, shootPos.position, transform.rotation);
+            steps--;
+            if (steps <= 0)
+            {
+                steps = stepsOriginal;
+
+                AudioManager.instance.Play3D(ShootAudio, transform.position);
+                Instantiate(bullet, shootPos.position, transform.rotation);
+            }
+
         }
     }
 

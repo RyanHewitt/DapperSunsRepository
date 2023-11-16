@@ -9,10 +9,13 @@ public class Heavy : EnemyAi
     [SerializeField] int steps;
 
     int currentStep;
+    Collider groundTrigger;
 
     protected override void Start()
     {
         base.Start();
+
+        groundTrigger = outline.GetComponent<Collider>();
     }
 
     protected override void Update()
@@ -23,6 +26,11 @@ public class Heavy : EnemyAi
     protected override void Restart()
     {
         base.Restart();
+
+        if (groundTrigger != null)
+        {
+            groundTrigger.enabled = true; 
+        }
     }
 
     protected override void Damage(int amount)
@@ -45,6 +53,7 @@ public class Heavy : EnemyAi
         baseModel.enabled = false;
         outlineModel.enabled = false;
         enemyCol.enabled = false;
+        groundTrigger.enabled = false;
     }
 
     protected override void BeatAction()

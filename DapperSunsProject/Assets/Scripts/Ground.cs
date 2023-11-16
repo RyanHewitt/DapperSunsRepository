@@ -14,7 +14,10 @@ public class Ground : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Ground");
-            GameManager.instance.playerScript.Ground(transform.parent.transform);
+            if (transform.parent != null)
+            {
+                GameManager.instance.playerScript.Ground(transform.parent.transform); 
+            }
         }
     }
 
@@ -30,11 +33,5 @@ public class Ground : MonoBehaviour
             Debug.Log("Unground");
             GameManager.instance.playerScript.Unground();
         }
-    }
-
-    void Restart()
-    {
-        // Need to store player and unparent here probably maybe
-
     }
 }

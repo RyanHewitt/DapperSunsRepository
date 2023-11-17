@@ -61,6 +61,10 @@ public class GameManager : MonoBehaviour
     {
         audioSource = AudioManager.instance.audioSource;
 
+        if (!PlayerPrefs.HasKey("Sensitivity"))
+        {
+            PlayerPrefs.SetFloat("Sensitivity", 1000f);
+        }
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
 

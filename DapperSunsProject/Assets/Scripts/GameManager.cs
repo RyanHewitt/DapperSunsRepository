@@ -67,9 +67,6 @@ public class GameManager : MonoBehaviour
         }
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
-
-        //sensitivitySlider.value = playerScript.settings.sensitivity;
-        //playerScript.sensitivity = playerScript.settings.sensitivity;
     }
 
     void Update()
@@ -304,9 +301,9 @@ public class GameManager : MonoBehaviour
 
             int minutes = (int)elapsedTime / 60;
             int seconds = (int)elapsedTime % 60;
-            int milliseconds = (int)((elapsedTime * 1000) % 1000);
+            int milliseconds = (int)((elapsedTime * 100) % 100);
 
-            string timerString = string.Format("{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+            string timerString = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
 
             timerText.text = timerString;
         }
@@ -336,7 +333,6 @@ public class GameManager : MonoBehaviour
     {
         playerScript.sensitivity = sensitivitySlider.value;
         PlayerPrefs.SetFloat("Sensitivity", playerScript.sensitivity);
-        //playerScript.settings.sensitivity = sensitivitySlider.value;
     }
 
     public event BeatEvent OnBeatEvent;

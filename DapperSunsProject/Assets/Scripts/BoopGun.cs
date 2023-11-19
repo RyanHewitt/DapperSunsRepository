@@ -41,7 +41,9 @@ public class BoopGun : MonoBehaviour
 
         gunSpeaker.transform.localScale = Vector3.Lerp(gunSpeaker.transform.localScale, Vector3.one, elapsedTime);
 
-        screenMat.mainTextureOffset = Vector2.Lerp(Vector2.zero, Vector2.down, GameManager.instance.beatTime - 0.25f);
+        float t = GameManager.instance.beatTime - 0.25f;
+        t -= Mathf.Floor(t);
+        screenMat.mainTextureOffset = Vector2.Lerp(Vector2.zero, Vector2.down * 0.95f, t);
     }
 
     void DoBeat()

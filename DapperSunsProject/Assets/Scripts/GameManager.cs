@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
 
-
     private float elapsedTime = 0f;
     public bool isCountingTimer;
 
@@ -51,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        //Application.targetFrameRate = 240;
+
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();

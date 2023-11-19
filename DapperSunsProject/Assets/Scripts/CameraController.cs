@@ -10,6 +10,7 @@ public class cameraController : MonoBehaviour
     [SerializeField] bool invertY;
 
     float xRot;
+
     void Start()
     {
         Cursor.visible = false;
@@ -21,6 +22,8 @@ public class cameraController : MonoBehaviour
         if (!GameManager.instance.isPaused)
         {
             // get input
+            // Vector2 input = new Vector2 (Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")).normalized;
+            
             float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * GameManager.instance.playerScript.sensitivity;
             float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * GameManager.instance.playerScript.sensitivity;
 
@@ -32,7 +35,6 @@ public class cameraController : MonoBehaviour
             {
                 xRot -= mouseY;
             }
-
 
             // clamp the rot on the X-axis
             xRot = Mathf.Clamp(xRot, lockVertMin, lockVertMax);

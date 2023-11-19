@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        //Application.targetFrameRate = 240;
+        Application.targetFrameRate = 240;
 
         instance = this;
         player = GameObject.FindWithTag("Player");

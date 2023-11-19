@@ -10,9 +10,11 @@ public class BoopGun : MonoBehaviour
     [SerializeField] float pulseSpeed;
 
     [SerializeField] Color offColor;
-    [SerializeField] Color onColor;
 
+    Color onColor;
+    Color onEmission;
     Color currentColor;
+    Color currentEmission;
 
     Material ringMat;
     Material screenMat;
@@ -24,9 +26,12 @@ public class BoopGun : MonoBehaviour
         GameManager.instance.OnBeatEvent += DoBeat;
 
         ringMat = gunRing.GetComponent<Renderer>().material;
-        currentColor = offColor;
-        ringMat.color = currentColor;
-        ringMat.SetColor("_EmissionColor", currentColor);
+
+        onColor = ringMat.color;
+        onEmission = ringMat.GetColor("_EmissionColor");
+
+        currentColor = onColor;
+        currentEmission = onEmission;
 
         screenMat = gunScreen.GetComponent<MeshRenderer>().material;
     }
@@ -37,6 +42,8 @@ public class BoopGun : MonoBehaviour
 
         currentColor = Color.Lerp(currentColor, offColor, elapsedTime);
         ringMat.color = currentColor;
+
+        currentEmission = Color.Lerp(currentEmission, offColor, elapsedTime);
         ringMat.SetColor("_EmissionColor", currentColor);
 
         gunSpeaker.transform.localScale = Vector3.Lerp(gunSpeaker.transform.localScale, Vector3.one, elapsedTime);
@@ -51,8 +58,10 @@ public class BoopGun : MonoBehaviour
         elapsedTime = 0;
 
         currentColor = onColor;
+        currentEmission = onEmission;
+
         ringMat.color = currentColor;
-        ringMat.SetColor("_EmissionColor", currentColor);
+        ringMat.SetColor("_EmissionColor", currentEmission);
 
         gunSpeaker.transform.localScale *= 1.1f;
     }

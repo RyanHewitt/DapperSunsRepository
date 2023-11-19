@@ -219,8 +219,7 @@ MonoBehaviour:
   rb: {fileID: 4093889961554352116}
   enemyCol: {fileID: 8919849123410621664}
   outline: {fileID: 5374043851085644285}
-  shootPos: {fileID: 4101349549511556180}
-  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
   HP: 3
   PlayerFaceSpeed: 10
   maxVerticalAngle: 0
@@ -229,6 +228,7 @@ MonoBehaviour:
   ShootAudio: {fileID: 8300000, guid: 4c39ad5b144ed7a478ac191515e29778, type: 3}
   deathAudio: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
   stepsOriginal: 4
+  shootPos: {fileID: 4101349549511556180}
   laserLineRenderer: {fileID: 4511426732849130356}
   LazerPosition: {fileID: 2122871370101012084}
 --- !u!65 &8919849123410621664

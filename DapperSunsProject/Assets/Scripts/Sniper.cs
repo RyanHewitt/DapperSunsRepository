@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Sniper : Shooter
 {
-    //[SerializeField] int stepsOriginal = 3;
-
-
-
-
     public LineRenderer laserLineRenderer;
     public Transform LazerPosition;
 

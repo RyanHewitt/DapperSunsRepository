@@ -42,17 +42,6 @@ public class Heavy : EnemyAi
     {
         yield return base.Death();
 
-        outlineMat.color = flashColor;
-        outlineMat.SetColor("_EmissionColor", flashColor);
-
-        yield return new WaitForSeconds(0.1f);
-
-        outlineMat.color = baseColor;
-        outlineMat.SetColor("_EmissionColor", baseColor);
-
-        baseModel.enabled = false;
-        outlineModel.enabled = false;
-        enemyCol.enabled = false;
         groundTrigger.enabled = false;
     }
 

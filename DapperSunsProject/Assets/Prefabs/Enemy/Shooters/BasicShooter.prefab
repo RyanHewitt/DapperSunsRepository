@@ -168,7 +168,7 @@ MonoBehaviour:
   rb: {fileID: 4093889961554352116}
   enemyCol: {fileID: 8919849123410621664}
   outline: {fileID: 5374043851085644285}
-  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
   HP: 1
   PlayerFaceSpeed: 5
   maxVerticalAngle: 0
@@ -176,6 +176,7 @@ MonoBehaviour:
   bullet: {fileID: 5226062936138798103, guid: 6e295f17f63e2a74993cd3fa12e9c1c7, type: 3}
   ShootAudio: {fileID: 8300000, guid: 04cdff4a14ae34f47a7fea1437fd6e7a, type: 3}
   deathAudio: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
+  stepsOriginal: 0
   shootPos: {fileID: 4101349549511556180}
 --- !u!33 &8700689883116589285
 MeshFilter:

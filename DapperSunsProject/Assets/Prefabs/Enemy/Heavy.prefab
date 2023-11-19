@@ -247,7 +247,7 @@ MonoBehaviour:
   rb: {fileID: 5239718723656642755}
   enemyCol: {fileID: 4616801356796533883}
   outline: {fileID: 8374583307634843382}
-  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
   HP: 1
   PlayerFaceSpeed: 0
   maxVerticalAngle: 0
@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3611908df7a4a4d984bd440ac759ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldParent: 0
 --- !u!1 &8562682398413246255
 GameObject:
   m_ObjectHideFlags: 0

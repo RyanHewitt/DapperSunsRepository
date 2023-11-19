@@ -70,26 +70,9 @@ public class Bomber : EnemyAi
         base.Damage(amount);
     }
 
-    IEnumerator Flash()
-    {
-        outlineMat.color = flashColor;
-        outlineMat.SetColor("_EmissionColor", flashColor);
-
-        yield return new WaitForSeconds(0.1f);
-
-        outlineMat.color = baseColor;
-        outlineMat.SetColor("_EmissionColor", baseColor);
-    }
-
     protected override IEnumerator Death()
     {
         yield return base.Death();
-
-        StartCoroutine(Flash());
-
-        baseModel.enabled = false;
-        outlineModel.enabled = false;
-        enemyCol.enabled = false;
 
         Explode();
     }

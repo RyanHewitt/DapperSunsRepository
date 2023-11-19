@@ -34,6 +34,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     protected Renderer outlineModel;
     protected Material outlineMat;
     protected Color baseColor;
+    protected Color baseEmission;
 
     protected virtual void Start()
     {
@@ -45,6 +46,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
         outlineMat = outline.GetComponent<Renderer>().material;
         baseColor = outlineMat.color;
+        baseEmission = outlineMat.GetColor("_EmissionColor");
 
         startPos = transform.position;
         startRot = transform.rotation;
@@ -115,10 +117,26 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     }
 
+    protected IEnumerator Flash()
+    {
+        outlineMat.color = flashColor;
+        outlineMat.SetColor("_EmissionColor", flashColor);
+
+        yield return new WaitForSeconds(0.1f);
+
+        outlineMat.color = baseColor;
+        outlineMat.SetColor("_EmissionColor", baseEmission);
+    }
+
     protected virtual IEnumerator Death()
     {
         AudioManager.instance.Play3D(deathAudio, transform.position);
-        yield break;
+
+        yield return StartCoroutine(Flash());
+
+        baseModel.enabled = false;
+        outlineModel.enabled = false;
+        enemyCol.enabled = false;
     }
 
     void DoBeat()

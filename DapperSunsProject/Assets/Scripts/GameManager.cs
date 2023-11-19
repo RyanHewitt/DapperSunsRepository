@@ -100,13 +100,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (playerDead)
+        if (Input.GetButtonDown("Restart"))
         {
-            if (Input.anyKeyDown)
-            {
-                Restart();
-                AudioManager.instance.Unmuffle();
-            }
+            Restart();
+            AudioManager.instance.Unmuffle();
         }
 
         CheckTimer();

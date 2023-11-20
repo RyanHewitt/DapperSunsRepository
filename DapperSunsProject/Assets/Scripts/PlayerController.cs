@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -221,7 +218,9 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (hit.transform.position != transform.position)
             {
-                playerVelocity.y = -playerVelocity.y; 
+                playerVelocity.y = -playerVelocity.y;
+                boopVelocity.y = 0f;
+                jumpVelocity.y = 0f;
             }
         }
     }
@@ -306,7 +305,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DashInput()
     {
-        if (Input.GetButtonDown("Dash") && Input.GetAxis("Vertical") > 0.1f)
+        if (Input.GetButtonDown("Dash") && move.normalized.magnitude > 0)
         {
             if (!hitPenalty)
             {
@@ -331,15 +330,16 @@ public class PlayerController : MonoBehaviour, IDamage
         dashing = true;
 
         float startTime = Time.time;
-        Vector3 dashDirection = transform.forward;
+        Vector3 dashDirection = move.normalized;
         playerVelocity.y = 0;
         dashCounter = dashCooldown;
 
         while (Time.time < startTime + dashDuration)
         {
-            controller.Move(dashDirection.normalized * dashSpeed * Time.deltaTime);
+            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
             yield return null;
         }
+
         dashing = false;
     }
 

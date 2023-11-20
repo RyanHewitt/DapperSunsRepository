@@ -377,8 +377,11 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         // Apply the slam impact logic (e.g., damage enemies, create an impact effect, etc.)
-        AudioManager.instance.audioSource.PlayOneShot(slamSFX);
-        SlamImpact();
+        if (slamming)
+        {
+            AudioManager.instance.audioSource.PlayOneShot(slamSFX);
+            SlamImpact(); 
+        }
 
         // Reset gravity influence
         gravityValue = originalGravity;

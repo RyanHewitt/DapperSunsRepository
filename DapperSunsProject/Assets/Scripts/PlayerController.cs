@@ -329,16 +329,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         dashing = true;
 
-        float startTime = Time.time;
         Vector3 dashDirection = move.normalized;
         playerVelocity.y = 0;
         dashCounter = dashCooldown;
+        playerVelocity = dashDirection * dashSpeed;
 
-        while (Time.time < startTime + dashDuration)
-        {
-            controller.Move(dashDirection * dashSpeed * Time.deltaTime);
-            yield return null;
-        }
+        yield return new WaitForSeconds(dashDuration);
 
         dashing = false;
     }

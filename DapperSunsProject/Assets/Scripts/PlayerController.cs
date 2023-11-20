@@ -83,6 +83,9 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (!GameManager.instance.isPaused)
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
             if (GameManager.instance.beatWindow)
             {
                 if (!canBeat) // First beat in window
@@ -104,6 +107,11 @@ public class PlayerController : MonoBehaviour, IDamage
                 canBeat = false;
                 hitBeat = false;
             }
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 

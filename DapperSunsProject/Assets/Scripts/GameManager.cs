@@ -143,8 +143,6 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
         AudioManager.instance.audioSource.Pause();
     }
 
@@ -152,8 +150,6 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOg;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         AudioManager.instance.audioSource.UnPause();
     }
 

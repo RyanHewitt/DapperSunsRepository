@@ -7,15 +7,6 @@ public class MainMenuScreen : MonoBehaviour
 {
     public void Start()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        GameManager.instance.isPaused = true;
-    }
-
-    void Update()
-    {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
         GameManager.instance.isPaused = true;
     }
 }

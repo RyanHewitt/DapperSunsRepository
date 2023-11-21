@@ -176,6 +176,11 @@ public class PlayerController : MonoBehaviour, IDamage
                     jumpVelocity.y += jumpHeight;
                     jumpVelocityOg = jumpVelocity;
                     jumpElapsedTime = 0f;
+
+                    if (boopVelocity.y < 0f)
+                    {
+                        boopVelocityOg.y = 0f;
+                    }
                 }
                 else
                 {
@@ -229,8 +234,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         jumpElapsedTime += Time.deltaTime;
         jumpVelocity = Vector3.Lerp(jumpVelocityOg, Vector3.zero, jumpElapsedTime);
+        Vector3 verticalVelocity = (playerVelocity + boopVector + jumpVelocity) * Time.deltaTime;
 
-        controller.Move((playerVelocity + boopVector + jumpVelocity) * Time.deltaTime);
+        controller.Move(verticalVelocity);
     }
 
     void CheckHeadHit()
@@ -238,11 +244,9 @@ public class PlayerController : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.4f))
         {
-            if (hit.transform.position != transform.position)
+            if (hit.transform.position != transform.position && !hit.collider.isTrigger)
             {
                 playerVelocity.y = -playerVelocity.y;
-                boopVelocity.y = 0f;
-                jumpVelocity.y = 0f;
             }
         }
     }
@@ -420,7 +424,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void SlamImpact()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, boopDist))
+        if (Physics.BoxCast(transform.position - Vector3.down, Vector3.one, Vector3.down, out hit))
         {
             if (!hit.collider.isTrigger)
             {

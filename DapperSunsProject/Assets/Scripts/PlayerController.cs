@@ -190,6 +190,20 @@ public class PlayerController : MonoBehaviour, IDamage
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
         boopVector *= frictionForce;
 
+        // Cancel boop velocity if you move in the opposite direction or stop moving
+        if (move.normalized.magnitude > 0)
+        {
+            if (move.x == 0f || Mathf.Sign(move.x) != Mathf.Sign(boopVector.x))
+            {
+                boopVelocityOg.x = 0f;
+            }
+
+            if (move.z == 0f || Mathf.Sign(move.z) != Mathf.Sign(boopVector.z))
+            {
+                boopVelocityOg.z = 0f;
+            }
+        }
+
         if (!dashing && !slamming)
         {
             playerVelocity.x *= frictionForce;
@@ -338,7 +352,11 @@ public class PlayerController : MonoBehaviour, IDamage
         dashing = true;
 
         Vector3 dashDirection = move.normalized;
+
         playerVelocity.y = 0;
+        boopVelocityOg = Vector3.zero;
+        jumpVelocityOg = Vector3.zero;
+
         dashCounter = dashCooldown;
         playerVelocity = dashDirection * dashSpeed;
 
@@ -374,6 +392,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         // Disable player horizontal control and gravity influence here if desired
         gravityValue = 0;
+        boopVelocityOg = Vector3.zero;
+        jumpVelocityOg = Vector3.zero;
 
         // Apply the ground pound speed directly downwards
         playerVelocity.y = -slamSpeed;

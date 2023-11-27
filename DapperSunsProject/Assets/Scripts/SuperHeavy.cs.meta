@@ -3,7 +3,14 @@ guid: c1107fce29f91114a8c19349ea5fea4b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - rb: {instanceID: 0}
+  - enemyCol: {instanceID: 0}
+  - outline: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - ShootAudio: {instanceID: 0}
+  - deathAudio: {instanceID: 0}
+  - bulletPrefab: {fileID: 5226062936138798103, guid: b47aad9238df57542b66b9b02f5069ab, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

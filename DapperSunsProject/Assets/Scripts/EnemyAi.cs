@@ -55,35 +55,41 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void Update()
     {
-        if (playerInRange)
+        if (playerInRange && CanSeePlayer())
         {
-            if (CanSeePlayer())
-            {
-                playerDirection = GameManager.instance.player.transform.position - transform.position;
+            playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-                Rotate();
+            Rotate();
 
-                Move();
-            }
-            else
-            {
-                playerInRange = false;
-            }
+            Move();
+        }
+        else
+        {
+            playerInRange = false;
         }
     }
-
     private bool CanSeePlayer()
     {
+        Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDirection.normalized, out hit))
+        // Cast a ray from the enemy to the player
+        if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer))
         {
+            // Debug line to visualize the ray in the Scene view
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+
+            // Check if the raycast hit the player
             if (hit.collider.CompareTag("Player"))
             {
                 return true;
             }
         }
+        // If the raycast didn't hit anything or didn't hit the player, return false
         return false;
     }
+
 
     protected virtual void Restart()
     {

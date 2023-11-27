@@ -7,8 +7,8 @@ public class SuperHeavy : EnemyAi
     [Header("---SuperHeavy---")]
     [SerializeField] Transform[] shootPositions;
     [SerializeField] GameObject bulletPrefab; // Prefab for the bullets
-    [SerializeField] float bulletSpeed = 2f; // Lower speed for more trackable bullets
-    [SerializeField] float knockbackForce = 10f; // Higher force for more impactful knockback
+    //[SerializeField] float bulletSpeed = 2f; // Lower speed for more trackable bullets
+    //[SerializeField] float knockbackForce = 10f; // Higher force for more impactful knockback
     [SerializeField] int maxHitPoints = 3; // It takes three hits to kill the SuperHeavy
 
     public int currentHitPoints;

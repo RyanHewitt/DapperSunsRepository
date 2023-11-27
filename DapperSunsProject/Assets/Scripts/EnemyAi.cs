@@ -57,12 +57,32 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     {
         if (playerInRange)
         {
-            playerDirection = GameManager.instance.player.transform.position - transform.position;
+            if (CanSeePlayer())
+            {
+                playerDirection = GameManager.instance.player.transform.position - transform.position;
 
-            Rotate();
+                Rotate();
 
-            Move();
+                Move();
+            }
+            else
+            {
+                playerInRange = false;
+            }
         }
+    }
+
+    private bool CanSeePlayer()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, playerDirection.normalized, out hit))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected virtual void Restart()

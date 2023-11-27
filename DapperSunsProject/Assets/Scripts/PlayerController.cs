@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                if (canBeat)
+                if (canBeat) // First beat off window
                 {
                     hitPenalty = false;
                 }
@@ -166,27 +166,23 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
-            if (!hitPenalty)
+            if (!hitBeat && !hitPenalty)
             {
-                if (canBeat && !hitBeat)
-                {
-                    hitBeat = true;
-                    AudioManager.instance.audioSource.PlayOneShot(jumpSFX);
+                hitBeat = true;
+                AudioManager.instance.audioSource.PlayOneShot(jumpSFX);
 
-                    jumpVelocity.y += jumpHeight;
-                    jumpVelocityOg = jumpVelocity;
-                    jumpElapsedTime = 0f;
+                jumpVelocity.y += jumpHeight;
+                jumpVelocityOg = jumpVelocity;
+                jumpElapsedTime = 0f;
 
-                    if (boopVelocity.y < 0f)
-                    {
-                        boopVelocityOg.y = 0f;
-                    }
-                }
-                else
+                if (boopVelocity.y < 0f)
                 {
-                    hitPenalty = true;
-                    BoopPenalty();
+                    boopVelocityOg.y = 0f;
                 }
+            }
+            else
+            {
+                BoopPenalty();
             }
         }
 
@@ -255,18 +251,14 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Shoot"))
         {
-            if (!hitPenalty)
+            if (!hitBeat && !hitPenalty)
             {
-                if (canBeat && !hitBeat)
-                {
-                    hitBeat = true;
-                    Boop();
-                }
-                else
-                {
-                    hitPenalty = true;
-                    BoopPenalty();
-                }
+                hitBeat = true;
+                Boop();
+            }
+            else
+            {
+                BoopPenalty();
             }
         }
     }
@@ -297,6 +289,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void BoopPenalty()
     {
         AudioManager.instance.playOnce(blastPenaltySFX);
+        hitPenalty = true;
     }
 
     public void takeDamage(int amount)
@@ -344,7 +337,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
                 else
                 {
-                    hitPenalty = true;
                     BoopPenalty();
                 }
             }
@@ -383,7 +375,6 @@ public class PlayerController : MonoBehaviour, IDamage
                 }
                 else
                 {
-                    hitPenalty = true;
                     BoopPenalty();
                 }
             }

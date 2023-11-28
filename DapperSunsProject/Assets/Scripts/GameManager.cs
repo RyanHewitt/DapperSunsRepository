@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
+    [SerializeField] GameObject optionsstart;
+    [SerializeField] GameObject mainmenustart;
+    [SerializeField] GameObject tutorialstart;
+    [SerializeField] GameObject controlsstart;
+    [SerializeField] GameObject quitstart;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -168,6 +174,7 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuOptions);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(optionsstart);
     }
 
     public void PopupControls()
@@ -178,6 +185,7 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuControls);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(controlsstart);
     }
 
     public void PopupWin()
@@ -209,6 +217,7 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuQuit);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(quitstart);
     }
 
     public void Back()
@@ -222,6 +231,10 @@ public class GameManager : MonoBehaviour
         else if (isPaused && SceneManager.GetActiveScene().name != "MainMenu")
         {
             StateUnpause();
+        }
+        else if(isPaused && SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            EventSystem.current.SetSelectedGameObject(mainmenustart);
         }
     }
 
@@ -266,6 +279,7 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(tutorialMenu);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(tutorialstart);
     }
     public void ToTutorial()
     {

@@ -6,10 +6,12 @@ public class Sniper : Shooter
 {
     public LineRenderer laserLineRenderer;
     public Transform LazerPosition;
+    public GameObject lazer;
 
     protected override void Start()
     {
         base.Start();
+        lazer.SetActive(true);
         laserLineRenderer.enabled = true;
     }
 

@@ -921,7 +921,7 @@ MonoBehaviour:
   controller: {fileID: 5283020408901821959}
   shootPos: {fileID: 230813569849710475}
   headPos: {fileID: 1451994654362099324}
-  playerSpeed: 10
+  playerSpeed: 8
   jumpHeight: 20
   gravityValue: -10
   frictionAir: 0.9
@@ -930,6 +930,7 @@ MonoBehaviour:
   dashDuration: 0.15
   dashCooldown: 2
   slamSpeed: 50
+  groovePlayerSpeed: 15
   boopDist: 10
   boopForce: 30
   boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}

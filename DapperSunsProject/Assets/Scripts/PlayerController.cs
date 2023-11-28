@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Slam Stats -----")]
     [SerializeField] float slamSpeed;
 
+    [Header("----- Groove Stats -----")]
+    [Range(1, 30)][SerializeField] float groovePlayerSpeed;
+
     [Header("----- Gun Stats -----")]
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
@@ -65,6 +68,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float frictionForce;
     float boopElapsedTime;
     float jumpElapsedTime;
+    float currentPlayerSpeed;
 
     void Start()
     {
@@ -79,6 +83,7 @@ public class PlayerController : MonoBehaviour, IDamage
         SpawnPlayer();
 
         originalGravity = gravityValue;
+        currentPlayerSpeed = playerSpeed;
     }
 
     void Update()
@@ -160,6 +165,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
         slamming = false;
         gravityValue = originalGravity;
+
+        BoopPenalty();
     }
 
     void MovePlayer()
@@ -186,6 +193,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (grooveMeter < 4)
                 {
                     grooveMeter++;
+                    CheckGroove();
                 }
 
                 grooveTimer = 0;
@@ -227,7 +235,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             translation = (ghost.transform.position - transform.position);
 
-            controller.Move(((move * playerSpeed + playerVelocity + boopVector) * Time.deltaTime) + translation);
+            controller.Move(((move * currentPlayerSpeed + playerVelocity + boopVector) * Time.deltaTime) + translation);
         }
 
         CheckHeadHit();
@@ -274,6 +282,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (grooveMeter < 4)
                 {
                     grooveMeter++;
+                    CheckGroove();
                 }
 
                 grooveTimer = 0;
@@ -321,7 +330,7 @@ public class PlayerController : MonoBehaviour, IDamage
         grooveMeter = 0;
         grooveTimer = 0;
 
-        // Groove Penalty Logic
+        currentPlayerSpeed = playerSpeed;
     }
 
     public void takeDamage(int amount)
@@ -368,6 +377,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (grooveMeter < 4)
                 {
                     grooveMeter++;
+                    CheckGroove();
                 }
 
                 grooveTimer = 0;
@@ -415,6 +425,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (grooveMeter < 4)
                 {
                     grooveMeter++;
+                    CheckGroove();
                 }
 
                 grooveTimer = 0;
@@ -484,7 +495,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (grooveMeter == 4)
         {
-            // Buff Player
+            currentPlayerSpeed = groovePlayerSpeed;
         }
     }
 

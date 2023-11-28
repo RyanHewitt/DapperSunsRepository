@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             if (GameManager.instance.beatWindow)
             {
-                if (!canBeat) // First beat in window
+                if (!canBeat) // First update in window
                 {
                     if (dashCounter > 0)
                     {
@@ -100,12 +100,13 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                if (canBeat) // First beat off window
+                if (canBeat) // First update off window
                 {
                     hitPenalty = false;
+                    hitBeat = false;
                 }
+
                 canBeat = false;
-                hitBeat = false;
             }
         }
         else
@@ -178,6 +179,11 @@ public class PlayerController : MonoBehaviour, IDamage
                 if (boopVelocity.y < 0f)
                 {
                     boopVelocityOg.y = 0f;
+                }
+
+                if (!canBeat)
+                {
+                    BoopPenalty();
                 }
             }
             else
@@ -255,6 +261,11 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 hitBeat = true;
                 Boop();
+
+                if (!canBeat)
+                {
+                    BoopPenalty();
+                }
             }
             else
             {
@@ -326,19 +337,21 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Dash") && move.normalized.magnitude > 0)
         {
-            if (!hitPenalty)
+            if (!hitBeat && !hitPenalty && dashCounter <= 0)
             {
-                if (canBeat && !hitBeat && dashCounter <= 0)
-                {
-                    hitBeat = true;
-                    AudioManager.instance.playOnce(dashSFX);
-                    StartCoroutine(GameManager.instance.FlashLines(dashDuration));
-                    StartCoroutine(DoDash());
-                }
-                else
+                hitBeat = true;
+                AudioManager.instance.playOnce(dashSFX);
+                StartCoroutine(GameManager.instance.FlashLines(dashDuration));
+                StartCoroutine(DoDash());
+
+                if (!canBeat)
                 {
                     BoopPenalty();
                 }
+            }
+            else
+            {
+                BoopPenalty();
             }
         }
     }
@@ -365,18 +378,20 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Slam") && !groundedPlayer && !slamming)
         {
-            if (!hitPenalty)
+            if (!hitBeat && !hitPenalty)
             {
-                if (canBeat && !hitBeat)
-                {
-                    hitBeat = true;
-                    AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
-                    StartCoroutine(DoSlam());
-                }
-                else
+                hitBeat = true;
+                AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
+                StartCoroutine(DoSlam());
+
+                if (!canBeat)
                 {
                     BoopPenalty();
                 }
+            }
+            else
+            {
+                BoopPenalty();
             }
         }
     }

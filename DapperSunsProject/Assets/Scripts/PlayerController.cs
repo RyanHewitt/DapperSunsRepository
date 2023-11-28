@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour, IDamage
     bool dashing = false;
     int HP = 1;
     int dashCounter;
+    int grooveMeter;
+    int grooveTimer;
     float originalGravity;
     float frictionForce;
     float boopElapsedTime;
@@ -181,6 +183,13 @@ public class PlayerController : MonoBehaviour, IDamage
                     boopVelocityOg.y = 0f;
                 }
 
+                if (grooveMeter < 4)
+                {
+                    grooveMeter++;
+                }
+
+                grooveTimer = 0;
+
                 if (!canBeat)
                 {
                     BoopPenalty();
@@ -262,6 +271,13 @@ public class PlayerController : MonoBehaviour, IDamage
                 hitBeat = true;
                 Boop();
 
+                if (grooveMeter < 4)
+                {
+                    grooveMeter++;
+                }
+
+                grooveTimer = 0;
+
                 if (!canBeat)
                 {
                     BoopPenalty();
@@ -300,7 +316,12 @@ public class PlayerController : MonoBehaviour, IDamage
     void BoopPenalty()
     {
         AudioManager.instance.playOnce(blastPenaltySFX);
+
         hitPenalty = true;
+        grooveMeter = 0;
+        grooveTimer = 0;
+
+        // Groove Penalty Logic
     }
 
     public void takeDamage(int amount)
@@ -344,6 +365,13 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(GameManager.instance.FlashLines(dashDuration));
                 StartCoroutine(DoDash());
 
+                if (grooveMeter < 4)
+                {
+                    grooveMeter++;
+                }
+
+                grooveTimer = 0;
+
                 if (!canBeat)
                 {
                     BoopPenalty();
@@ -383,6 +411,13 @@ public class PlayerController : MonoBehaviour, IDamage
                 hitBeat = true;
                 AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
                 StartCoroutine(DoSlam());
+
+                if (grooveMeter < 4)
+                {
+                    grooveMeter++;
+                }
+
+                grooveTimer = 0;
 
                 if (!canBeat)
                 {
@@ -445,9 +480,25 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    void CheckGroove()
+    {
+        if (grooveMeter == 4)
+        {
+            // Buff Player
+        }
+    }
+
     void DoBeat()
     {
-        
+        if (grooveMeter > 0)
+        {
+            grooveTimer++;
+        }
+
+        if (grooveTimer > 4)
+        {
+            BoopPenalty();
+        }
     }
 
     public void DoBoop(Vector3 direction)

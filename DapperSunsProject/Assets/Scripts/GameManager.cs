@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     int lastSampledTime;
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
+     public Stack<GameObject> buttonStack = new Stack<GameObject>();
     GameObject playerSpawn;
 
     public delegate void BeatEvent();
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour
         menuStack.Push(menuOptions);
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(optionsstart);
+        buttonStack.Push(optionsstart);
     }
 
     public void PopupControls()
@@ -186,6 +189,7 @@ public class GameManager : MonoBehaviour
         menuStack.Push(menuControls);
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(controlsstart);
+        buttonStack.Push(controlsstart);
     }
 
     public void PopupWin()
@@ -218,12 +222,15 @@ public class GameManager : MonoBehaviour
         menuStack.Push(menuQuit);
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(quitstart);
+        buttonStack.Push(quitstart);
     }
 
     public void Back()
     {
         menuStack.Peek().SetActive(false);
         menuStack.Pop();
+        buttonStack.Pop();
+        EventSystem.current.SetSelectedGameObject(buttonStack.Peek());
         if (menuStack.Count > 0)
         {
             menuStack.Peek().SetActive(true);
@@ -231,10 +238,6 @@ public class GameManager : MonoBehaviour
         else if (isPaused && SceneManager.GetActiveScene().name != "MainMenu")
         {
             StateUnpause();
-        }
-        else if(isPaused && SceneManager.GetActiveScene().name == "MainMenu")
-        {
-            EventSystem.current.SetSelectedGameObject(mainmenustart);
         }
     }
 
@@ -280,6 +283,7 @@ public class GameManager : MonoBehaviour
         menuStack.Push(tutorialMenu);
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(tutorialstart);
+        buttonStack.Push(tutorialstart);
     }
     public void ToTutorial()
     {

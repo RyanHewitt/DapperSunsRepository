@@ -12,6 +12,7 @@ public class MainMenuScreen : MonoBehaviour
     public void Start()
     {
         GameManager.instance.isPaused = true;
+        GameManager.instance.buttonStack.Push(DefaultButton);
     }
     public void Update()
     {

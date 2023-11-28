@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DoBeat()
     {
-        if (grooveMeter > 0)
+        if (grooveMeter == 4)
         {
             grooveTimer++;
         }

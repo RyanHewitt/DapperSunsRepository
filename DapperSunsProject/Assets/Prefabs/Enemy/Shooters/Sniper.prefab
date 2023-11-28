@@ -231,6 +231,7 @@ MonoBehaviour:
   shootPos: {fileID: 4101349549511556180}
   laserLineRenderer: {fileID: 4511426732849130356}
   LazerPosition: {fileID: 2122871370101012084}
+  lazer: {fileID: 7166461826696049339}
 --- !u!65 &8919849123410621664
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -316,7 +317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2122871370101012084
 Transform:
   m_ObjectHideFlags: 0

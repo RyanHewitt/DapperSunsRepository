@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour, IDamage
     Vector3 boopVelocityOg;
     Vector3 jumpVelocity;
     Vector3 jumpVelocityOg;
+    Vector3 dashVelocity;
+    Vector3 dashVelocityOg;
+
     bool groundedPlayer;
     bool canBeat = false;
     bool hitBeat = false;
@@ -68,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float frictionForce;
     float boopElapsedTime;
     float jumpElapsedTime;
+    float dashElapsedTime;
     float currentPlayerSpeed;
 
     void Start()
@@ -211,6 +215,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         boopElapsedTime += Time.deltaTime;
         boopVelocity = Vector3.Lerp(boopVelocityOg, Vector3.zero, boopElapsedTime);
+        boopVelocity.x *= frictionForce;
+        boopVelocity.z *= frictionForce;
+        boopVelocityOg.x *= frictionForce;
+        boopVelocityOg.z *= frictionForce;
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
         boopVector *= frictionForce;
 
@@ -235,7 +243,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
             translation = (ghost.transform.position - transform.position);
 
-            controller.Move(((move * currentPlayerSpeed + playerVelocity + boopVector) * Time.deltaTime) + translation);
+            dashElapsedTime += Time.deltaTime * 4;
+            dashVelocity = Vector3.Lerp(dashVelocityOg, Vector3.zero, dashElapsedTime);
+
+            controller.Move(((move * currentPlayerSpeed + playerVelocity + boopVector + dashVelocity) * Time.deltaTime) + translation);
+        }
+        else if (dashing)
+        {
+            controller.Move(dashVelocity * Time.deltaTime);
         }
 
         CheckHeadHit();
@@ -405,7 +420,9 @@ public class PlayerController : MonoBehaviour, IDamage
         jumpVelocityOg = Vector3.zero;
 
         dashCounter = dashCooldown;
-        playerVelocity = dashDirection * dashSpeed;
+        dashVelocity = dashDirection * dashSpeed;
+        dashVelocityOg = dashVelocity;
+        dashElapsedTime = 0;
 
         yield return new WaitForSeconds(dashDuration);
 
@@ -501,7 +518,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void DoBeat()
     {
-        if (grooveMeter > 0)
+        if (grooveMeter == 4)
         {
             grooveTimer++;
         }

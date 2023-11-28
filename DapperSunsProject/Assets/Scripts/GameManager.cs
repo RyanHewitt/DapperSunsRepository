@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
+    [SerializeField] GameObject optionsstart;
+    [SerializeField] GameObject mainmenustart;
+    [SerializeField] GameObject tutorialstart;
+    [SerializeField] GameObject controlsstart;
+    [SerializeField] GameObject quitstart;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -32,6 +39,7 @@ public class GameManager : MonoBehaviour
     int lastSampledTime;
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
+     public Stack<GameObject> buttonStack = new Stack<GameObject>();
     GameObject playerSpawn;
 
     public delegate void BeatEvent();
@@ -168,6 +176,8 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuOptions);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(optionsstart);
+        buttonStack.Push(optionsstart);
     }
 
     public void PopupControls()
@@ -178,6 +188,8 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuControls);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(controlsstart);
+        buttonStack.Push(controlsstart);
     }
 
     public void PopupWin()
@@ -209,12 +221,16 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuQuit);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(quitstart);
+        buttonStack.Push(quitstart);
     }
 
     public void Back()
     {
         menuStack.Peek().SetActive(false);
         menuStack.Pop();
+        buttonStack.Pop();
+        EventSystem.current.SetSelectedGameObject(buttonStack.Peek());
         if (menuStack.Count > 0)
         {
             menuStack.Peek().SetActive(true);
@@ -266,6 +282,8 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(tutorialMenu);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(tutorialstart);
+        buttonStack.Push(tutorialstart);
     }
     public void ToTutorial()
     {

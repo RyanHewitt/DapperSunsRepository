@@ -8,15 +8,17 @@ using UnityEngine.SceneManagement;
 public class MainMenuScreen : MonoBehaviour
 {
     private GameObject lastSelectedButton;
+    [SerializeField] GameObject DefaultButton;
     public void Start()
     {
         GameManager.instance.isPaused = true;
+        GameManager.instance.buttonStack.Push(DefaultButton);
     }
     public void Update()
     {
-        if(EventSystem.current.currentSelectedGameObject == null)
+        if (EventSystem.current.currentSelectedGameObject == null)
         {
-            EventSystem.current.SetSelectedGameObject(lastSelectedButton);
+                EventSystem.current.SetSelectedGameObject(lastSelectedButton);
         }
         else
         {

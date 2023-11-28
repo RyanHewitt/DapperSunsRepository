@@ -211,6 +211,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
         boopElapsedTime += Time.deltaTime;
         boopVelocity = Vector3.Lerp(boopVelocityOg, Vector3.zero, boopElapsedTime);
+        boopVelocity.x *= frictionForce;
+        boopVelocity.z *= frictionForce;
+        boopVelocityOg.x *= frictionForce;
+        boopVelocityOg.z *= frictionForce;
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
         boopVector *= frictionForce;
 

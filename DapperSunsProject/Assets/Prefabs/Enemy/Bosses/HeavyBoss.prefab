@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6524818511217687367}
   - component: {fileID: -3443341401806846109}
+  - component: {fileID: -1826043244889484486}
   - component: {fileID: 7468932859033021100}
   - component: {fileID: 784456964929373343}
   - component: {fileID: 4616801356796533883}
@@ -260,6 +261,20 @@ MonoBehaviour:
   maxHitPoints: 3
   currentHitPoints: 0
   isDead: 0
+--- !u!114 &-1826043244889484486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5985554853651395757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2738977a96d9908458e05fdd68a2c29b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  trackingRate: 1
 --- !u!33 &7468932859033021100
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -5,10 +5,10 @@ using UnityEngine;
 public class Heavy : EnemyAi
 {
     [Header("---Heavy---")]
-    [SerializeField] Transform[] shootPositions;
-    [SerializeField] int steps;
+    [SerializeField] public Transform[] shootPositions;
+    [SerializeField] public int steps;
 
-    int currentStep;
+    public int currentStep;
     Collider groundTrigger;
 
     protected override void Start()

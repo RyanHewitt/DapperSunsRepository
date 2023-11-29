@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(winstart);
         buttonStack.Push(winstart);
     }
+
     public void PopupEndGame()
     {
         StatePause();
@@ -247,8 +248,13 @@ public class GameManager : MonoBehaviour
     {
         menuStack.Peek().SetActive(false);
         menuStack.Pop();
+
         buttonStack.Pop();
-        EventSystem.current.SetSelectedGameObject(buttonStack.Peek());
+        if (buttonStack.Count > 0)
+        {
+            EventSystem.current.SetSelectedGameObject(buttonStack.Peek()); 
+        }
+
         if (menuStack.Count > 0)
         {
             menuStack.Peek().SetActive(true);
@@ -292,6 +298,7 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
+
     public void TutorialQuestion()
     {
         while (menuStack.Count > 0)
@@ -303,6 +310,7 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(tutorialstart);
         buttonStack.Push(tutorialstart);
     }
+
     public void ToTutorial()
     {
         while (menuStack.Count > 0)
@@ -312,6 +320,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
         StateUnpause();
     }
+
     public void RejectTutorial()
     {
         while (menuStack.Count > 0)

@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject tutorialstart;
     [SerializeField] GameObject controlsstart;
     [SerializeField] GameObject quitstart;
+    [SerializeField] GameObject pausestart;
+    [SerializeField] GameObject endgamestart;
+    [SerializeField] GameObject winstart;
 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
     Stack<GameObject> menuStack = new Stack<GameObject>();
      public Stack<GameObject> buttonStack = new Stack<GameObject>();
     GameObject playerSpawn;
+    private GameObject lastSelectedButton;
 
     public delegate void BeatEvent();
 
@@ -114,6 +118,14 @@ public class GameManager : MonoBehaviour
         }
 
         CheckTimer();
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            EventSystem.current.SetSelectedGameObject(lastSelectedButton);
+        }
+        else
+        {
+            lastSelectedButton = EventSystem.current.currentSelectedGameObject;
+        }
     }
 
     void CheckBeat()
@@ -166,6 +178,8 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuStack.Push(menuPause);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(pausestart);
+        buttonStack.Push(pausestart);
     }
 
     public void PopupOptions()
@@ -197,12 +211,16 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuStack.Push(menuWin);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(winstart);
+        buttonStack.Push(winstart);
     }
     public void PopupEndGame()
     {
         StatePause();
         menuStack.Push(menuEndGame);
         menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(endgamestart);
+        buttonStack.Push(endgamestart);
     }
 
     public void PopupLose()

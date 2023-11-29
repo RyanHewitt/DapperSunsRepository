@@ -307,7 +307,7 @@ MonoBehaviour:
   outline: {fileID: 186496619292639381}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
   stopDistance: 2
-  HP: 5
+  HP: 20
   PlayerFaceSpeed: 0
   maxVerticalAngle: 0
   boopMultiplier: 0
@@ -323,9 +323,10 @@ MonoBehaviour:
   currentStep: 0
   groundTrigger: {fileID: 0}
   superHeavyHitPoints: 3
-  teleportDistance: 2
   trackingBulletSpeed: 1
   trackingRate: 1
+  teleportPosition1: {fileID: 0}
+  teleportPosition2: {fileID: 0}
 --- !u!114 &4950680407355125246
 MonoBehaviour:
   m_ObjectHideFlags: 0

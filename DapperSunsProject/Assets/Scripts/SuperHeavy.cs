@@ -7,10 +7,15 @@ public class SuperHeavy : Heavy
 {
     [Header("---SuperHeavy---")]
     [SerializeField] private int superHeavyHitPoints = 3; // Takes three hits to kill
-    [SerializeField] private float teleportDistance = 5.0f; // Distance to teleport away from the player
     //[SerializeField] private float knockbackForce = 10f; // Force to knock the player back
     [SerializeField] private float trackingBulletSpeed = 2f; // Speed for tracking bullets
     [SerializeField] private float trackingRate = 1f; // Tracking rate for bullets
+
+    [Header("---Teleport Positions---")]
+    [SerializeField] private Transform teleportPosition1; 
+    [SerializeField] private Transform teleportPosition2; 
+
+    private bool lastTeleportWasPos1 = false;
 
     protected override void Start()
     {
@@ -62,10 +67,7 @@ public class SuperHeavy : Heavy
     {
         base.Damage(amount);
 
-        if (HP > 0)
-        {
-            TeleportAwayFromPlayer();
-        }
+        TeleportAwayFromPlayer();
     }
 
     protected override IEnumerator Death()
@@ -78,52 +80,20 @@ public class SuperHeavy : Heavy
     protected override void BoopImpulse(float force, bool slam = false)
     {
        base.BoopImpulse(force, slam);
+        
     }
-
 
     private void TeleportAwayFromPlayer()
     {
-        Vector3 directionAwayFromPlayer = (transform.position - GameManager.instance.player.transform.position).normalized;
-        Vector3 potentialTeleportPosition = transform.position + directionAwayFromPlayer * teleportDistance;
-
-        if (IsPositionValid(potentialTeleportPosition))
-        {
-            transform.position = potentialTeleportPosition; // Teleport the SuperHeavy
-        }
-        else
-        {
-            // Fallback: Try to find an alternative valid position
-            Vector3 alternativePosition = FindAlternativePosition();
-            if (alternativePosition != Vector3.zero)
-            {
-                transform.position = alternativePosition;
-            }
-           
-        }
-    }
-
-    private bool IsPositionValid(Vector3 position)
-    {
-        float checkRadius = 1.0f; 
-
-   
-        Collider[] hitColliders = Physics.OverlapSphere(position, checkRadius);
-
-        return hitColliders.Length == 0; 
-    }
-
-    private Vector3 FindAlternativePosition()
-    {
         
-        Vector3[] directions = { Vector3.left, Vector3.right, Vector3.forward, Vector3.back };
-        foreach (var dir in directions)
-        {
-            Vector3 potentialPosition = transform.position + dir * teleportDistance;
-            if (IsPositionValid(potentialPosition))
-            {
-                return potentialPosition;
-            }
-        }
-        return Vector3.zero; 
+        Transform targetTeleportPosition = lastTeleportWasPos1 ? teleportPosition2 : teleportPosition1;
+
+       
+        transform.position = targetTeleportPosition.position;
+
+        
+        lastTeleportWasPos1 = !lastTeleportWasPos1;
     }
 }
+
+

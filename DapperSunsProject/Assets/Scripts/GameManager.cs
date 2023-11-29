@@ -249,10 +249,14 @@ public class GameManager : MonoBehaviour
         menuStack.Peek().SetActive(false);
         menuStack.Pop();
 
-        buttonStack.Pop();
         if (buttonStack.Count > 0)
         {
-            EventSystem.current.SetSelectedGameObject(buttonStack.Peek()); 
+            buttonStack.Pop(); 
+        }
+
+        if (buttonStack.Count > 0)
+        {
+            EventSystem.current.SetSelectedGameObject(buttonStack.Peek());
         }
 
         if (menuStack.Count > 0)

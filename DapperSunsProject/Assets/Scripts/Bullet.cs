@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] float bulletSpeed;
     [SerializeField] float life = 3;
 
-    void Start()
+    protected virtual void Start()
     {
         if (gameObject != null)
         {
@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
         Restart();
     }
 
-    void Restart()
+    protected virtual void Restart()
     {
         if (gameObject != null)
         {

@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (AudioManager.instance.audioSource.isPlaying)
+        if (AudioManager.instance.audioSource.isPlaying && !playerDead)
         {
             CheckBeat();
         }

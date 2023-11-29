@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyAi : MonoBehaviour, IDamage, IBoop
 {
+    [Header("---Movement---")]
+    [SerializeField] protected float stopDistance = 2.0f;
+
     [Header("---Components---")]
     [SerializeField] protected Rigidbody rb;
     [SerializeField] protected Collider enemyCol;
@@ -116,6 +119,10 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void Move()
     {
+        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > stopDistance)
+        {
+            
+        }
 
     }
 

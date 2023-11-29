@@ -9,7 +9,7 @@ public class Heavy : EnemyAi
     [SerializeField] public int steps;
 
     public int currentStep;
-    Collider groundTrigger;
+    public Collider groundTrigger;
 
     protected override void Start()
     {

@@ -11,6 +11,9 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     
     [SerializeField] protected Color flashColor;
 
+    [Header("---Movement---")]
+    [SerializeField] protected float stopDistance = 2.0f;
+
     [Header("---Stats---")]
     [SerializeField] protected int HP;
     [SerializeField] protected int PlayerFaceSpeed;

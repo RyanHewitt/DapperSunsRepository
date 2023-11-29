@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject shootCone;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
 

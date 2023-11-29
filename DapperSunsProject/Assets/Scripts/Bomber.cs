@@ -42,9 +42,17 @@ public class Bomber : EnemyAi
 
     protected override void Move()
     {
-        Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
-        transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+        
+        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+
+        
+        if (distanceToPlayer > stopDistance)
+        {
+            Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
+            transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+        }
     }
+
 
     protected override void Rotate()
     {

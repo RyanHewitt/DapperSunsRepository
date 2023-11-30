@@ -16,6 +16,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(0, 1)][SerializeField] float frictionAir;
     [Range(0, 1)][SerializeField] float frictionGround;
 
+    [Header("----- Double Time Stats -----")]
+    [SerializeField] float doubleTimeSpeedMultiplier = 1.5f;
+    [SerializeField] int doubleTimeJumpMultiplier = 2;
+    [SerializeField] int doubleTimeDashCooldownReduction = 1;
+
+    bool doubleTimeActive = false;
+
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
     [SerializeField] float dashDuration;
@@ -73,6 +80,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float jumpElapsedTime;
     float dashElapsedTime;
     float currentPlayerSpeed;
+    private float originalSpeed;
 
     void Start()
     {
@@ -540,5 +548,38 @@ public class PlayerController : MonoBehaviour, IDamage
         boopVelocity = direction * boopForce;
         boopVelocityOg = boopVelocity;
         boopElapsedTime = 0f;
+    }
+
+
+    public void ActivateDoubleTime(bool isActive)
+    {
+        doubleTimeActive = isActive;
+
+        if (doubleTimeActive)
+        {
+            // Increase player stats for double time
+            playerSpeed *= doubleTimeSpeedMultiplier;
+            jumpHeight *= doubleTimeJumpMultiplier;
+            dashCooldown -= doubleTimeDashCooldownReduction;
+        }
+        else
+        {
+            // Reset player stats after double time
+            playerSpeed /= doubleTimeSpeedMultiplier;
+            jumpHeight /= doubleTimeJumpMultiplier;
+            dashCooldown += doubleTimeDashCooldownReduction;
+        }
+    }
+
+    public void IncreaseSpeed(float multiplier)
+    {
+        playerSpeed *= multiplier;
+        // Adjust other stats if necessary
+    }
+
+    public void ResetSpeed()
+    {
+        playerSpeed = originalSpeed;
+        // Reset other stats if necessary
     }
 }

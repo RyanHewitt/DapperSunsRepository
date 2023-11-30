@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioLowPassFilter lowPassFilter;
+    private AudioClip doubleTimeSong;
 
     void Awake()
     {
@@ -83,5 +84,20 @@ public class AudioManager : MonoBehaviour
         lowPassFilter.cutoffFrequency = 800;
 
         yield break;
+    }
+
+    public void ChangeSong(AudioClip newSong)
+    {
+        audioSource.Stop();
+        audioSource.clip = newSong;
+        audioSource.Play();
+    }
+
+    public void ActivateDoubleTimePowerUp()
+    {
+        
+        AudioManager.instance.ChangeSong(doubleTimeSong);
+
+       
     }
 }

@@ -32,12 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pausestart;
     [SerializeField] GameObject endgamestart;
     [SerializeField] GameObject winstart;
-    [SerializeField] GameObject DoubleTimePrefab;
-   
-
-
-    [SerializeField] private float doubleTimeDuration = 10f; // Duration of double-time effect
-    
+    [SerializeField] GameObject DoubleTimePrefab;    
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -51,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     float bpm;
     int lastSampledTime;
+    int doubleTimeCount;
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
      public Stack<GameObject> buttonStack = new Stack<GameObject>();
@@ -292,26 +288,21 @@ public class GameManager : MonoBehaviour
     {
         elapsedTime = 0;
         playerDead = false;
+
         if (OnRestartEvent != null)
         {
             OnRestartEvent();
         }
+
         while (menuStack.Count > 0)
         {
             Back();
         }
+
         if (doubleTimeActive)
         {
             DeactivateDoubleTimePowerUp();
         }
-
-        else if (originalSong != null)
-        {
-           
-            AudioManager.instance.ChangeSong(originalSong);
-        }
-
-        RespawnDoubleTimePowerUp();
     }
 
     public void ToMainMenu()
@@ -390,10 +381,13 @@ public class GameManager : MonoBehaviour
 
     public void SyncBeats(float _bpm)
     {
-        originalBpm = _bpm;
+        originalBpm = bpm;
         bpm = _bpm;
-        StartTimer();
-        AudioManager.instance.playAudio(audioClip);
+        if (!isCountingTimer)
+        {
+            StartTimer();
+        }
+        AudioManager.instance.ChangeSong(audioClip);
     }
 
     public IEnumerator FlashLines(float duration)
@@ -409,18 +403,21 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetFloat("Sensitivity", playerScript.sensitivity);
     }
 
-    public void ActivateDoubleTimePowerUp(AudioClip doubleTimeSong)
+    public void ActivateDoubleTimePowerUp(AudioClip doubleTimeSong, float doubleBpm, float duration)
     {
         if (!doubleTimeActive)
         {
+            doubleTimeCount++;
+
             originalSong = AudioManager.instance.audioSource.clip; // Store the current song
             audioClip = doubleTimeSong; // Set the double-time song
             AudioManager.instance.ChangeSong(audioClip); // Change to the double-time song
 
             doubleTimeActive = true;
-            SyncBeats(originalBpm * 2);
+            SyncBeats(doubleBpm);
+            
             // Start a coroutine to end double-time after its duration
-            StartCoroutine(EndDoubleTimeAfterDuration(doubleTimeDuration));
+            StartCoroutine(EndDoubleTimeAfterDuration(duration));
         }
     }
 
@@ -428,7 +425,15 @@ public class GameManager : MonoBehaviour
     public IEnumerator EndDoubleTimeAfterDuration(float duration)
     {
         yield return new WaitForSeconds(duration);
-        DeactivateDoubleTimePowerUp();
+        if (doubleTimeCount == 1)
+        {
+            doubleTimeCount = 0;
+            DeactivateDoubleTimePowerUp();
+        }
+        else
+        {
+            doubleTimeCount--;
+        }
     }
 
     // Method to deactivate double-time
@@ -436,18 +441,12 @@ public class GameManager : MonoBehaviour
     {
         if (doubleTimeActive)
         {
-            AudioManager.instance.ChangeSong(originalSong); // Revert to the original song
             doubleTimeActive = false;
+            audioClip = originalSong;
             SyncBeats(originalBpm);
         }
     }
-    public void RespawnDoubleTimePowerUp()
-    {
-        if (DoubleTimePrefab != null)
-        {
-            DoubleTimePrefab.SetActive(true);
-        }
-    }
+
     public event BeatEvent OnBeatEvent;
     public event BeatEvent OnRestartEvent;
 }

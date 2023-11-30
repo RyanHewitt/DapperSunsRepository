@@ -610,6 +610,11 @@ public class PlayerController : MonoBehaviour, IDamage
             AudioManager.instance.audioSource.PlayOneShot(deathSFX);
             GameManager.instance.playerDead = true;
             GameManager.instance.PopupLose();
+            GameManager.instance.RespawnDoubleTimePowerUp();
+            if (GameManager.instance.doubleTimeActive)
+            {
+                GameManager.instance.DeactivateDoubleTimePowerUp();
+            }
         }
     }
 

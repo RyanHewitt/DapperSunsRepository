@@ -32,9 +32,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pausestart;
     [SerializeField] GameObject endgamestart;
     [SerializeField] GameObject winstart;
+    [SerializeField] GameObject DoubleTimePrefab;
+   
 
 
     [SerializeField] private float doubleTimeDuration = 10f; // Duration of double-time effect
+    
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -66,6 +69,7 @@ public class GameManager : MonoBehaviour
 
     public float beatTime;
     public float timeScaleOg;
+   
 
     void Awake()
     {
@@ -123,6 +127,7 @@ public class GameManager : MonoBehaviour
         {
             Restart();
             AudioManager.instance.Unmuffle();
+
         }
 
         CheckTimer();
@@ -295,6 +300,18 @@ public class GameManager : MonoBehaviour
         {
             Back();
         }
+        if (doubleTimeActive)
+        {
+            DeactivateDoubleTimePowerUp();
+        }
+
+        else if (originalSong != null)
+        {
+           
+            AudioManager.instance.ChangeSong(originalSong);
+        }
+
+        RespawnDoubleTimePowerUp();
     }
 
     public void ToMainMenu()
@@ -424,7 +441,13 @@ public class GameManager : MonoBehaviour
             SyncBeats(originalBpm);
         }
     }
-
+    public void RespawnDoubleTimePowerUp()
+    {
+        if (DoubleTimePrefab != null)
+        {
+            DoubleTimePrefab.SetActive(true);
+        }
+    }
     public event BeatEvent OnBeatEvent;
     public event BeatEvent OnRestartEvent;
 }

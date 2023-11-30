@@ -813,6 +813,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1755065832 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4966727969349307355, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
+  m_PrefabInstance: {fileID: 2382450764588027219}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2002260666
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -826,12 +831,28 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: isCountingTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: DoubleTimePrefab
+      value: 
+      objectReference: {fileID: 7625103977445913577, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: doubleTimeActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: powerUpSpawnPoint
+      value: 
+      objectReference: {fileID: 1755065832}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
+      propertyPath: powerUpSpawnPos.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2495563465553279361, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: doubleTimeDuration
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8066243146842517648, guid: 51d4f1afc03eb6e48ac28e7e98c821c7, type: 3}
       propertyPath: m_Pivot.x
@@ -1044,21 +1065,17 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1316307511}
-    - target: {fileID: 4795550323963731871, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
-      propertyPath: doubleTimeSong
-      value: 
-      objectReference: {fileID: 8300000, guid: a1fd72efb0f31c045b3767bbabbf61b1, type: 3}
     - target: {fileID: 6878761042848382993, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.256134
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6878761042848382993, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.69
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6878761042848382993, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -42.452736
+      value: -42
       objectReference: {fileID: 0}
     - target: {fileID: 6878761042848382993, guid: cf0e6755efc3f964cbe37996feb47377, type: 3}
       propertyPath: m_LocalRotation.w

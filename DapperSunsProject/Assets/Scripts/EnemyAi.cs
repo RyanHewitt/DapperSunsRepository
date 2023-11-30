@@ -66,7 +66,6 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
             Move();
         }
-      
     }
 
 
@@ -119,11 +118,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void Move()
     {
-        if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > stopDistance)
-        {
-            
-        }
-
+        
     }
 
     protected IEnumerator Flash()

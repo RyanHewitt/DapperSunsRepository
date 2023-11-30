@@ -30,11 +30,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("----- Gun Stats -----")]
     [SerializeField] GameObject boopCard;
-    [SerializeField] int boopDist;
     [SerializeField] int boopForce;
     [SerializeField] int rayCount;
     [SerializeField] int rayDistance;
-    [SerializeField] int coneAngle;
+    [SerializeField] int coneOuterAngle;
+    [SerializeField] int coneInnerAngle;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip boopSFX;
@@ -344,9 +344,9 @@ public class PlayerController : MonoBehaviour, IDamage
             float angleRad = Mathf.Deg2Rad * angle;
 
             // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneOuterAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
 
             // Combine coordinates to get the direction vector
             Vector3 direction = new Vector3(x, y, z);
@@ -388,9 +388,9 @@ public class PlayerController : MonoBehaviour, IDamage
             float angleRad = Mathf.Deg2Rad * angle;
 
             // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
-            float y = Mathf.Sin(Mathf.Deg2Rad * (coneAngle / 2));
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneInnerAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
 
             // Combine coordinates to get the direction vector
             Vector3 direction = new Vector3(x, y, z);
@@ -482,9 +482,9 @@ public class PlayerController : MonoBehaviour, IDamage
             float angleRad = Mathf.Deg2Rad * angle;
 
             // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneOuterAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
 
             // Combine coordinates to get the direction vector
             Vector3 direction = new Vector3(x, y, z);
@@ -517,9 +517,9 @@ public class PlayerController : MonoBehaviour, IDamage
             float angleRad = Mathf.Deg2Rad * angle;
 
             // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
-            float y = Mathf.Sin(Mathf.Deg2Rad * (coneAngle / 2));
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneInnerAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
 
             // Combine coordinates to get the direction vector
             Vector3 direction = new Vector3(x, y, z);

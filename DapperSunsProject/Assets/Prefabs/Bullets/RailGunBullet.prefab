@@ -103,7 +103,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6495927407642491603}
-  - component: {fileID: 165615054905230524}
   - component: {fileID: 6785483726873245933}
   - component: {fileID: 3288600831564893372}
   - component: {fileID: 1053502472015180994}
@@ -133,22 +132,6 @@ Transform:
   - {fileID: 2958308150222427618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &165615054905230524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5226062936138798103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bf7e983e9f7fec40824cc664f2dd3ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  rb: {fileID: 3288600831564893372}
-  bulletSpeed: 200
-  life: 1
 --- !u!114 &6785483726873245933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,9 +144,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0d9431fa034a043a6dd52acb47261b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  rb: {fileID: 3288600831564893372}
+  bulletSpeed: 100
+  life: 3
   _RailGunTrail: {fileID: 7812096193875168536, guid: 4f30bfe187613234a930cf1f7881071a, type: 3}
-  trailInterval: 0
-  maxTrailCount: 100
+  trailInterval: 0.001
+  maxTrailCount: 5
   trailDuration: 1.5
 --- !u!54 &3288600831564893372
 Rigidbody:
@@ -340,7 +327,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -370,7 +357,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

@@ -23,7 +23,7 @@ public class Bomb : EnemyAi
 
     protected override void Update()
     {
-        base.Update();
+        playerDirection = GameManager.instance.player.transform.position - transform.position;
     }
 
     protected override void Restart()
@@ -76,6 +76,7 @@ public class Bomb : EnemyAi
     {
 
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+        
 
         startCountdown = false;
         counter = 0;

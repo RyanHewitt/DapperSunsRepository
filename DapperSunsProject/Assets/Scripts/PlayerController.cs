@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour, IDamage
     float jumpElapsedTime;
     float dashElapsedTime;
     float currentPlayerSpeed;
-    private float originalSpeed;
+    float originalSpeed;
 
     void Start()
     {
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        RaycastCone();
+        DebugRaycastCone();
     }
 
     void LateUpdate()
@@ -337,23 +337,118 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
 
-        Vector3 midpoint = RaycastCone();
-
-        DoBoop(transform.position - midpoint);
-
-        Instantiate(boopCard, shootPos.position, shootPos.rotation);
-    }
-
-    Vector3 RaycastCone()
-    {
         List<Vector3> points = new List<Vector3>();
+        List<IBoop> targets = new List<IBoop>();
 
         // Make raycast cone
-        Vector3 origin = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)).origin;
+        Vector3 origin = shootPos.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
         for (int i = 0; i < rayCount; i++)
         {
             float angle = i * (360f / rayCount); // Calculate angle for each ray
+
+            // Convert angle to radians
+            float angleRad = Mathf.Deg2Rad * angle;
+
+            // Calculate spherical coordinates
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+
+            // Combine coordinates to get the direction vector
+            Vector3 direction = new Vector3(x, y, z);
+
+            // Rotate the direction using the camera's rotation matrix
+            direction = rotation * direction;
+
+            // Perform the raycast
+            Ray ray = new Ray(origin, direction.normalized);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance))
+            {
+                Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                points.Add(hit.point);
+
+                IBoop boopable = hit.collider.GetComponent<IBoop>();
+                if (hit.transform != transform && boopable != null)
+                {
+                    if (!targets.Contains(boopable))
+                    {
+                        targets.Add(boopable);
+                    }
+                }
+            }
+            else
+            {
+                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+            }
+        }
+
+        // Center raycast
+        Ray centerRay = new Ray(shootPos.position, Camera.main.transform.forward);
+        RaycastHit centerHit;
+        if (Physics.Raycast(centerRay, out centerHit, rayDistance))
+        {
+            Debug.DrawLine(centerRay.origin, centerHit.point, Color.magenta);
+
+            points.Add(centerHit.point);
+
+            IBoop boopable = centerHit.collider.GetComponent<IBoop>();
+            if (centerHit.transform != transform && boopable != null)
+            {
+                if (!targets.Contains(boopable))
+                {
+                    targets.Add(boopable);
+                }
+            }
+        }
+        else
+        {
+            Debug.DrawRay(centerRay.origin, centerRay.direction * rayDistance, Color.blue);
+        }
+
+        Vector3 midpoint = Vector3.zero;
+
+        if (points.Count > 0)
+        {
+            // Initialize the sum
+            Vector3 sum = Vector3.zero;
+
+            // Sum up all the points
+            foreach (Vector3 point in points)
+            {
+                sum += point;
+            }
+
+            // Divide by the number of points to get the average (midpoint)
+            midpoint = sum / points.Count;
+
+            // Boop player
+            DoBoop((transform.position - midpoint).normalized);
+        }
+
+        Debug.DrawLine(midpoint, origin, Color.yellow);
+
+        foreach (IBoop target in targets)
+        {
+            target.DoBoop(boopForce);
+        }
+
+        Instantiate(boopCard, shootPos.position, shootPos.rotation);
+    }
+
+    void DebugRaycastCone()
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        // Make raycast cone
+        Vector3 origin = shootPos.position;
+        Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
+        for (int i = 0; i < rayCount / 2; i++)
+        {
+            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
 
             // Convert angle to radians
             float angleRad = Mathf.Deg2Rad * angle;
@@ -385,18 +480,52 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
+        for (int i = 0; i < rayCount / 2; i++)
+        {
+            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
+
+            // Convert angle to radians
+            float angleRad = Mathf.Deg2Rad * angle;
+
+            // Calculate spherical coordinates
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+            float y = Mathf.Sin(Mathf.Deg2Rad * (coneAngle / 2));
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+
+            // Combine coordinates to get the direction vector
+            Vector3 direction = new Vector3(x, y, z);
+
+            // Rotate the direction using the camera's rotation matrix
+            direction = rotation * direction;
+
+            // Perform the raycast
+            Ray ray = new Ray(origin, direction.normalized);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance))
+            {
+                Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                points.Add(hit.point);
+            }
+            else
+            {
+                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+            }
+        }
+
         // Center raycast
-        Ray centerRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
+        Ray centerRay = new Ray(shootPos.position, Camera.main.transform.forward);
         RaycastHit centerHit;
         if (Physics.Raycast(centerRay, out centerHit, rayDistance))
         {
-            Debug.DrawLine(centerRay.origin, centerHit.point, Color.red);
+            Debug.DrawLine(centerRay.origin, centerHit.point, Color.magenta);
 
             points.Add(centerHit.point);
         }
         else
         {
-            Debug.DrawRay(centerRay.origin, centerRay.direction * rayDistance, Color.green);
+            Debug.DrawRay(centerRay.origin, centerRay.direction * rayDistance, Color.blue);
         }
 
         Vector3 midpoint = Vector3.zero;
@@ -417,8 +546,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         Debug.DrawLine(midpoint, origin, Color.yellow);
-
-        return midpoint;
     }
 
     void BoopPenalty()
@@ -620,7 +747,6 @@ public class PlayerController : MonoBehaviour, IDamage
         boopVelocityOg = boopVelocity;
         boopElapsedTime = 0f;
     }
-
 
     public void ActivateDoubleTime(bool isActive)
     {

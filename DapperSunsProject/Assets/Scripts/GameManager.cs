@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour
             if (OnBeatEvent != null)
             {
                 OnBeatEvent();
+                //StatePause();
             }
         }
 

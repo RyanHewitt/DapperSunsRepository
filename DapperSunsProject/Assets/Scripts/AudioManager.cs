@@ -92,11 +92,4 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = newSong;
         audioSource.Play();
     }
-
-    public void ActivateDoubleTimePowerUp()
-    {
-
-        AudioManager.instance.ChangeSong(doubleTimeSong);
-
-    }
 }

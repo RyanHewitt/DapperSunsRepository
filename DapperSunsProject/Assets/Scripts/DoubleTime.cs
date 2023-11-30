@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class DoubleTime : MonoBehaviour
 {
-    [SerializeField] public GameManager gameManager; 
-    [SerializeField] public AudioClip doubleTimeSong;
+    [SerializeField] AudioClip doubleTimeSong;
+    [SerializeField] Renderer model;
+    [SerializeField] Collider col;
+    [SerializeField] float duration;
+    [SerializeField] float bpm;
 
-    private void OnTriggerEnter(Collider other)
+    void Start()
+    {
+        GameManager.instance.OnRestartEvent += Restart;
+    }
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.ActivateDoubleTimePowerUp(doubleTimeSong);
-            gameObject.SetActive(false);
+            GameManager.instance.ActivateDoubleTimePowerUp(doubleTimeSong, bpm, duration);
+            model.enabled = false;
+            col.enabled = false;
         }
     }
 
-    public void Respawn()
+    void Restart()
     {
-        gameObject.SetActive(true);
-
+        model.enabled = true;
+        col.enabled = true;
     }
 }

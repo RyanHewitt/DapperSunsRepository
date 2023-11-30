@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
-    [SerializeField] GameObject shootCone;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
 
@@ -29,9 +29,12 @@ public class PlayerController : MonoBehaviour, IDamage
     [Range(1, 30)][SerializeField] float groovePlayerSpeed;
 
     [Header("----- Gun Stats -----")]
+    [SerializeField] GameObject boopCard;
     [SerializeField] int boopDist;
     [SerializeField] int boopForce;
-    [SerializeField] GameObject boopCard;
+    [SerializeField] int rayCount;
+    [SerializeField] int rayDistance;
+    [SerializeField] int coneAngle;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip boopSFX;
@@ -131,6 +134,8 @@ public class PlayerController : MonoBehaviour, IDamage
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
         }
+
+        RaycastCone();
     }
 
     void LateUpdate()
@@ -324,23 +329,88 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, boopDist))
+        Vector3 midpoint = RaycastCone();
+
+        DoBoop(transform.position - midpoint);
+
+        Instantiate(boopCard, shootPos.position, shootPos.rotation);
+    }
+
+    Vector3 RaycastCone()
+    {
+        List<Vector3> points = new List<Vector3>();
+
+        // Make raycast cone
+        Vector3 origin = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)).origin;
+        Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
+        for (int i = 0; i < rayCount; i++)
         {
-            if (!hit.collider.isTrigger && hit.transform.position != transform.position)
+            float angle = i * (360f / rayCount); // Calculate angle for each ray
+
+            // Convert angle to radians
+            float angleRad = Mathf.Deg2Rad * angle;
+
+            // Calculate spherical coordinates
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+            float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+
+            // Combine coordinates to get the direction vector
+            Vector3 direction = new Vector3(x, y, z);
+
+            // Rotate the direction using the camera's rotation matrix
+            direction = rotation * direction;
+
+            // Perform the raycast
+            Ray ray = new Ray(origin, direction.normalized);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance))
             {
-                DoBoop(hit.normal);
+                Debug.DrawLine(ray.origin, hit.point, Color.red);
 
-                IBoop boopable = hit.collider.GetComponent<IBoop>();
-
-                if (hit.transform != transform && boopable != null)
-                {
-                    boopable.DoBoop(boopForce);
-                }
+                points.Add(hit.point);
+            }
+            else
+            {
+                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
             }
         }
 
-        Instantiate(boopCard, shootPos.position, shootPos.rotation);
+        // Center raycast
+        Ray centerRay = Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f));
+        RaycastHit centerHit;
+        if (Physics.Raycast(centerRay, out centerHit, rayDistance))
+        {
+            Debug.DrawLine(centerRay.origin, centerHit.point, Color.red);
+
+            points.Add(centerHit.point);
+        }
+        else
+        {
+            Debug.DrawRay(centerRay.origin, centerRay.direction * rayDistance, Color.green);
+        }
+
+        Vector3 midpoint = Vector3.zero;
+
+        if (points.Count > 0)
+        {
+            // Initialize the sum
+            Vector3 sum = Vector3.zero;
+
+            // Sum up all the points
+            foreach (Vector3 point in points)
+            {
+                sum += point;
+            }
+
+            // Divide by the number of points to get the average (midpoint)
+            midpoint = sum / points.Count;
+        }
+
+        Debug.DrawLine(midpoint, origin, Color.yellow);
+
+        return midpoint;
     }
 
     void BoopPenalty()

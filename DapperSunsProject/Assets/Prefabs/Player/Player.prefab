@@ -564,69 +564,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!1 &3034531880756720789
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7163356356343148305}
-  - component: {fileID: 7429709387235106744}
-  - component: {fileID: 7141961531119715705}
-  m_Layer: 3
-  m_Name: ShootCone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7163356356343148305
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3034531880756720789}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000055661794, y: 0.259, z: -0.98300004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5045692978660919069}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7429709387235106744
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3034531880756720789}
-  m_Mesh: {fileID: 3613567641014311022, guid: 42f4b121c91187f4ca4042baa0711879, type: 3}
---- !u!64 &7141961531119715705
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3034531880756720789}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3613567641014311022, guid: 42f4b121c91187f4ca4042baa0711879, type: 3}
 --- !u!1 &3692799930447183159
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +799,6 @@ Transform:
   - {fileID: 4058748812512859680}
   - {fileID: 4192442243711542427}
   - {fileID: 230813569849710475}
-  - {fileID: 7163356356343148305}
   m_Father: {fileID: 8608530452862127262}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &6038714936106013765
@@ -983,7 +919,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5283020408901821959}
-  shootCone: {fileID: 3034531880756720789}
   shootPos: {fileID: 230813569849710475}
   headPos: {fileID: 1451994654362099324}
   playerSpeed: 8
@@ -996,9 +931,12 @@ MonoBehaviour:
   dashCooldown: 2
   slamSpeed: 50
   groovePlayerSpeed: 15
+  boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
   boopDist: 10
   boopForce: 30
-  boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
+  rayCount: 18
+  rayDistance: 10
+  coneAngle: 60
   boopSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
   jumpSFX: {fileID: 8300000, guid: 298f834f7f478fc408c8aa6cb07d4619, type: 3}

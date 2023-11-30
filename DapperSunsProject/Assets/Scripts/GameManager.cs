@@ -35,10 +35,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float doubleTimeDuration = 10f; // Duration of double-time effect
 
-    private bool doubleTimeActive = false;
+    public bool doubleTimeActive = false;
     private AudioClip originalSong; 
     private float elapsedTime = 0f;
     public bool isCountingTimer;
+    private float originalBpm; 
+ 
 
     public AudioClip audioClip;
     AudioSource audioSource;
@@ -364,6 +366,7 @@ public class GameManager : MonoBehaviour
 
     public void SyncBeats(float _bpm)
     {
+        originalBpm = _bpm;
         bpm = _bpm;
         StartTimer();
         AudioManager.instance.playAudio(audioClip);
@@ -395,9 +398,8 @@ public class GameManager : MonoBehaviour
             // Change to the double-time song
             AudioManager.instance.ChangeSong(doubleTimeSong);
 
-            
-
             doubleTimeActive = true;
+            SyncBeats(originalBpm * 2);
 
             // Start a coroutine to automatically end double-time after its duration
             StartCoroutine(EndDoubleTimeAfterDuration(doubleTimeDuration));
@@ -420,8 +422,9 @@ public class GameManager : MonoBehaviour
             AudioManager.instance.ChangeSong(originalSong);
 
             // Revert any changes made to game mechanics
-           
             doubleTimeActive = false;
+            SyncBeats(originalBpm);
+           
         }
     }
 

@@ -17,7 +17,14 @@ public class MusicStartTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.instance.audioClip = musicClip;
-            GameManager.instance.SyncBeats(bpm);
+            if (GameManager.instance.doubleTimeActive)
+            {
+                GameManager.instance.SyncBeats(bpm * 2); // Double the BPM if double-time is active
+            }
+            else
+            {
+                GameManager.instance.SyncBeats(bpm);
+            }
             gameObject.SetActive(false);
         }
     }

@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bomb : EnemyAi
 {
-    [Header("---Bomber Stats---")]
+    [Header("---Bomb Stats---")]
+    [SerializeField] Collision collision;
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] int explosionForce;    // Force inflicted by the explosion
     [SerializeField] int countdown;
+    [SerializeField] int expcountdown;
 
     bool startCountdown;
     int counter;
@@ -24,6 +27,11 @@ public class Bomb : EnemyAi
     protected override void Update()
     {
         playerDirection = GameManager.instance.player.transform.position - transform.position;
+
+        if (playerInRange && enemyCol.enabled)
+        {
+            startCountdown = true;
+        }
     }
 
     protected override void Restart()
@@ -41,7 +49,7 @@ public class Bomb : EnemyAi
 
     protected override IEnumerator Death()
     {
-        yield return base.Death();
+        yield return new WaitForSeconds(expcountdown);
 
         Explode();
     }
@@ -70,15 +78,27 @@ public class Bomb : EnemyAi
     protected override void BoopImpulse(float force, bool slam = false)
     {
         rb.AddForce(-playerDirection * force * boopMultiplier, ForceMode.Impulse);
+        StartCoroutine(Death());
     }
 
     void Explode()
     {
-
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-        
+
+        // Check if the player is close enough to be knocked back
+        if (distanceToPlayer <= explosionRadius)
+        {
+            GameManager.instance.playerScript.DoBoop(playerDirection * explosionForce);
+        }
 
         startCountdown = false;
         counter = 0;
+        baseModel.enabled = false;
+        outlineModel.enabled = false;
+        enemyCol.enabled = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Explode();
     }
 }

@@ -343,9 +343,9 @@ public class PlayerController : MonoBehaviour, IDamage
         // Make raycast cone
         Vector3 origin = shootPos.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
-        for (int i = 0; i < rayCount; i++)
+        for (int i = 0; i < (rayCount / 2); i++)
         {
-            float angle = i * (360f / rayCount); // Calculate angle for each ray
+            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
 
             // Convert angle to radians
             float angleRad = Mathf.Deg2Rad * angle;
@@ -379,6 +379,41 @@ public class PlayerController : MonoBehaviour, IDamage
                         targets.Add(boopable);
                     }
                 }
+            }
+            else
+            {
+                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+            }
+        }
+
+        // Smaller cone
+        for (int i = 0; i < rayCount / 2; i++)
+        {
+            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
+
+            // Convert angle to radians
+            float angleRad = Mathf.Deg2Rad * angle;
+
+            // Calculate spherical coordinates
+            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+            float y = Mathf.Sin(Mathf.Deg2Rad * (coneAngle / 2));
+            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * (coneAngle / 2));
+
+            // Combine coordinates to get the direction vector
+            Vector3 direction = new Vector3(x, y, z);
+
+            // Rotate the direction using the camera's rotation matrix
+            direction = rotation * direction;
+
+            // Perform the raycast
+            Ray ray = new Ray(origin, direction.normalized);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, rayDistance))
+            {
+                Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                points.Add(hit.point);
             }
             else
             {
@@ -480,6 +515,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
+        // Smaller Cone
         for (int i = 0; i < rayCount / 2; i++)
         {
             float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
@@ -557,6 +593,7 @@ public class PlayerController : MonoBehaviour, IDamage
         grooveTimer = 0;
 
         currentPlayerSpeed = playerSpeed;
+        GameManager.instance.ToggleGrooveEdge(false);
     }
 
     public void takeDamage(int amount)
@@ -721,9 +758,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void CheckGroove()
     {
-        if (grooveMeter == 4)
+        if (grooveMeter == 4) // Is Grooving
         {
             currentPlayerSpeed = groovePlayerSpeed;
+            GameManager.instance.ToggleGrooveEdge(true);
         }
     }
 

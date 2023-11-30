@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuQuit;
     [SerializeField] GameObject SpeedLines;
+    [SerializeField] GameObject grooveEdge;
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
@@ -252,6 +253,11 @@ public class GameManager : MonoBehaviour
         buttonStack.Push(quitstart);
     }
 
+    public void ToggleGrooveEdge(bool isGroove)
+    {
+        grooveEdge.SetActive(isGroove);
+    }
+
     public void Back()
     {
         menuStack.Peek().SetActive(false);
@@ -386,9 +392,6 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetFloat("Sensitivity", playerScript.sensitivity);
     }
 
-    public event BeatEvent OnBeatEvent;
-    public event BeatEvent OnRestartEvent;
-
     public void ActivateDoubleTimePowerUp(AudioClip doubleTimeSong)
     {
         if (!doubleTimeActive)
@@ -422,4 +425,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public event BeatEvent OnBeatEvent;
+    public event BeatEvent OnRestartEvent;
 }

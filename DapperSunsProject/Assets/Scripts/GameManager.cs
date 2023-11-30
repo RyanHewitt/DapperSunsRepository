@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float doubleTimeDuration = 10f; // Duration of double-time effect
 
     public bool doubleTimeActive = false;
-    private AudioClip originalSong; 
-    private float elapsedTime = 0f;
+    public AudioClip originalSong; 
+    float elapsedTime = 0f;
     public bool isCountingTimer;
     private float originalBpm; 
  
@@ -393,22 +393,19 @@ public class GameManager : MonoBehaviour
     {
         if (!doubleTimeActive)
         {
-            
-            originalSong = AudioManager.instance.audioSource.clip;
-
-            // Change to the double-time song
-            AudioManager.instance.ChangeSong(doubleTimeSong);
+            originalSong = AudioManager.instance.audioSource.clip; // Store the current song
+            audioClip = doubleTimeSong; // Set the double-time song
+            AudioManager.instance.ChangeSong(audioClip); // Change to the double-time song
 
             doubleTimeActive = true;
             SyncBeats(originalBpm * 2);
-
-            // Start a coroutine to automatically end double-time after its duration
+            // Start a coroutine to end double-time after its duration
             StartCoroutine(EndDoubleTimeAfterDuration(doubleTimeDuration));
         }
     }
 
     // Coroutine to end double-time
-    private IEnumerator EndDoubleTimeAfterDuration(float duration)
+    public IEnumerator EndDoubleTimeAfterDuration(float duration)
     {
         yield return new WaitForSeconds(duration);
         DeactivateDoubleTimePowerUp();
@@ -419,13 +416,9 @@ public class GameManager : MonoBehaviour
     {
         if (doubleTimeActive)
         {
-            // Revert to the original song
-            AudioManager.instance.ChangeSong(originalSong);
-
-            // Revert any changes made to game mechanics
+            AudioManager.instance.ChangeSong(originalSong); // Revert to the original song
             doubleTimeActive = false;
             SyncBeats(originalBpm);
-           
         }
     }
 

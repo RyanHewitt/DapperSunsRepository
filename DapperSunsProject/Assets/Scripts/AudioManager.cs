@@ -95,9 +95,8 @@ public class AudioManager : MonoBehaviour
 
     public void ActivateDoubleTimePowerUp()
     {
-        
+
         AudioManager.instance.ChangeSong(doubleTimeSong);
 
-       
     }
 }

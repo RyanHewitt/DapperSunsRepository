@@ -7571,7 +7571,10 @@ MonoBehaviour:
   pausestart: {fileID: 3986725931023163304}
   endgamestart: {fileID: 496262886206453604}
   winstart: {fileID: 2420574157718998183}
-  isCountingTimer: 0
+  doubleTimeDuration: 10
+  doubleTimeActive: 0
+  originalSong: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
+  isCountingTimer: 1
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
   player: {fileID: 0}
   playerScript: {fileID: 0}

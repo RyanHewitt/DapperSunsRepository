@@ -56,4 +56,8 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.RejectTutorial();
     }
+    public void AudioMenu()
+    {
+        GameManager.instance.AudioMenuPopup();
+    }
 }

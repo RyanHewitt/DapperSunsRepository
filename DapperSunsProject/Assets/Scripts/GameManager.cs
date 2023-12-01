@@ -32,7 +32,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pausestart;
     [SerializeField] GameObject endgamestart;
     [SerializeField] GameObject winstart;
-    [SerializeField] GameObject DoubleTimePrefab;    
+    [SerializeField] GameObject DoubleTimePrefab;
+    [SerializeField] GameObject AudioMenu;
+    [SerializeField] GameObject Audiostart;
+
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -215,6 +218,17 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(controlsstart);
         buttonStack.Push(controlsstart);
     }
+    public void AudioMenuPopup()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(AudioMenu);
+        menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(Audiostart);
+        buttonStack.Push(Audiostart);
+    }
 
     public void PopupWin()
     {
@@ -356,6 +370,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Level 1");
         StateUnpause();
     }
+
 
     public void CheckTimer()
     {

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class LevelSelect : MonoBehaviour
 {
     public Button[] buttons;
     public GameObject levelButtons;
+    private GameObject lastSelectedButton;
+
 
     private void Awake()
     {
@@ -21,6 +24,12 @@ public class LevelSelect : MonoBehaviour
         {
             buttons[i].interactable = true;
         }
+    }
+
+    public void Start()
+    {
+        GameManager.instance.isPaused = true;
+       
     }
 
     public void OpenLevel(int levelid)
@@ -39,5 +48,16 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            EventSystem.current.SetSelectedGameObject(lastSelectedButton);
+        }
+        else
+        {
+            lastSelectedButton = EventSystem.current.currentSelectedGameObject;
+        }
+    }
 
 }

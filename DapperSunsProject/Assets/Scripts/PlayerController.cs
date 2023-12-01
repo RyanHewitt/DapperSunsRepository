@@ -219,18 +219,7 @@ public class PlayerController : MonoBehaviour, IDamage
                     boopVelocityOg.y = 0f;
                 }
 
-                if (grooveMeter < 4)
-                {
-                    grooveMeter++;
-                    CheckGroove();
-                }
-
-                grooveTimer = 0;
-
-                if (!canBeat)
-                {
-                    BoopPenalty();
-                }
+                CheckGroove();
             }
             else
             {
@@ -319,18 +308,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 hitBeat = true;
                 Boop();
 
-                if (grooveMeter < 4)
-                {
-                    grooveMeter++;
-                    CheckGroove();
-                }
-
-                grooveTimer = 0;
-
-                if (!canBeat)
-                {
-                    BoopPenalty();
-                }
+                CheckGroove();
             }
             else
             {
@@ -648,18 +626,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 StartCoroutine(GameManager.instance.FlashLines(dashDuration));
                 StartCoroutine(DoDash());
 
-                if (grooveMeter < 4)
-                {
-                    grooveMeter++;
-                    CheckGroove();
-                }
-
-                grooveTimer = 0;
-
-                if (!canBeat)
-                {
-                    BoopPenalty();
-                }
+                CheckGroove();
             }
             else
             {
@@ -698,18 +665,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
                 StartCoroutine(DoSlam());
 
-                if (grooveMeter < 4)
-                {
-                    grooveMeter++;
-                    CheckGroove();
-                }
-
-                grooveTimer = 0;
-
-                if (!canBeat)
-                {
-                    BoopPenalty();
-                }
+                CheckGroove();
             }
             else
             {
@@ -769,23 +725,40 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void CheckGroove()
     {
-        if (grooveMeter == 4) // Is Grooving
+        if (grooveMeter < 4)
         {
-            currentPlayerSpeed = groovePlayerSpeed;
-            GameManager.instance.ToggleGrooveEdge(true);
+            grooveMeter++;
+            if (grooveMeter == 4) // Is Grooving
+            {
+                // Apply Groove Effects
+                currentPlayerSpeed = groovePlayerSpeed;
+                GameManager.instance.ToggleGrooveEdge(true);
+            }
+        }
+
+        grooveTimer = 0;
+
+        if (!canBeat)
+        {
+            BoopPenalty();
         }
     }
 
     void DoBeat()
     {
-        if (grooveMeter == 4)
+        if (grooveMeter > 0)
         {
             grooveTimer++;
         }
 
-        if (grooveTimer > 4)
+        if (grooveTimer > 4 && grooveMeter == 4)
         {
             BoopPenalty();
+        }
+        else if (grooveTimer > 4)
+        {
+            grooveMeter = 0;
+            grooveTimer = 0;
         }
     }
 

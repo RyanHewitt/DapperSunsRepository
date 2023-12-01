@@ -9,7 +9,8 @@ public class LevelSelect : MonoBehaviour
 {
     public Button[] buttons;
     public GameObject levelButtons;
-    private GameObject lastSelectedButton;
+    
+    GameObject lastSelectedButton;
 
 
     private void Awake()
@@ -29,13 +30,11 @@ public class LevelSelect : MonoBehaviour
     public void Start()
     {
         GameManager.instance.isPaused = true;
-       
     }
 
     public void OpenLevel(int levelid)
     {
-        string levelname = "Level" + levelid;
-        SceneManager.LoadScene(levelname);
+        SceneManager.LoadScene(levelid);
     }
 
     void ButtonsToArray()

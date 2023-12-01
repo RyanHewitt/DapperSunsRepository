@@ -60,11 +60,11 @@ MonoBehaviour:
   boopMultiplier: 1
   bullet: {fileID: 0}
   ShootAudio: {fileID: 0}
-  deathAudio: {fileID: 0}
+  deathAudio: {fileID: 8300000, guid: 3fc319f390e9efb478bbe50e6f56b640, type: 3}
   explosionRadius: 5
   explosionForce: 5
   countdown: 3
-  expcountdown: 4
+  cooldown: 0
   explosionSound: {fileID: 8300000, guid: 3fc319f390e9efb478bbe50e6f56b640, type: 3}
   countSound: {fileID: 8300000, guid: 8367bae1f48ccb74184ef276ebcbd759, type: 3}
 --- !u!33 &8823238038199266235

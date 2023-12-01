@@ -318,6 +318,20 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        IBoop boopable = other.GetComponent<IBoop>();
+        if (boopable != null)
+        {
+
+        }
+    }
+
     void Boop()
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
@@ -399,6 +413,15 @@ public class PlayerController : MonoBehaviour, IDamage
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
 
                 points.Add(hit.point);
+
+                IBoop boopable = hit.collider.GetComponent<IBoop>();
+                if (hit.transform != transform && boopable != null)
+                {
+                    if (!targets.Contains(boopable))
+                    {
+                        targets.Add(boopable);
+                    }
+                }
             }
             else
             {
@@ -765,7 +788,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void DoBoop(Vector3 direction)
     {
-
         playerVelocity.y = 0;
         boopVelocity = direction * boopForce;
         boopVelocityOg = boopVelocity;

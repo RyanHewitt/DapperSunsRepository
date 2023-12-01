@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
@@ -71,6 +72,7 @@ public class PlayerController : MonoBehaviour, IDamage
     int dashCounter;
     int grooveMeter;
     int grooveTimer;
+    int timesGrounded;
     float originalGravity;
     float frictionForce;
     float boopElapsedTime;
@@ -154,17 +156,28 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void Ground(Transform ground)
     {
+        timesGrounded++;
+
         ghost.transform.parent = ground;
         ghost.transform.position = transform.position;
+
         groundedPlayer = true;
         frictionForce = frictionGround;
     }
 
     public void Unground()
     {
-        groundedPlayer = false;
+        timesGrounded--;
+        
         ghost.transform.parent = null;
-        frictionForce = frictionAir;
+        
+        if (timesGrounded <= 0)
+        {
+            timesGrounded = 0;
+            
+            groundedPlayer = false;
+            frictionForce = frictionAir; 
+        }
     }
 
     void Restart()

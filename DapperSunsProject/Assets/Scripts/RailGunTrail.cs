@@ -10,7 +10,7 @@ public class RailGunTrail : Bullet
     public int maxTrailCount;
     public float trailDuration;
     private List<GameObject> Trail = new List<GameObject>();
-    bool _is;
+    bool _trail;
 
     protected override void Start()
     {
@@ -19,7 +19,7 @@ public class RailGunTrail : Bullet
 
     void Update()
     {
-        if(!_is)
+        if(!_trail)
         {
             StartCoroutine(CreateTrail());
         }
@@ -35,19 +35,16 @@ public class RailGunTrail : Bullet
     }
     private IEnumerator CreateTrail()
     {
-        _is = true;
-        for (int i = 0; i < maxTrailCount; i++)
-        {
-            // Instantiate the trail
-            GameObject trailEffect = Instantiate(_RailGunTrail, transform.position, transform.rotation);
-            Trail.Add(trailEffect);
-            // Destroy the trail effect after a certain duration
-            Destroy(trailEffect, trailDuration);
+        _trail = true;
+        // Instantiate the trail
+        GameObject trailEffect = Instantiate(_RailGunTrail, transform.position, transform.rotation);
+        Trail.Add(trailEffect);
+        // Destroy the trail effect after a certain duration
+        Destroy(trailEffect, trailDuration);
 
-            // Wait for the specified interval before creating the next trail
-            yield return new WaitForSeconds(trailInterval);
-        }
-        _is = false;
+        // Wait for the specified interval before creating the next trail
+        yield return new WaitForSeconds(trailInterval);
+        _trail = false;
     }
 }
 

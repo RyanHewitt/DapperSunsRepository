@@ -10,7 +10,7 @@ public class Bomb : EnemyAi
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] int explosionForce;    // Force inflicted by the explosion
     [SerializeField] int countdown;
-    [SerializeField] int expcountdown;
+    [SerializeField] int cooldown;
 
     bool startCountdown;
     int counter;
@@ -49,9 +49,11 @@ public class Bomb : EnemyAi
 
     protected override IEnumerator Death()
     {
-        yield return new WaitForSeconds(expcountdown);
-
+        yield return base.Death();
+        
         Explode();
+        yield return new WaitForSeconds(cooldown);
+        startCountdown = true;
     }
 
     protected override void BeatAction()
@@ -60,17 +62,28 @@ public class Bomb : EnemyAi
         if (startCountdown)
         {
             counter++;
-            AudioManager.instance.Play3D(countSound, transform.position);
-            StartCoroutine(Flash());
-            if (counter == 0)
+            if (enemyCol.enabled)
             {
-
                 AudioManager.instance.Play3D(countSound, transform.position);
-            }
+                StartCoroutine(Flash());
+                if (counter == 0)
+                {
 
-            if (counter >= countdown)
+                    AudioManager.instance.Play3D(countSound, transform.position);
+                }
+
+                if (counter >= countdown)
+                {
+                    StartCoroutine(Death());
+                }
+            }
+            else
             {
-                StartCoroutine(Death());
+                if (counter >= countdown)
+                {
+                    startCountdown = false;
+                    Restart();
+                }
             }
         }
     }
@@ -78,27 +91,28 @@ public class Bomb : EnemyAi
     protected override void BoopImpulse(float force, bool slam = false)
     {
         rb.AddForce(-playerDirection * force * boopMultiplier, ForceMode.Impulse);
-        StartCoroutine(Death());
+        startCountdown = true;
     }
 
     void Explode()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
-        // Check if the player is close enough to be knocked back
-        if (distanceToPlayer <= explosionRadius)
+        for (int i = 0; i < colliders.Length; i++)
         {
-            GameManager.instance.playerScript.DoBoop(playerDirection * explosionForce);
+            IBoop boopable = colliders[i].GetComponent<IBoop>();
+            if (boopable != null)
+            {
+                boopable.DoBoop(explosionForce);
+            }
         }
 
         startCountdown = false;
         counter = 0;
-        baseModel.enabled = false;
-        outlineModel.enabled = false;
-        enemyCol.enabled = false;
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Explode();
+        rb.velocity = Vector3.zero;
+        StartCoroutine(Death());
     }
 }

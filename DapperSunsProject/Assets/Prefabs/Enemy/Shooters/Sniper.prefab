@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9a7240d5b817a4bb354cc2b960d338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopDistance: 2
   rb: {fileID: 4093889961554352116}
   enemyCol: {fileID: 8919849123410621664}
   outline: {fileID: 5374043851085644285}
@@ -300,7 +301,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &7166461826696049339
 GameObject:
   m_ObjectHideFlags: 0

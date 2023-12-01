@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
     void CheckBeat()
     {
         float beatInterval = 60f / bpm;
-        float sampledTime = (audioSource.timeSamples / (audioSource.clip.frequency * beatInterval)) - 0.25f;
+        float sampledTime = (AudioManager.instance.MusicSource.timeSamples / (AudioManager.instance.MusicSource.clip.frequency * beatInterval)) - 0.25f;
         int floor = Mathf.FloorToInt(sampledTime);
         if (floor != lastSampledTime)
         {

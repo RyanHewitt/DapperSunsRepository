@@ -5,18 +5,14 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     [SerializeField] int LazerDamage;
-    [SerializeField] Color _out;
-    [SerializeField] Color _in;
     [SerializeField] GameObject warningLazer;
     [SerializeField] GameObject LAZER;
 
     [SerializeField] int WarnSteps;
     [SerializeField] int OutSteps;
+    [SerializeField] bool IsAlwaysOn;
 
     Collider coll;
-
-    Material mat;
-
 
     bool isUp = false;
 
@@ -30,10 +26,6 @@ public class Laser : MonoBehaviour
 
         coll = GetComponent<Collider>();
         coll.enabled = false;
-
-        mat = GetComponent<Renderer>().material;
-        mat.color = _in;
-        mat.SetColor("_EmissionColor", _in);
 
         warningLazer.SetActive(false);
         LAZER.SetActive(false);
@@ -56,32 +48,35 @@ public class Laser : MonoBehaviour
 
     void DoBeat()
     {
-        beatCounter++;
-        if (beatCounter == WarnSteps) // Warn on beat
+        if (IsAlwaysOn)
         {
-            warningLazer.SetActive(true);
+            LAZER.SetActive(true);
         }
-        else if (beatCounter % OutSteps == 0) // Go up or down every beat
+        if (!IsAlwaysOn)
         {
-            if (isUp)
+            beatCounter++;
+            if (beatCounter == WarnSteps) // Warn on beat
             {
-                beatCounter = 0;
-                coll.enabled = false;
-                isUp = false;
-                mat.color = _in;
-                mat.SetColor("_EmissionColor", _in);
-                LAZER.SetActive(false);
+                warningLazer.SetActive(true);
+            }
+            else if (beatCounter % OutSteps == 0) // Go up or down every beat
+            {
+                if (isUp)
+                {
+                    beatCounter = 0;
+                    coll.enabled = false;
+                    isUp = false;
+                    LAZER.SetActive(false);
 
-            }
-            else
-            {
-                coll.enabled = true;
-                isUp = true;
-                mat.color = _out;
-                mat.SetColor("_EmissionColor", _out);
-                warningLazer.SetActive(false);
-                LAZER.SetActive(true);
-            }
+                }
+                else
+                {
+                    coll.enabled = true;
+                    isUp = true;
+                    warningLazer.SetActive(false);
+                    LAZER.SetActive(true);
+                }
+            } 
         }
     }
 }

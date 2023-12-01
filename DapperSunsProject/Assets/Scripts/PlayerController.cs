@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("----- Gun Stats -----")]
     [SerializeField] GameObject boopCard;
+    [SerializeField] LayerMask coneLayerMask;
     [SerializeField] int boopForce;
     [SerializeField] int rayCount;
     [SerializeField] int rayDistance;
@@ -325,7 +326,7 @@ public class PlayerController : MonoBehaviour, IDamage
         List<IBoop> targets = new List<IBoop>();
 
         // Make raycast cone
-        Vector3 origin = shootPos.position;
+        Vector3 origin = Camera.main.transform.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
         for (int i = 0; i < (rayCount / 2); i++)
         {
@@ -349,7 +350,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Ray ray = new Ray(origin, direction.normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, rayDistance))
+            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
 
@@ -393,7 +394,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Ray ray = new Ray(origin, direction.normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, rayDistance))
+            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
 
@@ -406,9 +407,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         // Center raycast
-        Ray centerRay = new Ray(shootPos.position, Camera.main.transform.forward);
+        Ray centerRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit centerHit;
-        if (Physics.Raycast(centerRay, out centerHit, rayDistance))
+        if (Physics.Raycast(centerRay, out centerHit, rayDistance, coneLayerMask))
         {
             Debug.DrawLine(centerRay.origin, centerHit.point, Color.magenta);
 
@@ -463,7 +464,7 @@ public class PlayerController : MonoBehaviour, IDamage
         List<Vector3> points = new List<Vector3>();
 
         // Make raycast cone
-        Vector3 origin = shootPos.position;
+        Vector3 origin = Camera.main.transform.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
         for (int i = 0; i < rayCount / 2; i++)
         {
@@ -487,7 +488,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Ray ray = new Ray(origin, direction.normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, rayDistance))
+            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
 
@@ -522,7 +523,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Ray ray = new Ray(origin, direction.normalized);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, rayDistance))
+            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
             {
                 Debug.DrawLine(ray.origin, hit.point, Color.red);
 
@@ -535,9 +536,9 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         // Center raycast
-        Ray centerRay = new Ray(shootPos.position, Camera.main.transform.forward);
+        Ray centerRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit centerHit;
-        if (Physics.Raycast(centerRay, out centerHit, rayDistance))
+        if (Physics.Raycast(centerRay, out centerHit, rayDistance, coneLayerMask))
         {
             Debug.DrawLine(centerRay.origin, centerHit.point, Color.magenta);
 

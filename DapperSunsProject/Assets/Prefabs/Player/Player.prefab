@@ -754,8 +754,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5211730335138116052}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: -1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.016005851, y: 0.20899999, z: -1.033}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -882,7 +882,7 @@ GameObject:
   - component: {fileID: 7220864447329886250}
   - component: {fileID: 4232257910739179442}
   - component: {fileID: 4485975181824167034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -932,6 +932,9 @@ MonoBehaviour:
   slamSpeed: 50
   groovePlayerSpeed: 15
   boopCard: {fileID: 8074908838442069400, guid: b8f57fa2cd1c5aa4dbdaa46a1a8c4f40, type: 3}
+  coneLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   boopForce: 30
   rayCount: 72
   rayDistance: 10

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
@@ -11,9 +13,17 @@ public class AudioManager : MonoBehaviour
     public AudioLowPassFilter lowPassFilter;
     public bool musicPlaying;
 
+    [SerializeField] AudioMixer Mixer;
+
+
+    public const string MasterKey = "MusicVolume";
+    public const string MusicKey = "MusicVolume";
+    public const string SFXKey = "SFXVolume";
+
     void Awake()
     {
         instance = this;
+        LoadVolume();
     }
 
     public void playAudio(AudioClip input)
@@ -92,5 +102,15 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = newSong;
         audioSource.Play();
         musicPlaying = true;
+    }
+    void LoadVolume()
+    {
+        float MasterVolume = PlayerPrefs.GetFloat(MasterKey, 1f);
+        float MusicVolume = PlayerPrefs.GetFloat(MusicKey, 1f);
+        float SFXVolume = PlayerPrefs.GetFloat(SFXKey, 1f);
+
+        Mixer.SetFloat(VolumeSettings.MixerMaster, Mathf.Log10(MasterVolume) * 20);
+        Mixer.SetFloat(VolumeSettings.MixerMusic, Mathf.Log10(MusicVolume) * 20);
+        Mixer.SetFloat(VolumeSettings.MixerSFX, Mathf.Log10(SFXVolume) * 20);
     }
 }

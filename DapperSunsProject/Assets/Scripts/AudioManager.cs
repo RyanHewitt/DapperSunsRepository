@@ -9,7 +9,6 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioLowPassFilter lowPassFilter;
-    private AudioClip doubleTimeSong;
 
     void Awake()
     {

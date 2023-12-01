@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bomber : EnemyAi
 {
+
     [Header("---Bomber Stats---")]
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] float moveSpeed;       // Speed at which the bomber moves towards the player
@@ -115,16 +116,35 @@ public class Bomber : EnemyAi
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
-        for(int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < colliders.Length; i++)
         {
-            IBoop boopable = colliders[i].GetComponent<IBoop>();
-            if(boopable != null)
+            // Check if there is a direct line of sight to the collider
+            if (IsInLineOfSight(colliders[i]))
             {
-                boopable.DoBoop(explosionForce);
+                IBoop boopable = colliders[i].GetComponent<IBoop>();
+                if (boopable != null)
+                {
+                    boopable.DoBoop(explosionForce);
+                }
             }
         }
 
         startCountdown = false;
         counter = 0;
+    }
+
+    bool IsInLineOfSight(Collider other)
+    {
+        RaycastHit hit;
+        Vector3 directionToOther = other.transform.position - transform.position;
+
+        // Perform a raycast to see if there's an obstacle
+        if (Physics.Raycast(transform.position, directionToOther.normalized, out hit, explosionRadius))
+        {
+            // Check if the first object hit is the same as the object in question
+            return hit.collider == other;
+        }
+
+        return false;
     }
 }

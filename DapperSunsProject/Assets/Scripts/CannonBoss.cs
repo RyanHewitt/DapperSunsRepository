@@ -29,20 +29,17 @@ public class CannonBoss : Shooter, IDamage
         ShootSteps = stepsOriginal + shootDelay;
         foreach (var bomber in Bombers)
         {
-            // Check if the bomber is inactive
-            if (!bomber.activeSelf)
-            {
-                // Reset the position ,rotation ,and parent
-                bomber.transform.position = shootPos.position;
-                bomber.transform.rotation = shootPos.rotation;
-                bomber.transform.parent = transform;
-
-                // Set the bomber as active
-                bomber.SetActive(true);
-
-                // Continue with the next bomber
-                continue;
-            }
+            //// Check if the bomber is inactive
+            //if (!bomber.activeSelf)
+            //{
+            //    // Reset the position ,rotation ,and parent
+            //    bomber.transform.position = shootPos.position;
+            //    bomber.transform.rotation = shootPos.rotation;
+            //    bomber.transform.parent = transform;
+            //    bomber.SetActive(false);
+            //    // Continue with the next bomber
+            //    continue;
+            //}
 
             // If the bomber is active, set it as inactive
             bomber.SetActive(false);
@@ -92,7 +89,6 @@ public class CannonBoss : Shooter, IDamage
                 steps = stepsOriginal;
                 ShootSteps = stepsOriginal + shootDelay;
             }
-        } 
+        }
     }
-
 }

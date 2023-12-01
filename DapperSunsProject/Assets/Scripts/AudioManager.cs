@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
@@ -8,12 +11,22 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     public AudioSource audioSource;
+    public AudioSource MusicSource;
     public AudioLowPassFilter lowPassFilter;
     public bool musicPlaying;
+    [SerializeField] AudioMixer Mixer;
+    [SerializeField] AudioMixerGroup SFX;
+    [SerializeField] AudioMixerGroup Music;
+
+
+    public const string MasterKey = "MusicVolume";
+    public const string MusicKey = "MusicVolume";
+    public const string SFXKey = "SFXVolume";
 
     void Awake()
     {
         instance = this;
+        LoadVolume();
     }
 
     public void playAudio(AudioClip input)
@@ -26,6 +39,7 @@ public class AudioManager : MonoBehaviour
     {
         GameObject audioSourceObject = new GameObject("3DAudio");
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFX;
 
         audioSourceObject.transform.position = pos;
         audioSource.clip = clip;
@@ -37,6 +51,7 @@ public class AudioManager : MonoBehaviour
 
     public void playOnce(AudioClip input)
     {
+        audioSource.outputAudioMixerGroup = SFX;
         audioSource.PlayOneShot(input);
     }
 
@@ -82,15 +97,25 @@ public class AudioManager : MonoBehaviour
         }
 
         lowPassFilter.cutoffFrequency = 800;
-
         yield break;
     }
 
     public void ChangeSong(AudioClip newSong)
     {
-        audioSource.Stop();
-        audioSource.clip = newSong;
-        audioSource.Play();
+        MusicSource.outputAudioMixerGroup = Music;
+        MusicSource.Stop();
+        MusicSource.clip = newSong;
+        MusicSource.Play();
         musicPlaying = true;
+    }
+    void LoadVolume()
+    {
+        float MasterVolume = PlayerPrefs.GetFloat(MasterKey, 1f);
+        float MusicVolume = PlayerPrefs.GetFloat(MusicKey, 1f);
+        float SFXVolume = PlayerPrefs.GetFloat(SFXKey, 1f);
+
+        Mixer.SetFloat(VolumeSettings.MixerMaster, Mathf.Log10(MasterVolume) * 20);
+        Mixer.SetFloat(VolumeSettings.MixerMusic, Mathf.Log10(MusicVolume) * 20);
+        Mixer.SetFloat(VolumeSettings.MixerSFX, Mathf.Log10(SFXVolume) * 20);
     }
 }

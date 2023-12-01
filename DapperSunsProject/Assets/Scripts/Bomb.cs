@@ -96,12 +96,15 @@ public class Bomb : EnemyAi
 
     void Explode()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
-        // Check if the player is close enough to be knocked back
-        if (distanceToPlayer <= explosionRadius)
+        for (int i = 0; i < colliders.Length; i++)
         {
-            GameManager.instance.playerScript.DoBoop(playerDirection * explosionForce);
+            IBoop boopable = colliders[i].GetComponent<IBoop>();
+            if (boopable != null)
+            {
+                boopable.DoBoop(explosionForce);
+            }
         }
 
         startCountdown = false;

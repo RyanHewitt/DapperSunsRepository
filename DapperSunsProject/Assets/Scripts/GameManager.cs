@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (AudioManager.instance.audioSource.isPlaying && !playerDead)
+        if (AudioManager.instance.musicPlaying && !playerDead)
         {
             CheckBeat();
         }
@@ -177,6 +177,7 @@ public class GameManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         AudioManager.instance.audioSource.Pause();
+        AudioManager.instance.musicPlaying = false;
     }
 
     public void StateUnpause()
@@ -184,6 +185,7 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = timeScaleOg;
         AudioManager.instance.audioSource.UnPause();
+        AudioManager.instance.musicPlaying = true;
     }
 
     public void PopupPause()

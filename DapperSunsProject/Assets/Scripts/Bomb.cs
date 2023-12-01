@@ -10,6 +10,7 @@ public class Bomb : EnemyAi
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] int explosionForce;    // Force inflicted by the explosion
     [SerializeField] int countdown;
+    [SerializeField] int cooldown;
 
     bool startCountdown;
     int counter;
@@ -49,8 +50,10 @@ public class Bomb : EnemyAi
     protected override IEnumerator Death()
     {
         yield return base.Death();
-
+        
         Explode();
+        yield return new WaitForSeconds(cooldown);
+        startCountdown = true;
     }
 
     protected override void BeatAction()
@@ -59,19 +62,28 @@ public class Bomb : EnemyAi
         if (startCountdown)
         {
             counter++;
-            AudioManager.instance.Play3D(countSound, transform.position);
-            StartCoroutine(Flash());
-            if (counter == 0)
+            if (enemyCol.enabled)
             {
-
                 AudioManager.instance.Play3D(countSound, transform.position);
+                StartCoroutine(Flash());
+                if (counter == 0)
+                {
+
+                    AudioManager.instance.Play3D(countSound, transform.position);
+                }
+
+                if (counter >= countdown)
+                {
+                    StartCoroutine(Death());
+                }
             }
-
-            if (counter >= countdown)
+            else
             {
-                StartCoroutine(Death());
-                base.Restart();
-
+                if (counter >= countdown)
+                {
+                    startCountdown = false;
+                    Restart();
+                }
             }
         }
     }
@@ -99,6 +111,5 @@ public class Bomb : EnemyAi
     {
         rb.velocity = Vector3.zero;
         StartCoroutine(Death());
-        base.Restart();
     }
 }

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 220060493221589258}
   - component: {fileID: 2451463091068202719}
   - component: {fileID: 6533298853194526419}
+  - component: {fileID: 7029543586478814175}
+  - component: {fileID: 2879497032625823346}
   m_Layer: 0
   m_Name: ExitDoor
   m_TagString: Untagged
@@ -123,6 +125,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pulse: 1.15
   returnspeed: 5
+--- !u!65 &7029543586478814175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699513532448953424}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.5, z: 8.000002}
+  m_Center: {x: 0, y: 8.25, z: 0}
+--- !u!114 &2879497032625823346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699513532448953424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3611908df7a4a4d984bd440ac759ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldParent: 1
 --- !u!1 &2928496521850977277
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioLowPassFilter lowPassFilter;
+    public bool musicPlaying;
 
     void Awake()
     {
@@ -90,5 +91,6 @@ public class AudioManager : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = newSong;
         audioSource.Play();
+        musicPlaying = true;
     }
 }

@@ -60,10 +60,15 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     {
         if (playerInRange)
         {
+            // Recheck line of sight in case the player moves behind an obstacle
+            if (!CheckLineOfSight(GameManager.instance.player.transform))
+            {
+                playerInRange = false;
+                return;
+            }
+
             playerDirection = GameManager.instance.player.transform.position - transform.position;
-
             Rotate();
-
             Move();
         }
     }
@@ -97,7 +102,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            playerInRange = CheckLineOfSight(other.transform);
         }
     }
 
@@ -166,5 +171,22 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     protected virtual void BoopImpulse(float force, bool slam = false)
     {
 
+    }
+
+    protected bool CheckLineOfSight(Transform target)
+    {
+        RaycastHit hit;
+        Vector3 direction = target.position - transform.position;
+
+        // Perform a raycast to see if there's any obstacle between the enemy and the player
+        if (Physics.Raycast(transform.position, direction.normalized, out hit, Mathf.Infinity))
+        {
+            if (hit.transform == target)
+            {
+                // Direct line of sight to the player
+                return true;
+            }
+        }
+        return false; // No line of sight
     }
 }

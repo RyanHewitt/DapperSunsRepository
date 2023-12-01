@@ -764,6 +764,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void DoBoop(Vector3 direction)
     {
+
         playerVelocity.y = 0;
         boopVelocity = direction * boopForce;
         boopVelocityOg = boopVelocity;

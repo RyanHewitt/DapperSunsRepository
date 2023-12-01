@@ -5815,6 +5815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59269737754f13943a8ea42e1afdf1c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: []
+  levelButtons: {fileID: 1623432346}
 --- !u!1 &1827947772
 GameObject:
   m_ObjectHideFlags: 0
@@ -6031,6 +6033,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8700189838832869779}
+        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
+        m_MethodName: TutorialMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1729971884}
         m_TargetAssemblyTypeName: LevelSelect, Assembly-CSharp
         m_MethodName: OpenLevel
@@ -6046,18 +6060,6 @@ MonoBehaviour:
       - m_Target: {fileID: 295610248}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8700189838832869779}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: TutorialMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

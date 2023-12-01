@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class FragilePlatform : MonoBehaviour, IBoop
 {
-    [SerializeField] private float _breakTime = 3f;
     [SerializeField] Collider trigger;
     [SerializeField] Collider col;
     [SerializeField] Renderer model;
     [SerializeField] GameObject outline;
+    [SerializeField] GameObject[] connectedPlats;
+    [SerializeField] float _breakTime = 3f;
 
     int breakCount;
 
@@ -26,7 +27,22 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     public void DoBoop(float force, bool slam = false)
     {
-        StartCoroutine(Break());
+        if (col.enabled)
+        {
+            StartCoroutine(Break());
+
+            if (connectedPlats.Length > 0)
+            {
+                foreach (GameObject obj in connectedPlats)
+                {
+                    IBoop boopable = obj.GetComponent<IBoop>();
+                    if (boopable != null)
+                    {
+                        boopable.DoBoop(force);
+                    }
+                }
+            }
+        }
     }
 
     IEnumerator Break()

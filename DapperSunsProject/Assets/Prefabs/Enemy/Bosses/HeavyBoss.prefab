@@ -302,11 +302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1107fce29f91114a8c19349ea5fea4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopDistance: 2
   rb: {fileID: 5877277385738005470}
   enemyCol: {fileID: 5884250442976671246}
   outline: {fileID: 186496619292639381}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
-  stopDistance: 2
   HP: 20
   PlayerFaceSpeed: 0
   maxVerticalAngle: 0
@@ -459,7 +459,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &6426346364714296237
 GameObject:
   m_ObjectHideFlags: 0

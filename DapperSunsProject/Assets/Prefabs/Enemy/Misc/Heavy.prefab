@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874cce5faf010d549a1672a5e1fd8059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopDistance: 2
   rb: {fileID: 5239718723656642755}
   enemyCol: {fileID: 4616801356796533883}
   outline: {fileID: 8374583307634843382}
@@ -265,6 +266,8 @@ MonoBehaviour:
   - {fileID: 416094290176420937}
   - {fileID: 2583777356645916935}
   steps: 2
+  currentStep: 0
+  groundTrigger: {fileID: 0}
 --- !u!33 &7468932859033021100
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -383,7 +386,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &8374583307634843382
 GameObject:
   m_ObjectHideFlags: 0

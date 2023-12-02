@@ -94,8 +94,9 @@ public class GameManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("MaxFPS"))
         {
-            PlayerPrefs.SetFloat("MaxFPS", 60);
+            PlayerPrefs.SetInt("MaxFPS", 60);
         }
+        FPS.value = PlayerPrefs.GetInt("MaxFPS");
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
     }
@@ -498,7 +499,7 @@ public class GameManager : MonoBehaviour
     public void SetmFPS()
     {
         Application.targetFrameRate = (int)FPS.value;
-        PlayerPrefs.SetFloat("MaxFPS", FPS.value);
+        PlayerPrefs.SetInt("MaxFPS", (int)FPS.value);
     }
 
     public event BeatEvent OnBeatEvent;

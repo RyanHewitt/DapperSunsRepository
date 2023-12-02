@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject DoubleTimePrefab;
     [SerializeField] GameObject AudioMenu;
     [SerializeField] GameObject Audiostart;
+    [SerializeField] GameObject Videomenu;
+    [SerializeField] GameObject Videostart;
 
+    [SerializeField] Slider FPS;
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -68,11 +71,12 @@ public class GameManager : MonoBehaviour
 
     public float beatTime;
     public float timeScaleOg;
-   
+
+    List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
+    List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
 
     void Awake()
     {
-        Application.targetFrameRate = 240;
 
         instance = this;
         player = GameObject.FindWithTag("Player");
@@ -87,6 +91,10 @@ public class GameManager : MonoBehaviour
         if (!PlayerPrefs.HasKey("Sensitivity"))
         {
             PlayerPrefs.SetFloat("Sensitivity", 1000f);
+        }
+        if (!PlayerPrefs.HasKey("MaxFPS"))
+        {
+            PlayerPrefs.SetFloat("MaxFPS", 60);
         }
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
@@ -230,6 +238,17 @@ public class GameManager : MonoBehaviour
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(Audiostart);
         buttonStack.Push(Audiostart);
+    }
+    public void VideoMenuPopup()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(Videomenu);
+        menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(Videostart);
+        buttonStack.Push(Videostart);
     }
 
     public void PopupWin()
@@ -462,6 +481,24 @@ public class GameManager : MonoBehaviour
             audioClip = originalSong;
             SyncBeats(originalBpm);
         }
+    }
+    public void SetScreenSize(int index)
+    {
+        bool fullscreen = Screen.fullScreen;
+        int width = widths[index];
+        int height = heights[index];
+        Screen.SetResolution(width, height, fullscreen);
+    }
+
+    public void SetFullscreen(bool fullscreen)
+    {
+        Screen.fullScreen = fullscreen;
+    }
+
+    public void SetmFPS()
+    {
+        Application.targetFrameRate = (int)FPS.value;
+        PlayerPrefs.SetFloat("MaxFPS", FPS.value);
     }
 
     public event BeatEvent OnBeatEvent;

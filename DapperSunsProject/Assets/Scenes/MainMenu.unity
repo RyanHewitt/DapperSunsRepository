@@ -3135,7 +3135,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8700189838832869779}
         m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: Controls
+        m_MethodName: VideoMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11675,6 +11675,8 @@ MonoBehaviour:
   DoubleTimePrefab: {fileID: 0}
   AudioMenu: {fileID: 384099383}
   Audiostart: {fileID: 178280444}
+  Videomenu: {fileID: 0}
+  Videostart: {fileID: 0}
   doubleTimeActive: 0
   originalSong: {fileID: 0}
   isCountingTimer: 0

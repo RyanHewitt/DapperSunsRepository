@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject speedLinesPrefab;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
 
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Range(-10, 50)][SerializeField] float gravityValue;
     [Range(0, 1)][SerializeField] float frictionAir;
     [Range(0, 1)][SerializeField] float frictionGround;
+    [SerializeField] float speedLineRotSpeed;
+    [SerializeField] float speedLineScroll;
 
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
@@ -53,6 +56,10 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Range(100, 2500)] public float sensitivity;
 
     GameObject ghost;
+    GameObject speedLines;
+
+    Material speedLineMat;
+
     Transform startPos;
 
     Vector3 translation;
@@ -82,7 +89,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     float jumpElapsedTime;
     float dashElapsedTime;
     float currentPlayerSpeed;
-    float originalSpeed;
 
     void Start()
     {
@@ -95,6 +101,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
         GameManager.instance.playerDead = false;
         SpawnPlayer();
+
+        speedLines = Instantiate(speedLinesPrefab, transform.position, Quaternion.Euler(Vector3.zero));
+        speedLineMat = speedLines.GetComponent<Renderer>().material;
 
         originalGravity = gravityValue;
         currentPlayerSpeed = playerSpeed;
@@ -152,11 +161,40 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             MovePlayer();
             DashInput();
             SlamInput();
+            //UpdateSpeedLines();
 
-            Debug.Log((controller.velocity + dashVelocity));
-
-            ghost.transform.position = transform.position; 
+            ghost.transform.position = transform.position;
         }
+    }
+
+    void UpdateSpeedLines()
+    {
+        speedLines.transform.position = transform.position;
+        Vector3 direction = ((controller.velocity).normalized + (dashVelocity).normalized + (move).normalized).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(90f, 0f, 0f);
+            speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+        }
+
+        float uvMax = 0.7f;
+        float uvMin = 0.3f;
+
+        float offsetY = Time.time * speedLineScroll;
+
+        // Calculate the UV offset based on the y-axis scrolling
+        float uvOffsetY = offsetY * (uvMax - uvMin);
+
+        // Apply the offset to the material's mainTextureOffset
+        Vector2 textureOffset = new Vector2(0f, uvOffsetY);
+        speedLineMat.mainTextureOffset = textureOffset;
+
+        // Clamp the UV offset within the specified range
+        float clampedUVOffsetY = Mathf.Repeat(textureOffset.y, 1f);
+        float clampedUVY = Mathf.Lerp(uvMin, uvMax, clampedUVOffsetY);
+        speedLineMat.mainTextureOffset = new Vector2(0f, clampedUVY);
+
+        //speedLineMat.mainTextureOffset += (Vector2.up * speedLineScroll) * Time.deltaTime;
     }
 
     public void Ground(Transform ground)

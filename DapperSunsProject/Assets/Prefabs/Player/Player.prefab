@@ -918,6 +918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5283020408901821959}
+  speedLinesPrefab: {fileID: 5477644315042940242, guid: fc245f58189d1c0468718eaae798a8e9, type: 3}
   shootPos: {fileID: 230813569849710475}
   headPos: {fileID: 1451994654362099324}
   playerSpeed: 8
@@ -925,6 +926,8 @@ MonoBehaviour:
   gravityValue: -10
   frictionAir: 0.98
   frictionGround: 0
+  speedLineRotSpeed: 20
+  speedLineScroll: 2
   dashSpeed: 50
   dashDuration: 0.1
   dashCooldown: 2

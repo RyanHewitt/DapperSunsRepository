@@ -4,7 +4,7 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour, IDamage, IBoop
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
@@ -469,14 +469,14 @@ public class PlayerController : MonoBehaviour, IDamage
             midpoint = sum / points.Count;
 
             // Boop player
-            DoBoop((transform.position - midpoint).normalized);
+            DoBoop(midpoint, boopForce);
         }
 
         Debug.DrawLine(midpoint, origin, Color.yellow);
 
         foreach (IBoop target in targets)
         {
-            target.DoBoop(boopForce);
+            target.DoBoop(transform.position, boopForce);
         }
 
         Instantiate(boopCard, shootPos.position, shootPos.rotation);
@@ -645,6 +645,12 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             if (!hitBeat && !hitPenalty && dashCounter <= 0)
             {
+                if (slamming)
+                {
+                    slamming = false;
+                    gravityValue = originalGravity;
+                }
+
                 hitBeat = true;
                 AudioManager.instance.playOnce(dashSFX);
                 StartCoroutine(GameManager.instance.FlashLines(dashDuration));
@@ -740,8 +746,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
                 if (hit.transform != transform && boopable != null)
                 {
-                    boopable.DoBoop(boopForce, true);
-                    DoBoop(Vector3.up / 2);
+                    boopable.DoBoop(hit.normal, boopForce, true);
+                    DoBoop(hit.normal, boopForce);
                 }
             }
         }
@@ -786,10 +792,16 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    public void DoBoop(Vector3 direction)
+    public void DoBoop(Vector3 origin, float force, bool slam = false)
     {
+        if (slamming)
+        {
+            slamming = false;
+            gravityValue = originalGravity;
+        }
+
         playerVelocity.y = 0;
-        boopVelocity = direction * boopForce;
+        boopVelocity = -(origin - transform.position).normalized * force;
         boopVelocityOg = boopVelocity;
         boopElapsedTime = 0f;
     }

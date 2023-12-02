@@ -163,12 +163,12 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     }
 
-    public void DoBoop(float force, bool slam = false)
+    public void DoBoop(Vector3 origin, float force, bool slam = false)
     {
-        BoopImpulse(force, slam);
+        BoopImpulse(origin, force, slam);
     }
 
-    protected virtual void BoopImpulse(float force, bool slam = false)
+    protected virtual void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
 
     }

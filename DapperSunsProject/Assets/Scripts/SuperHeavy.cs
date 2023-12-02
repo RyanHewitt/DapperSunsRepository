@@ -77,10 +77,9 @@ public class SuperHeavy : Heavy
         
     }
 
-    protected override void BoopImpulse(float force, bool slam = false)
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
-       base.BoopImpulse(force, slam);
-        
+       base.BoopImpulse(origin, force, slam);
     }
 
     private void TeleportAwayFromPlayer()

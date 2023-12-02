@@ -25,7 +25,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
         GameManager.instance.OnRestartEvent += Restart;
     }
 
-    public void DoBoop(float force, bool slam = false)
+    public void DoBoop(Vector3 origin, float force, bool slam = false)
     {
         if (col.enabled)
         {
@@ -38,7 +38,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
                     IBoop boopable = obj.GetComponent<IBoop>();
                     if (boopable != null)
                     {
-                        boopable.DoBoop(force);
+                        boopable.DoBoop(Vector3.zero, force);
                     }
                 }
             }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Bomber : EnemyAi
@@ -107,9 +108,9 @@ public class Bomber : EnemyAi
         }
     }
 
-    protected override void BoopImpulse(float force, bool slam = false)
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
-        rb.AddForce(-playerDirection * force * boopMultiplier, ForceMode.Impulse);
+        rb.AddForce(-(origin - transform.position) * force * boopMultiplier, ForceMode.Impulse);
     }
 
     void Explode()
@@ -124,7 +125,7 @@ public class Bomber : EnemyAi
                 IBoop boopable = colliders[i].GetComponent<IBoop>();
                 if (boopable != null)
                 {
-                    boopable.DoBoop(explosionForce);
+                    boopable.DoBoop(transform.position, explosionForce);
                 }
             }
         }

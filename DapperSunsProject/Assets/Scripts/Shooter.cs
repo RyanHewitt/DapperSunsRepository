@@ -53,7 +53,6 @@ public class Shooter : EnemyAi
                 AudioManager.instance.Play3D(ShootAudio, transform.position);
                 Instantiate(bullet, shootPos.position, transform.rotation);
             }
-
         }
     }
 
@@ -76,8 +75,8 @@ public class Shooter : EnemyAi
         }
     }
 
-    protected override void BoopImpulse(float force, bool slam = false)
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
-        rb.AddForce(-playerDirection * force * boopMultiplier, ForceMode.Impulse);
+        rb.AddForce(-(origin - transform.position).normalized * force * boopMultiplier, ForceMode.Impulse);
     }
 }

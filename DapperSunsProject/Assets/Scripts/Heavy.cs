@@ -65,7 +65,7 @@ public class Heavy : EnemyAi
         }
     }
 
-    protected override void BoopImpulse(float force, bool slam = false)
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         if (slam)
         {

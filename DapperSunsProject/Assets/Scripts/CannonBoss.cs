@@ -46,10 +46,9 @@ public class CannonBoss : Shooter, IDamage
         }
     }
 
-    protected override void BoopImpulse(float force, bool slam = false)
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
-        base.BoopImpulse(force, slam);
-        Damage(HP);
+        Damage(1);
     }
     protected override void BeatAction()
     {

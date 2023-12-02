@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour, IDamage, IBoop
 {
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
+    [SerializeField] GameObject speedLinesPrefab;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
 
@@ -17,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Range(-10, 50)][SerializeField] float gravityValue;
     [Range(0, 1)][SerializeField] float frictionAir;
     [Range(0, 1)][SerializeField] float frictionGround;
+    [SerializeField] float speedLineRotSpeed;
+    [SerializeField] float speedLineScroll;
 
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
@@ -37,6 +41,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [SerializeField] int rayDistance;
     [SerializeField] int coneOuterAngle;
     [SerializeField] int coneInnerAngle;
+    [SerializeField] int coneOuterInnerAngle;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip boopSFX;
@@ -51,6 +56,10 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Range(100, 2500)] public float sensitivity;
 
     GameObject ghost;
+    GameObject speedLines;
+
+    Material speedLineMat;
+
     Transform startPos;
 
     Vector3 translation;
@@ -80,7 +89,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     float jumpElapsedTime;
     float dashElapsedTime;
     float currentPlayerSpeed;
-    float originalSpeed;
 
     void Start()
     {
@@ -93,6 +101,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
         GameManager.instance.playerDead = false;
         SpawnPlayer();
+
+        speedLines = Instantiate(speedLinesPrefab, transform.position, Quaternion.Euler(Vector3.zero));
+        speedLineMat = speedLines.GetComponent<Renderer>().material;
 
         originalGravity = gravityValue;
         currentPlayerSpeed = playerSpeed;
@@ -139,7 +150,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        DebugRaycastCone();
+        // DebugRaycastCone();
     }
 
     void LateUpdate()
@@ -150,9 +161,40 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             MovePlayer();
             DashInput();
             SlamInput();
+            //UpdateSpeedLines();
 
-            ghost.transform.position = transform.position; 
+            ghost.transform.position = transform.position;
         }
+    }
+
+    void UpdateSpeedLines()
+    {
+        speedLines.transform.position = transform.position;
+        Vector3 direction = ((controller.velocity).normalized + (dashVelocity).normalized + (move).normalized).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(90f, 0f, 0f);
+            speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+        }
+
+        float uvMax = 0.7f;
+        float uvMin = 0.3f;
+
+        float offsetY = Time.time * speedLineScroll;
+
+        // Calculate the UV offset based on the y-axis scrolling
+        float uvOffsetY = offsetY * (uvMax - uvMin);
+
+        // Apply the offset to the material's mainTextureOffset
+        Vector2 textureOffset = new Vector2(0f, uvOffsetY);
+        speedLineMat.mainTextureOffset = textureOffset;
+
+        // Clamp the UV offset within the specified range
+        float clampedUVOffsetY = Mathf.Repeat(textureOffset.y, 1f);
+        float clampedUVY = Mathf.Lerp(uvMin, uvMax, clampedUVOffsetY);
+        speedLineMat.mainTextureOffset = new Vector2(0f, clampedUVY);
+
+        //speedLineMat.mainTextureOffset += (Vector2.up * speedLineScroll) * Time.deltaTime;
     }
 
     public void Ground(Transform ground)
@@ -235,7 +277,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         boopVelocityOg.x *= frictionForce;
         boopVelocityOg.z *= frictionForce;
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
-        boopVector *= frictionForce;
 
         // Cancel boop velocity if you move in the opposite direction or stop moving
         if (move.normalized.magnitude > 0)
@@ -318,20 +359,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            return;
-        }
-
-        IBoop boopable = other.GetComponent<IBoop>();
-        if (boopable != null)
-        {
-
-        }
-    }
-
     void Boop()
     {
         AudioManager.instance.audioSource.PlayOneShot(boopSFX);
@@ -342,92 +369,56 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         // Make raycast cone
         Vector3 origin = Camera.main.transform.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
-        for (int i = 0; i < (rayCount / 2); i++)
+
+        void MakeCone(int coneAngle)
         {
-            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
-
-            // Convert angle to radians
-            float angleRad = Mathf.Deg2Rad * angle;
-
-            // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneOuterAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
-
-            // Combine coordinates to get the direction vector
-            Vector3 direction = new Vector3(x, y, z);
-
-            // Rotate the direction using the camera's rotation matrix
-            direction = rotation * direction;
-
-            // Perform the raycast
-            Ray ray = new Ray(origin, direction.normalized);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
+            for (int i = 0; i < (rayCount); i++)
             {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
+                float angle = i * (360f / rayCount); // Calculate angle for each ray
 
-                points.Add(hit.point);
+                // Convert angle to radians
+                float angleRad = Mathf.Deg2Rad * angle;
 
-                IBoop boopable = hit.collider.GetComponent<IBoop>();
-                if (hit.transform != transform && boopable != null)
+                // Calculate spherical coordinates
+                float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+                float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
+                float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+
+                // Combine coordinates to get the direction vector
+                Vector3 direction = new Vector3(x, y, z);
+
+                // Rotate the direction using the camera's rotation matrix
+                direction = rotation * direction;
+
+                // Perform the raycast
+                Ray ray = new Ray(origin, direction.normalized);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
                 {
-                    if (!targets.Contains(boopable))
+                    Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                    points.Add(hit.point);
+
+                    IBoop boopable = hit.collider.GetComponent<IBoop>();
+                    if (hit.transform != transform && boopable != null)
                     {
-                        targets.Add(boopable);
+                        if (!targets.Contains(boopable))
+                        {
+                            targets.Add(boopable);
+                        }
                     }
                 }
-            }
-            else
-            {
-                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+                else
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+                }
             }
         }
 
-        // Smaller cone
-        for (int i = 0; i < rayCount / 2; i++)
-        {
-            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
-
-            // Convert angle to radians
-            float angleRad = Mathf.Deg2Rad * angle;
-
-            // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneInnerAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
-
-            // Combine coordinates to get the direction vector
-            Vector3 direction = new Vector3(x, y, z);
-
-            // Rotate the direction using the camera's rotation matrix
-            direction = rotation * direction;
-
-            // Perform the raycast
-            Ray ray = new Ray(origin, direction.normalized);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
-            {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
-
-                points.Add(hit.point);
-
-                IBoop boopable = hit.collider.GetComponent<IBoop>();
-                if (hit.transform != transform && boopable != null)
-                {
-                    if (!targets.Contains(boopable))
-                    {
-                        targets.Add(boopable);
-                    }
-                }
-            }
-            else
-            {
-                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
-            }
-        }
+        MakeCone(coneOuterAngle);
+        MakeCone(coneInnerAngle);
+        MakeCone(coneOuterInnerAngle);
 
         // Center raycast
         Ray centerRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
@@ -489,74 +480,47 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         // Make raycast cone
         Vector3 origin = Camera.main.transform.position;
         Quaternion rotation = Camera.main.transform.rotation * Quaternion.Euler(90f, 0f, 0f);
-        for (int i = 0; i < rayCount / 2; i++)
+        
+        void MakeCone(int coneAngle)
         {
-            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
-
-            // Convert angle to radians
-            float angleRad = Mathf.Deg2Rad * angle;
-
-            // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneOuterAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneOuterAngle);
-
-            // Combine coordinates to get the direction vector
-            Vector3 direction = new Vector3(x, y, z);
-
-            // Rotate the direction using the camera's rotation matrix
-            direction = rotation * direction;
-
-            // Perform the raycast
-            Ray ray = new Ray(origin, direction.normalized);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
+            for (int i = 0; i < (rayCount); i++)
             {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
+                float angle = i * (360f / rayCount); // Calculate angle for each ray
 
-                points.Add(hit.point);
-            }
-            else
-            {
-                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+                // Convert angle to radians
+                float angleRad = Mathf.Deg2Rad * angle;
+
+                // Calculate spherical coordinates
+                float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+                float y = Mathf.Sin(Mathf.Deg2Rad * coneAngle);
+                float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneAngle);
+
+                // Combine coordinates to get the direction vector
+                Vector3 direction = new Vector3(x, y, z);
+
+                // Rotate the direction using the camera's rotation matrix
+                direction = rotation * direction;
+
+                // Perform the raycast
+                Ray ray = new Ray(origin, direction.normalized);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
+                {
+                    Debug.DrawLine(ray.origin, hit.point, Color.red);
+
+                    points.Add(hit.point);
+                }
+                else
+                {
+                    Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
+                }
             }
         }
 
-        // Smaller Cone
-        for (int i = 0; i < rayCount / 2; i++)
-        {
-            float angle = i * (360f / (rayCount / 2)); // Calculate angle for each ray
-
-            // Convert angle to radians
-            float angleRad = Mathf.Deg2Rad * angle;
-
-            // Calculate spherical coordinates
-            float x = Mathf.Sin(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
-            float y = Mathf.Sin(Mathf.Deg2Rad * coneInnerAngle);
-            float z = Mathf.Cos(angleRad) * Mathf.Cos(Mathf.Deg2Rad * coneInnerAngle);
-
-            // Combine coordinates to get the direction vector
-            Vector3 direction = new Vector3(x, y, z);
-
-            // Rotate the direction using the camera's rotation matrix
-            direction = rotation * direction;
-
-            // Perform the raycast
-            Ray ray = new Ray(origin, direction.normalized);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, rayDistance, coneLayerMask))
-            {
-                Debug.DrawLine(ray.origin, hit.point, Color.red);
-
-                points.Add(hit.point);
-            }
-            else
-            {
-                Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.green);
-            }
-        }
+        MakeCone(coneOuterAngle);
+        MakeCone(coneInnerAngle);
+        MakeCone(coneOuterInnerAngle);
 
         // Center raycast
         Ray centerRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward);

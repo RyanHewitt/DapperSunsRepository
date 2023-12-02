@@ -60,4 +60,8 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.AudioMenuPopup();
     }
+    public void VideoMenu()
+    {
+        GameManager.instance.VideoMenuPopup();
+    }
 }

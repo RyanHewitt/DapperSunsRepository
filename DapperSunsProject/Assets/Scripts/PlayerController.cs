@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        DebugRaycastCone();
+        // DebugRaycastCone();
     }
 
     void LateUpdate()
@@ -152,6 +152,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             MovePlayer();
             DashInput();
             SlamInput();
+
+            Debug.Log((controller.velocity + dashVelocity));
 
             ghost.transform.position = transform.position; 
         }
@@ -237,7 +239,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         boopVelocityOg.x *= frictionForce;
         boopVelocityOg.z *= frictionForce;
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
-        boopVector *= frictionForce;
 
         // Cancel boop velocity if you move in the opposite direction or stop moving
         if (move.normalized.magnitude > 0)

@@ -99,9 +99,9 @@ public class GameManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("FOV"))
         {
-            PlayerPrefs.SetFloat("FOV", 90f);
+            PlayerPrefs.SetInt("FOV", 90);
         }
-        FOV.value = PlayerPrefs.GetFloat("FOV");
+        FOV.value = PlayerPrefs.GetInt("FOV");
         FPS.value = PlayerPrefs.GetInt("MaxFPS");
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
@@ -510,7 +510,7 @@ public class GameManager : MonoBehaviour
     public void SetFOV()
     {
         Camera.main.fieldOfView = FOV.value;
-        PlayerPrefs.SetFloat("FOV", FOV.value);
+        PlayerPrefs.SetInt("FOV", (int)FOV.value);
     }
 
     public event BeatEvent OnBeatEvent;

@@ -20,7 +20,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Range(0, 1)][SerializeField] float frictionAir;
     [Range(0, 1)][SerializeField] float frictionGround;
     [SerializeField] float speedLineRotSpeed;
-    [SerializeField] float speedLineScroll;
+    [SerializeField] float speedFadeSpeed;
+    [SerializeField] float speedFadeIn;
+    [SerializeField] float speedFadeOut;
 
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
@@ -161,7 +163,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             MovePlayer();
             DashInput();
             SlamInput();
-            //UpdateSpeedLines();
+            UpdateSpeedLines();
 
             ghost.transform.position = transform.position;
         }
@@ -170,31 +172,20 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     void UpdateSpeedLines()
     {
         speedLines.transform.position = transform.position;
-        Vector3 direction = ((controller.velocity).normalized + (dashVelocity).normalized + (move).normalized).normalized;
+        Vector3 direction = ((controller.velocity) + (dashVelocity) + (move * currentPlayerSpeed));
         if (direction != Vector3.zero)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(90f, 0f, 0f);
+            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
             speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
         }
 
-        float uvMax = 0.7f;
-        float uvMin = 0.3f;
+        float magnitude = direction.magnitude;
 
-        float offsetY = Time.time * speedLineScroll;
+        float targetAlpha = Mathf.InverseLerp(speedFadeIn, speedFadeOut, magnitude);
 
-        // Calculate the UV offset based on the y-axis scrolling
-        float uvOffsetY = offsetY * (uvMax - uvMin);
-
-        // Apply the offset to the material's mainTextureOffset
-        Vector2 textureOffset = new Vector2(0f, uvOffsetY);
-        speedLineMat.mainTextureOffset = textureOffset;
-
-        // Clamp the UV offset within the specified range
-        float clampedUVOffsetY = Mathf.Repeat(textureOffset.y, 1f);
-        float clampedUVY = Mathf.Lerp(uvMin, uvMax, clampedUVOffsetY);
-        speedLineMat.mainTextureOffset = new Vector2(0f, clampedUVY);
-
-        //speedLineMat.mainTextureOffset += (Vector2.up * speedLineScroll) * Time.deltaTime;
+        Color materialColor = speedLineMat.color;
+        materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
+        speedLineMat.color = materialColor;
     }
 
     public void Ground(Transform ground)
@@ -617,7 +608,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
                 hitBeat = true;
                 AudioManager.instance.playOnce(dashSFX);
-                StartCoroutine(GameManager.instance.FlashLines(dashDuration));
+                //StartCoroutine(GameManager.instance.FlashLines(dashDuration));
                 StartCoroutine(DoDash());
 
                 CheckGroove();

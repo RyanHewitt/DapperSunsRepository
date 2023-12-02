@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using UnityEngine.UIElements;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
-    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] UnityEngine.UI.Slider sensitivitySlider;
     [SerializeField] GameObject optionsstart;
     [SerializeField] GameObject mainmenustart;
     [SerializeField] GameObject tutorialstart;
@@ -38,8 +40,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Videomenu;
     [SerializeField] GameObject Videostart;
 
-    [SerializeField] Slider FPS;
-    [SerializeField] Slider FOV;
+    [SerializeField] UnityEngine.UI.Slider FPS;
+    [SerializeField] UnityEngine.UI.Slider FOV;
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -72,9 +74,6 @@ public class GameManager : MonoBehaviour
 
     public float beatTime;
     public float timeScaleOg;
-
-    List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
-    List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
 
     void Awake()
     {
@@ -354,8 +353,8 @@ public class GameManager : MonoBehaviour
             Back();
         }
         SceneManager.LoadScene("MainMenu");
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         isPaused = true;
     }
 
@@ -489,17 +488,32 @@ public class GameManager : MonoBehaviour
             SyncBeats(originalBpm);
         }
     }
-    public void SetScreenSize(int index)
+    public void Set1080P()
     {
-        bool fullscreen = Screen.fullScreen;
-        int width = widths[index];
-        int height = heights[index];
-        Screen.SetResolution(width, height, fullscreen);
+
+        //List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
+        //List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
+        //bool fullscreen = Screen.fullScreen;
+        //int width = widths[index];
+        //int height = heights[index];
+        //Screen.SetResolution(width, height, fullscreen);
+        Screen.SetResolution(1920, 1080, true);
+    }
+    public void Set1440P()
+    {
+        Screen.SetResolution(2560, 1440, true);
     }
 
-    public void SetFullscreen(bool fullscreen)
+    public void SetFullscreen()
     {
-        Screen.fullScreen = fullscreen;
+        //if (Fullscreen.enabled)
+        //{
+        //    Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        //}
+        //else
+        //{
+        //    Screen.fullScreenMode = FullScreenMode.Windowed;
+        //}
     }
 
     public void SetmFPS()

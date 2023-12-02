@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Videostart;
 
     [SerializeField] Slider FPS;
+    [SerializeField] Slider FOV;
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -96,6 +97,11 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("MaxFPS", 60);
         }
+        if (!PlayerPrefs.HasKey("FOV"))
+        {
+            PlayerPrefs.SetFloat("FOV", 90f);
+        }
+        FOV.value = PlayerPrefs.GetFloat("FOV");
         FPS.value = PlayerPrefs.GetInt("MaxFPS");
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
@@ -500,6 +506,11 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = (int)FPS.value;
         PlayerPrefs.SetInt("MaxFPS", (int)FPS.value);
+    }
+    public void SetFOV()
+    {
+        Camera.main.fieldOfView = FOV.value;
+        PlayerPrefs.SetFloat("FOV", FOV.value);
     }
 
     public event BeatEvent OnBeatEvent;

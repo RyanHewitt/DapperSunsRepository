@@ -8,6 +8,7 @@ public class RailGunBoss : Shooter
     [SerializeField] LineRenderer laserLineRenderer;
     [SerializeField] Transform LazerPosition;
     [SerializeField] GameObject lazer;
+    private Transform currentTarget;
 
     protected override void Start()
     {
@@ -22,20 +23,20 @@ public class RailGunBoss : Shooter
 
         Vector3 aimDirection = LazerPosition.forward;
 
-        Ray ray = new Ray(transform.position, aimDirection);
+        Ray ray = new Ray(LazerPosition.position, aimDirection);
         RaycastHit hit;
 
         // Check if the ray hits an object.
         if (Physics.Raycast(ray, out hit))
         {
             // Enable the laser and set its positions.
-            laserLineRenderer.SetPosition(0, transform.position);
+            laserLineRenderer.SetPosition(0, LazerPosition.position);
             laserLineRenderer.SetPosition(1, hit.point);
         }
         else
         {
-            laserLineRenderer.SetPosition(0, transform.position);
-            laserLineRenderer.SetPosition(1, transform.position + transform.forward * 9999);
+            laserLineRenderer.SetPosition(0, LazerPosition.position);
+            laserLineRenderer.SetPosition(1, LazerPosition.position + LazerPosition.forward * 9999);
         }
     }
 
@@ -45,12 +46,24 @@ public class RailGunBoss : Shooter
         laserLineRenderer.enabled = true;
     }
 
+    public void SetTarget(Transform target)
+    {
+        currentTarget = target;
+    }
+
+    public void ClearTarget(Transform target)
+    {
+        if (currentTarget == target)
+        {
+            currentTarget = null;
+        }
+    }
+
     protected override void Rotate()
     {
-        if(playerDirection !=null)
+        if (currentTarget != null)
         {
-            Vector3 targetDirection = playerDirection;
-
+            Vector3 targetDirection = currentTarget.position - transform.position;
             targetDirection.y = 0f; // Ignore the vertical component
 
             if (targetDirection != Vector3.zero)

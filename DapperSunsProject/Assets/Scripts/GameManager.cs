@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
-    float elapsedTime = 0f;
+    public float elapsedTime = 0f;
     public bool isCountingTimer;
     private float originalBpm; 
  

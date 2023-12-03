@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,6 +11,7 @@ public class SuperHeavy : Heavy
     //[SerializeField] private float knockbackForce = 10f; // Force to knock the player back
     [SerializeField] private float trackingBulletSpeed = 2f; // Speed for tracking bullets
     [SerializeField] private float trackingRate = 1f; // Tracking rate for bullets
+    public static event Action OnBossDefeated;
 
     [Header("---Teleport Positions---")]
     [SerializeField] private Transform teleportPosition1; 
@@ -74,7 +76,10 @@ public class SuperHeavy : Heavy
     {
         yield return base.Death();
 
-        
+        OnBossDefeated?.Invoke();
+       
+        gameObject.SetActive(false);
+
     }
 
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
@@ -93,6 +98,8 @@ public class SuperHeavy : Heavy
         
         lastTeleportWasPos1 = !lastTeleportWasPos1;
     }
+
+ 
 }
 
 

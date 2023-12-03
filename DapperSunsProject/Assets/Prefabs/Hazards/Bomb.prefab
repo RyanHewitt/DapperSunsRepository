@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4374462415095882799}
   - component: {fileID: 8823238038199266235}
   - component: {fileID: 2163929610658314871}
-  - component: {fileID: 8909953530106967675}
+  - component: {fileID: 4091777317837343891}
   - component: {fileID: 8642440556505120302}
   m_Layer: 0
   m_Name: Bomb
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 2
   rb: {fileID: 8642440556505120302}
-  enemyCol: {fileID: 8909953530106967675}
+  enemyCol: {fileID: 4091777317837343891}
   outline: {fileID: 5557353221210761273}
   flashColor: {r: 1, g: 1, b: 1, a: 0}
   HP: 2
@@ -117,8 +117,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8909953530106967675
-SphereCollider:
+--- !u!65 &4091777317837343891
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,7 +136,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8642440556505120302
 Rigidbody:
@@ -163,7 +163,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &5557353221210761273
 GameObject:

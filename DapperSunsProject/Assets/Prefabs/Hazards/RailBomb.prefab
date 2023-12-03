@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4076959958872294307}
   - component: {fileID: 5872001305031885394}
   - component: {fileID: 8767220763861022296}
-  - component: {fileID: 4381256359430099051}
+  - component: {fileID: 189872528758527130}
   - component: {fileID: 1094265593217598665}
   m_Layer: 0
   m_Name: RailBomb
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944677029885062852}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -30.052826, y: -1.3285642, z: 22.402027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 2
   rb: {fileID: 1094265593217598665}
-  enemyCol: {fileID: 4381256359430099051}
+  enemyCol: {fileID: 189872528758527130}
   outline: {fileID: 3745314591837555227}
   flashColor: {r: 1, g: 1, b: 1, a: 0}
   HP: 2
@@ -117,8 +117,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &4381256359430099051
-SphereCollider:
+--- !u!65 &189872528758527130
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,7 +136,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1094265593217598665
 Rigidbody:
@@ -163,7 +163,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &3745314591837555227
 GameObject:

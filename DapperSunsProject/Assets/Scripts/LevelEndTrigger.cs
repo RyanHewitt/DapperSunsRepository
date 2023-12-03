@@ -16,10 +16,10 @@ public class LevelEndTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GameManager.instance.PopupWin();
+            GameManager.instance.elapsedTime = timer;
         }
 
         UnlockNewLevel();
-        GameManager.instance.elapsedTime = timer;
     }
 
     void UnlockNewLevel()

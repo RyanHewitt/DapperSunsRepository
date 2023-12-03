@@ -29,7 +29,7 @@ public class VolumeSettings : MonoBehaviour
         SFXSlider.value = PlayerPrefs.GetFloat(AudioManager.SFXKey, 1f);
     }
 
-    void OnLeave()
+    void OnApplicationQuit()
     {
         PlayerPrefs.SetFloat(AudioManager.MasterKey, MasterSlider.value);
         PlayerPrefs.SetFloat(AudioManager.MusicKey, MusicSlider.value);

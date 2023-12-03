@@ -13029,12 +13029,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3288253392203380083, guid: cf3c0014baccc3d47b65f012ff08b9bd, type: 3}
       propertyPath: bpm
-      value: 128
+      value: 121
       objectReference: {fileID: 0}
     - target: {fileID: 3288253392203380083, guid: cf3c0014baccc3d47b65f012ff08b9bd, type: 3}
       propertyPath: musicClip
       value: 
-      objectReference: {fileID: 8300000, guid: 725d23e1564ab504ea8934c4f658df5e, type: 3}
+      objectReference: {fileID: 8300000, guid: df8c574a960d95a4e9194d8e53039dd7, type: 3}
     - target: {fileID: 4246923192048494600, guid: cf3c0014baccc3d47b65f012ff08b9bd, type: 3}
       propertyPath: m_Name
       value: MusicStartTrigger
@@ -14635,6 +14635,7 @@ MonoBehaviour:
   FOV: {fileID: 743282064}
   doubleTimeActive: 0
   originalSong: {fileID: 0}
+  elapsedTime: 0
   isCountingTimer: 0
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
   player: {fileID: 1083996024}

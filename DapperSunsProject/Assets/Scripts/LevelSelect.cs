@@ -12,8 +12,7 @@ public class LevelSelect : MonoBehaviour
     
     GameObject lastSelectedButton;
 
-
-    private void Awake()
+    void Awake()
     {
         ButtonsToArray();
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);

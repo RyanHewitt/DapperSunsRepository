@@ -313,12 +313,12 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckHeadHit()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f, 0);
         foreach (Collider collider in colliders)
         {            
             if (collider.transform != transform)
             {
-                playerVelocity.y = -10;
+                playerVelocity.y = -gravityValue;
                 Debug.Log(collider.name);
             }
         }
@@ -687,7 +687,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void SlamImpact()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f, 0);
         foreach (Collider collider in colliders)
         {
             IBoop boopable = collider.GetComponent<IBoop>();

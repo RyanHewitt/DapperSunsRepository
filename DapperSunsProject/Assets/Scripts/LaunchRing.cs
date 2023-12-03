@@ -5,6 +5,7 @@ using UnityEngine;
 public class LaunchRing : MonoBehaviour
 {
     [SerializeField] float force;
+    [SerializeField] AudioClip launchSFX;
     
     void OnTriggerEnter(Collider other)
     {
@@ -16,6 +17,7 @@ public class LaunchRing : MonoBehaviour
         IBoop boopable = other.GetComponent<IBoop>();
         if (boopable != null )
         {
+            AudioManager.instance.playOnce(launchSFX);
             boopable.DoBoop(transform.position + (transform.forward * -10), force);
         }
     }

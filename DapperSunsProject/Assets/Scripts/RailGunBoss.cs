@@ -118,13 +118,16 @@ public class RailGunBoss : Shooter
     {
         if (_playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            steps--;
-            if (steps <= 0)
+            if (CheckLineOfSight(GameManager.instance.player.transform)) // Check line of sight
             {
-                steps = stepsOriginal;
+                steps--;
+                if (steps <= 0)
+                {
+                    steps = stepsOriginal;
 
-                AudioManager.instance.Play3D(ShootAudio, transform.position);
-                Instantiate(bullet, shootPos.position, transform.rotation);
+                    AudioManager.instance.Play3D(ShootAudio, transform.position);
+                    Instantiate(bullet, shootPos.position, transform.rotation);
+                }
             }
         }
     }

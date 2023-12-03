@@ -89,24 +89,29 @@ public class Bomber : EnemyAi
 
     protected override void BeatAction()
     {
-
-        if (startCountdown)
+        
+        if (playerInRange && CheckLineOfSight(GameManager.instance.player.transform))
         {
-            counter++;
-            AudioManager.instance.Play3D(countSound, transform.position);
-            StartCoroutine(Flash());
-            if (counter == 0)
+            if (startCountdown)
             {
-                
+                counter++;
                 AudioManager.instance.Play3D(countSound, transform.position);
-            }
+                StartCoroutine(Flash());
 
-            if (counter >= countdown)
-            {
-                StartCoroutine(Death());
+                if (counter >= countdown)
+                {
+                    StartCoroutine(Death());
+                }
             }
         }
+        else
+        {
+            
+            startCountdown = false;
+            counter = 0;
+        }
     }
+
 
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {

@@ -62,5 +62,19 @@ public class Sniper : Shooter
     protected override void BeatAction()
     {
         base.BeatAction();
+        if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
+        {
+            if (CheckLineOfSight(GameManager.instance.player.transform))
+            {
+                steps--;
+                if (steps <= 0)
+                {
+                    steps = stepsOriginal;
+
+                    AudioManager.instance.Play3D(ShootAudio, transform.position);
+                    Instantiate(bullet, shootPos.position, transform.rotation);
+                }
+            }
+        }
     }
 }

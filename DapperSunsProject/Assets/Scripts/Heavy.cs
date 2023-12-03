@@ -49,18 +49,21 @@ public class Heavy : EnemyAi
     {
         if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            currentStep++;
-            if (steps <= currentStep)
+            if (CheckLineOfSight(GameManager.instance.player.transform)) // Check line of sight
             {
-                AudioManager.instance.Play3D(ShootAudio, transform.position);
-
-                //Shoot bullets on all four sides of enemy
-                foreach (Transform pos in shootPositions)
+                currentStep++;
+                if (steps <= currentStep)
                 {
-                    Instantiate(bullet, pos.position, pos.rotation);
-                }
+                    AudioManager.instance.Play3D(ShootAudio, transform.position);
 
-                currentStep = 0;
+                    //Shoot bullets on all four sides of enemy
+                    foreach (Transform pos in shootPositions)
+                    {
+                        Instantiate(bullet, pos.position, pos.rotation);
+                    }
+
+                    currentStep = 0;
+                }
             }
         }
     }

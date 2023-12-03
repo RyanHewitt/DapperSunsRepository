@@ -35,11 +35,14 @@ public class SuperHeavy : Heavy
         base.BeatAction();
         if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
         {
-            currentStep++;
-            if (steps <= currentStep)
+            if (CheckLineOfSight(GameManager.instance.player.transform)) // Check line of sight
             {
-                ShootTrackingBullets();
-                currentStep = 0;
+                currentStep++;
+                if (steps <= currentStep)
+                {
+                    ShootTrackingBullets();
+                    currentStep = 0;
+                }
             }
         }
     }
@@ -58,12 +61,12 @@ public class SuperHeavy : Heavy
             Rigidbody bulletRb = bulletObject.GetComponent<Rigidbody>();
             bulletRb.velocity = shootPosition.forward * trackingBulletSpeed;
 
-
             TrackingBullet tracker = bulletObject.AddComponent<TrackingBullet>();
             tracker.target = GameManager.instance.player.transform;
             tracker.trackingRate = trackingRate;
         }
     }
+
 
     protected override void Damage(int amount)
     {

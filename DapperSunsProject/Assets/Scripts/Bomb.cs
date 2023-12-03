@@ -12,7 +12,8 @@ public class Bomb : EnemyAi
     [SerializeField] int countdown;
     [SerializeField] int cooldown;
 
-    bool startCountdown;
+    protected Collider[] colliders;
+    protected bool startCountdown;
     int counter;
 
     [Header("---Explosion Effects---")]
@@ -58,7 +59,6 @@ public class Bomb : EnemyAi
 
     protected override void BeatAction()
     {
-
         if (startCountdown)
         {
             counter++;
@@ -94,9 +94,9 @@ public class Bomb : EnemyAi
         startCountdown = true;
     }
 
-    void Explode()
+    protected virtual void Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -110,7 +110,8 @@ public class Bomb : EnemyAi
         startCountdown = false;
         counter = 0;
     }
-    private void OnCollisionEnter(Collision collision)
+
+    void OnCollisionEnter(Collision collision)
     {
         rb.velocity = Vector3.zero;
         StartCoroutine(Death());

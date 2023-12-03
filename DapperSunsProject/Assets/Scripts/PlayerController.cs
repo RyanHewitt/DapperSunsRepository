@@ -327,28 +327,15 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckHeadHit()
     {
-        //RaycastHit hit;
-        //if (Physics.Raycast(transform.position, Vector3.up, out hit, 2f, 0))
-        //{
-        //    Debug.DrawLine(transform.position, hit.point, Color.red);
-        //    if (hit.transform.position != transform.position && !hit.collider.isTrigger)
-        //    {
-        //        playerVelocity.y = -playerVelocity.y;
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.DrawRay(transform.position, Vector3.up * 2f, Color.green);
-        //}
-
-        //RaycastHit hit;
-        //if (Physics.BoxCast(transform.position + Vector3.up, Vector3.one, Vector3.up, out hit))
-        //{
-        //    if (!hit.collider.isTrigger && hit.transform != transform)
-        //    {
-        //        playerVelocity.y = -10;
-        //    }
-        //}
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f);
+        foreach (Collider collider in colliders)
+        {            
+            if (collider.transform != transform)
+            {
+                playerVelocity.y = -10;
+                Debug.Log(collider.name);
+            }
+        }
     }
 
     void ShootInput()
@@ -714,20 +701,23 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void SlamImpact()
     {
-        RaycastHit hit;
-        if (Physics.BoxCast(transform.position - Vector3.down, Vector3.one, Vector3.down, out hit))
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f);
+        foreach (Collider collider in colliders)
         {
-            if (!hit.collider.isTrigger)
-            {
-                IBoop boopable = hit.collider.GetComponent<IBoop>();
+            IBoop boopable = collider.GetComponent<IBoop>();
 
-                if (hit.transform != transform && boopable != null)
-                {
-                    boopable.DoBoop(hit.normal, boopForce, true);
-                    DoBoop(hit.normal, boopForce);
-                }
+            if (collider.transform != transform && boopable != null)
+            {
+                boopable.DoBoop(transform.position, boopForce, true);
+                DoBoop(transform.position, boopForce);
             }
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + Vector3.down, 1f);
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, 0.8f);
     }
 
     void CheckGroove()

@@ -9,6 +9,7 @@ public class RailGunBoss : Shooter
     [SerializeField] Transform LazerPosition;
     [SerializeField] GameObject lazer;
     private Transform currentTarget;
+    bool _playerInRange;
 
     protected override void Start()
     {
@@ -58,7 +59,10 @@ public class RailGunBoss : Shooter
             currentTarget = null;
         }
     }
-
+    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
+    {
+        takeDamage(1);
+    }
     protected override void Rotate()
     {
         if (currentTarget != null)
@@ -80,6 +84,10 @@ public class RailGunBoss : Shooter
         }
 
     }
+    public void SetPlayerInRange(bool inRange)
+    {
+        _playerInRange = inRange;
+    }
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -98,6 +106,16 @@ public class RailGunBoss : Shooter
 
     protected override void BeatAction()
     {
-        base.BeatAction();
+        if (_playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
+        {
+            steps--;
+            if (steps <= 0)
+            {
+                steps = stepsOriginal;
+
+                AudioManager.instance.Play3D(ShootAudio, transform.position);
+                Instantiate(bullet, shootPos.position, transform.rotation);
+            }
+        }
     }
 }

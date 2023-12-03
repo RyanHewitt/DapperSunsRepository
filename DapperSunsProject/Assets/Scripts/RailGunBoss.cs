@@ -8,6 +8,7 @@ public class RailGunBoss : Shooter
     [SerializeField] LineRenderer laserLineRenderer;
     [SerializeField] Transform LazerPosition;
     [SerializeField] GameObject lazer;
+    [SerializeField] GameObject[] thingToTurnOn;
     private Transform currentTarget;
     bool _playerInRange;
 
@@ -45,6 +46,11 @@ public class RailGunBoss : Shooter
     {
         base.Restart();
         laserLineRenderer.enabled = true;
+        foreach(var thing in thingToTurnOn)
+        {
+            thing.SetActive(false);
+        }
+
     }
 
     public void SetTarget(Transform target)
@@ -101,6 +107,10 @@ public class RailGunBoss : Shooter
     protected override IEnumerator Death()
     {
         laserLineRenderer.enabled = false;
+        foreach (var thing in thingToTurnOn)
+        {
+            thing.SetActive(true);
+        }
         return base.Death();
     }
 

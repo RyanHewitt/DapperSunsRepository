@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     [Header("----- Groove Stats -----")]
     [Range(1, 30)][SerializeField] float groovePlayerSpeed;
+    [Range(1, 30)][SerializeField] float grooveFOV;
+    [Range(0, 1)][SerializeField] float grooveVol;
 
     [Header("----- Gun Stats -----")]
     [SerializeField] GameObject boopCard;
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     float jumpElapsedTime;
     float dashElapsedTime;
     float currentPlayerSpeed;
+    float ogMusicVol;
 
     void Start()
     {
@@ -109,6 +112,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
         originalGravity = gravityValue;
         currentPlayerSpeed = playerSpeed;
+
+        ogMusicVol = AudioManager.instance.MusicSource.volume;
     }
 
     void Update()
@@ -557,6 +562,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
         currentPlayerSpeed = playerSpeed;
         GameManager.instance.ToggleGrooveEdge(false);
+        speedLineMat.color = Color.white;
+        GameManager.instance.SetFOV();
+        AudioManager.instance.MusicSource.volume = ogMusicVol;
     }
 
     public void takeDamage(int amount)
@@ -718,6 +726,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
                 // Apply Groove Effects
                 currentPlayerSpeed = groovePlayerSpeed;
                 GameManager.instance.ToggleGrooveEdge(true);
+                speedLineMat.color = new Color(2f, 3.4f, 2f);
+                Camera.main.fieldOfView += grooveFOV;
+                AudioManager.instance.MusicSource.volume += grooveVol;
             }
         }
 

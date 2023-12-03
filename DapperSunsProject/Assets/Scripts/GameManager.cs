@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
-using UnityEngine.UIElements;
 using System;
 
 public class GameManager : MonoBehaviour
@@ -25,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
-    [SerializeField] UnityEngine.UI.Slider sensitivitySlider;
+    [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject optionsstart;
     [SerializeField] GameObject mainmenustart;
     [SerializeField] GameObject tutorialstart;
@@ -40,8 +39,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Videomenu;
     [SerializeField] GameObject Videostart;
 
-    [SerializeField] UnityEngine.UI.Slider FPS;
-    [SerializeField] UnityEngine.UI.Slider FOV;
+    [SerializeField] Slider FPS;
+    [SerializeField] Slider FOV;
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong; 
@@ -88,22 +87,10 @@ public class GameManager : MonoBehaviour
     {
         audioSource = AudioManager.instance.audioSource;
 
-        if (!PlayerPrefs.HasKey("Sensitivity"))
-        {
-            PlayerPrefs.SetFloat("Sensitivity", 1000f);
-        }
-        if (!PlayerPrefs.HasKey("MaxFPS"))
-        {
-            PlayerPrefs.SetInt("MaxFPS", 60);
-        }
-        if (!PlayerPrefs.HasKey("FOV"))
-        {
-            PlayerPrefs.SetInt("FOV", 90);
-        }
-        FOV.value = PlayerPrefs.GetInt("FOV");
-        FPS.value = PlayerPrefs.GetInt("MaxFPS");
-        sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
-        playerScript.sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+        FOV.value = PlayerPrefs.GetInt("FOV", 90);
+        FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
+        sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
+        playerScript.sensitivity = sensitivitySlider.value;
     }
 
     void Update()
@@ -521,6 +508,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = (int)FPS.value;
         PlayerPrefs.SetInt("MaxFPS", (int)FPS.value);
     }
+
     public void SetFOV()
     {
         Camera.main.fieldOfView = FOV.value;

@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        // DebugRaycastCone();
+        DebugRaycastCone();
     }
 
     void LateUpdate()
@@ -328,12 +328,17 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     void CheckHeadHit()
     {
         RaycastHit hit;
-        if (Physics.Raycast(headPos.transform.position, Vector3.up, out hit, 0.4f))
+        if (Physics.Raycast(transform.position, Vector3.up, out hit, 2f, 0))
         {
+            Debug.DrawLine(transform.position, hit.point, Color.red);
             if (hit.transform.position != transform.position && !hit.collider.isTrigger)
             {
                 playerVelocity.y = -playerVelocity.y;
             }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, Vector3.up * 2f, Color.green);
         }
     }
 

@@ -18,11 +18,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioMixerGroup SFX;
     [SerializeField] AudioMixerGroup Music;
 
-
-    public const string MasterKey = "MusicVolume";
-    public const string MusicKey = "MusicVolume";
-    public const string SFXKey = "SFXVolume";
-
     void Awake()
     {
         instance = this;
@@ -110,9 +105,9 @@ public class AudioManager : MonoBehaviour
     }
     void LoadVolume()
     {
-        float MasterVolume = PlayerPrefs.GetFloat(MasterKey, 1f);
-        float MusicVolume = PlayerPrefs.GetFloat(MusicKey, 1f);
-        float SFXVolume = PlayerPrefs.GetFloat(SFXKey, 1f);
+        float MasterVolume = PlayerPrefs.GetFloat(VolumeSettings.MixerMaster, 1f);
+        float MusicVolume = PlayerPrefs.GetFloat(VolumeSettings.MixerMusic, 1f);
+        float SFXVolume = PlayerPrefs.GetFloat(VolumeSettings.MixerSFX, 1f);
 
         Mixer.SetFloat(VolumeSettings.MixerMaster, Mathf.Log10(MasterVolume) * 20);
         Mixer.SetFloat(VolumeSettings.MixerMusic, Mathf.Log10(MusicVolume) * 20);

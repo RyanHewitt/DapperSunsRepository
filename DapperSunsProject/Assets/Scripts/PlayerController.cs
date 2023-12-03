@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     [Header("----- Gun Stats -----")]
     [SerializeField] GameObject boopCard;
+    [SerializeField] LayerMask defaultMask;
     [SerializeField] LayerMask coneLayerMask;
     [SerializeField] int boopForce;
     [SerializeField] int rayCount;
@@ -313,7 +314,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckHeadHit()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f, 0);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f, defaultMask);
         foreach (Collider collider in colliders)
         {            
             if (collider.transform != transform)
@@ -686,7 +687,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void SlamImpact()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f, 0);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f, defaultMask);
         foreach (Collider collider in colliders)
         {
             IBoop boopable = collider.GetComponent<IBoop>();

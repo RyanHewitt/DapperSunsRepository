@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class LevelEndTrigger : MonoBehaviour
 {
+    int timer;
     void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger)
@@ -18,6 +19,7 @@ public class LevelEndTrigger : MonoBehaviour
         }
 
         UnlockNewLevel();
+        GameManager.instance.elapsedTime = timer;
     }
 
     void UnlockNewLevel()

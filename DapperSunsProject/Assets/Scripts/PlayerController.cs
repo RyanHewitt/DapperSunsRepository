@@ -274,20 +274,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         boopVelocityOg.z *= frictionForce;
         Vector3 boopVector = new Vector3(boopVelocity.x, 0, boopVelocity.z);
 
-        // Cancel boop velocity if you move in the opposite direction or stop moving
-        if (move.normalized.magnitude > 0)
-        {
-            if (move.x == 0f || Mathf.Sign(move.x) != Mathf.Sign(boopVector.x))
-            {
-                boopVelocityOg.x = 0f;
-            }
-
-            if (move.z == 0f || Mathf.Sign(move.z) != Mathf.Sign(boopVector.z))
-            {
-                boopVelocityOg.z = 0f;
-            }
-        }
-
         if (!dashing && !slamming)
         {
             playerVelocity.x *= frictionForce;

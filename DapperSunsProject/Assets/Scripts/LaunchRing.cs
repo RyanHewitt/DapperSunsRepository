@@ -16,7 +16,7 @@ public class LaunchRing : MonoBehaviour
         IBoop boopable = other.GetComponent<IBoop>();
         if (boopable != null )
         {
-            boopable.DoBoop(transform.position + (transform.forward * -2), force);
+            boopable.DoBoop(transform.position + (transform.forward * -10), force);
         }
     }
 }

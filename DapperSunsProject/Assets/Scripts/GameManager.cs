@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Audiostart;
     [SerializeField] GameObject Videomenu;
     [SerializeField] GameObject Videostart;
+    [SerializeField] GameObject levelSelectMenu;
+    [SerializeField] GameObject levelSelectStart;
 
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
@@ -198,6 +200,18 @@ public class GameManager : MonoBehaviour
         buttonStack.Push(pausestart);
     }
 
+    public void PopupLevelSelect()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(levelSelectMenu);
+        menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(levelSelectStart);
+        buttonStack.Push(levelSelectStart);
+    }
+
     public void PopupOptions()
     {
         if (menuStack.Count > 0)
@@ -221,6 +235,7 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(controlsstart);
         buttonStack.Push(controlsstart);
     }
+
     public void AudioMenuPopup()
     {
         if (menuStack.Count > 0)
@@ -232,6 +247,7 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(Audiostart);
         buttonStack.Push(Audiostart);
     }
+
     public void VideoMenuPopup()
     {
         if (menuStack.Count > 0)

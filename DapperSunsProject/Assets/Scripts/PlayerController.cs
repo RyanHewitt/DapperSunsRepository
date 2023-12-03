@@ -318,8 +318,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         {            
             if (collider.transform != transform)
             {
-                playerVelocity.y = -gravityValue;
-                Debug.Log(collider.name);
+                playerVelocity.y = gravityValue;
             }
         }
     }

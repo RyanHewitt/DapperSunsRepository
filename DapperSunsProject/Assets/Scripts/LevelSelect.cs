@@ -10,41 +10,26 @@ public class LevelSelect : MonoBehaviour
     [SerializeField] Button[] buttons;
     [SerializeField] Image[] medalImages;
     [SerializeField] GameObject levelButtons;
-    
-    GameObject lastSelectedButton;
 
-    void Awake()
-    {
-        //ButtonsToArray();
-        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-        for(int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].interactable = false;
-        }
-        for(int i = 0;i < unlockedLevel; i++)
-        {
-            buttons[i].interactable = true;
-        }
-    }
+    GameObject lastSelectedButton;
 
     void Start()
     {
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+        }
+        for (int i = 0; i < unlockedLevel; i++)
+        {
+            buttons[i].interactable = true;
+        }
         GameManager.instance.isPaused = true;
     }
 
     public void OpenLevel(int levelid)
     {
         SceneManager.LoadScene(levelid);
-    }
-
-    void ButtonsToArray()
-    {
-        int childCount = levelButtons.transform.childCount;
-        buttons = new Button[childCount];
-        for (int i = 0; i < childCount; i++)
-        {
-            buttons[i] = levelButtons.transform.GetChild(i).gameObject.GetComponent<Button>();
-        }
     }
 
     void Update()

@@ -231,8 +231,10 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         playerVelocity = Vector3.zero;
         jumpVelocity = Vector3.zero;
         boopVelocity = Vector3.zero;
+        dashVelocity = Vector3.zero;
         jumpElapsedTime = 1;
         boopElapsedTime = 1;
+        dashElapsedTime = 1;
 
         slamming = false;
         gravityValue = originalGravity;

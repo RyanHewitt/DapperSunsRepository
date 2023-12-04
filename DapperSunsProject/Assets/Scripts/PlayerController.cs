@@ -702,7 +702,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             if (collider.transform != transform && boopable != null)
             {
                 boopable.DoBoop(transform.position, boopForce, true);
-                DoBoop(transform.position, boopForce);
+                DoBoop(transform.position - Vector3.one, boopForce);
             }
         }
     }

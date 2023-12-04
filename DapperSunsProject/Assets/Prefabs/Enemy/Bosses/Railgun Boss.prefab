@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1280213739008123632}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.057, z: 1.059}
+  m_LocalPosition: {x: 0, y: -4.58, z: 18.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,7 +244,7 @@ Transform:
   m_GameObject: {fileID: 7891154597416380359}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.001, y: 0.008, z: 1.56}
+  m_LocalPosition: {x: -0, y: -0.76, z: 18.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -357,7 +357,7 @@ MonoBehaviour:
   enemyCol: {fileID: 3555354920939665292}
   outline: {fileID: 2352843230286955552}
   flashColor: {r: 0, g: 0, b: 0, a: 0}
-  HP: 1
+  HP: 3
   PlayerFaceSpeed: 10
   maxVerticalAngle: 0
   boopMultiplier: 1
@@ -369,6 +369,9 @@ MonoBehaviour:
   laserLineRenderer: {fileID: 139004462142854653}
   LazerPosition: {fileID: 9049765405127938749}
   lazer: {fileID: 1280213739008123632}
+  thingToTurnOn:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!65 &3555354920939665292
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -409,7 +412,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 360
+  m_Radius: 165.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5498310029680218629
 Rigidbody:

@@ -53,8 +53,12 @@ public class LevelEndTrigger : MonoBehaviour
                 badgeIndex = 1;
                 medal.sprite = medalSprites[badgeIndex];
             }
-            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + " Time", timer);
-            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + " badgeIndex", badgeIndex);
+
+            if (PlayerPrefs.GetFloat(SceneManager.GetActiveScene().name + " Time", 0) > timer)
+            {
+                PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + " Time", timer);
+                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + " badgeIndex", badgeIndex); 
+            }
         }
 
         UnlockNewLevel();

@@ -7,14 +7,15 @@ using UnityEngine.EventSystems;
 
 public class LevelSelect : MonoBehaviour
 {
-    public Button[] buttons;
-    public GameObject levelButtons;
+    [SerializeField] Button[] buttons;
+    [SerializeField] Image[] medalImages;
+    [SerializeField] GameObject levelButtons;
     
     GameObject lastSelectedButton;
 
     void Awake()
     {
-        ButtonsToArray();
+        //ButtonsToArray();
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
         for(int i = 0; i < buttons.Length; i++)
         {
@@ -26,7 +27,7 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void Start()
+    void Start()
     {
         GameManager.instance.isPaused = true;
     }
@@ -46,7 +47,7 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    public void Update()
+    void Update()
     {
         if (EventSystem.current.currentSelectedGameObject == null)
         {

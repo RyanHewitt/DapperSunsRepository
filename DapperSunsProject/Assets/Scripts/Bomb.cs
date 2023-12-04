@@ -53,7 +53,6 @@ public class Bomb : EnemyAi
         yield return base.Death();
         
         Explode();
-        yield return new WaitForSeconds(cooldown);
         startCountdown = true;
     }
 

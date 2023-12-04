@@ -130,7 +130,7 @@ public class Bomber : EnemyAi
                 IBoop boopable = colliders[i].GetComponent<IBoop>();
                 if (boopable != null)
                 {
-                    boopable.DoBoop(transform.position, explosionForce);
+                    boopable.DoBoop(transform.position - (Vector3.up * 1f), explosionForce);
                 }
             }
         }

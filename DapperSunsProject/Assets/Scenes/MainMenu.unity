@@ -2522,7 +2522,7 @@ GameObject:
   - component: {fileID: 348642364}
   - component: {fileID: 348642363}
   m_Layer: 0
-  m_Name: Image
+  m_Name: Image15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9956,7 +9956,7 @@ MonoBehaviour:
   - {fileID: 1563521113}
   - {fileID: 1045123601}
   - {fileID: 882833023}
-  medalImages:
+  medalButtonImages:
   - {fileID: 1333206411}
   - {fileID: 2112218291}
   - {fileID: 791798735}
@@ -9972,6 +9972,12 @@ MonoBehaviour:
   - {fileID: 890814580}
   - {fileID: 925362173}
   - {fileID: 348642363}
+  medalSprites:
+  - {fileID: 21300000, guid: f39debb193a0fd74fae13094c42d7380, type: 3}
+  - {fileID: 21300000, guid: 68ba4f3d076d3ac4cb7a0eb43685e1c0, type: 3}
+  - {fileID: 21300000, guid: 83d4e5e76eacf4b4f88dc64901ffe3aa, type: 3}
+  - {fileID: 21300000, guid: 44c8f0be5dee9614984ebaaba83fa477, type: 3}
+  - {fileID: 21300000, guid: f2ee9a2b518c9d841abc4b203ca6b365, type: 3}
   levelButtons: {fileID: 1623432346}
 --- !u!1 &1213512480
 GameObject:
@@ -10989,7 +10995,7 @@ GameObject:
   - component: {fileID: 1333206412}
   - component: {fileID: 1333206411}
   m_Layer: 0
-  m_Name: Image
+  m_Name: Image1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

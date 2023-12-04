@@ -273,6 +273,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1855848370861395655}
     m_Modifications:
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: goldTime
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: silverTime
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: diamondTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f39debb193a0fd74fae13094c42d7380, type: 3}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 68ba4f3d076d3ac4cb7a0eb43685e1c0, type: 3}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 83d4e5e76eacf4b4f88dc64901ffe3aa, type: 3}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 44c8f0be5dee9614984ebaaba83fa477, type: 3}
+    - target: {fileID: 373860384116466755, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
+      propertyPath: medalSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: f2ee9a2b518c9d841abc4b203ca6b365, type: 3}
     - target: {fileID: 4246923192048494600, guid: 87a87fb888e4a054fbd353b75ebde8b4, type: 3}
       propertyPath: m_Name
       value: LevelEndTrigger

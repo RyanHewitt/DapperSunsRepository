@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public AudioClip originalSong; 
     public float elapsedTime = 0f;
     public bool isCountingTimer;
-    private float originalBpm; 
+    float originalBpm; 
  
 
     public AudioClip audioClip;
@@ -59,15 +59,17 @@ public class GameManager : MonoBehaviour
     int doubleTimeCount;
 
     Stack<GameObject> menuStack = new Stack<GameObject>();
-     public Stack<GameObject> buttonStack = new Stack<GameObject>();
+    public Stack<GameObject> buttonStack = new Stack<GameObject>();
     GameObject playerSpawn;
-    private GameObject lastSelectedButton;
+    GameObject lastSelectedButton;
 
     public delegate void BeatEvent();
 
     [Header("----- Public -----")]
     public GameObject player;
     public PlayerController playerScript;
+
+    public Image winMedalImage;
 
     public bool isPaused;
     public bool playerDead;

@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 public class LevelSelect : MonoBehaviour
 {
     [SerializeField] Button[] buttons;
-    [SerializeField] Image[] medalImages;
+    [SerializeField] Image[] medalButtonImages;
+    [SerializeField] Sprite[] medalSprites;
     [SerializeField] GameObject levelButtons;
 
     GameObject lastSelectedButton;
@@ -16,7 +17,7 @@ public class LevelSelect : MonoBehaviour
     void Start()
     {
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-        for (int i = 0; i < buttons.Length; i++)
+        for (int i = 0; i < buttons.Length; i++) // This is bad you should just do one for loop
         {
             buttons[i].interactable = false;
         }
@@ -24,7 +25,12 @@ public class LevelSelect : MonoBehaviour
         {
             buttons[i].interactable = true;
         }
-        GameManager.instance.isPaused = true;
+
+        for (int i = 0;i < medalButtonImages.Length; i++)
+        {
+            int badgeIndex = PlayerPrefs.GetInt("Level " + (i + 1) + " badgeIndex", 0);
+            medalButtonImages[i].sprite = medalSprites[badgeIndex];
+        }
     }
 
     public void OpenLevel(int levelid)

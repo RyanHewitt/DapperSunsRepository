@@ -6,23 +6,24 @@ using UnityEngine.UI;
 
 public class LevelEndTrigger : MonoBehaviour
 {
-    public float timer;
-    [SerializeField] Image bronzebadge;
-    [SerializeField] Image silverbadge;
-    [SerializeField] Image goldbadge;
-    [SerializeField] Image diamondbadge;
-    [SerializeField] float bronzetime;
-    [SerializeField] float silvertime;
-    [SerializeField] float goldtime;
-    [SerializeField] float diamondtime;
+    [SerializeField] Sprite[] medalSprites;
+
+    [SerializeField] float silverTime;
+    [SerializeField] float goldTime;
+    [SerializeField] float diamondTime;
+
+    Image medal;
+
+    float timer;
+    int badgeIndex;
+
+    void Start()
+    {
+        medal = GameManager.instance.winMedalImage;
+    }
 
     void OnTriggerEnter(Collider other)
     {
-        diamondbadge.enabled = false;
-        goldbadge.enabled = false;
-        silverbadge.enabled = false;
-        bronzebadge.enabled = false;
-
         if (other.isTrigger)
         {
             return;
@@ -32,23 +33,28 @@ public class LevelEndTrigger : MonoBehaviour
         {
             GameManager.instance.PopupWin();
             timer = GameManager.instance.elapsedTime;
-            if(timer < diamondtime)
+            if(timer <= diamondTime)
             {
-                diamondbadge.enabled = true;
+                badgeIndex = 4;
+                medal.sprite = medalSprites[badgeIndex];
             }
-            else if(timer < goldtime)
+            else if(timer <= goldTime)
             {
-                goldbadge.enabled = true;
+                badgeIndex = 3;
+                medal.sprite = medalSprites[badgeIndex];
             }
-            else if(timer < silvertime)
+            else if(timer <= silverTime)
             {
-                silverbadge.enabled = true;
+                badgeIndex = 2;
+                medal.sprite = medalSprites[badgeIndex];
             }
-            else if(timer > bronzetime)
+            else
             {
-                bronzebadge.enabled = true;
+                badgeIndex = 1;
+                medal.sprite = medalSprites[badgeIndex];
             }
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + " Time", timer);
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + " badgeIndex", badgeIndex);
         }
 
         UnlockNewLevel();
@@ -60,8 +66,6 @@ public class LevelEndTrigger : MonoBehaviour
         {
             PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
             PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
-            PlayerPrefs.Save();
-
         }
     }
 }

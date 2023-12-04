@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [SerializeField] float speedFadeSpeed;
     [SerializeField] float speedFadeIn;
     [SerializeField] float speedFadeOut;
+    [SerializeField] float headSphereRad;
 
     [Header("----- Dash Stats -----")]
     [SerializeField] float dashSpeed;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     [Header("----- Slam Stats -----")]
     [SerializeField] float slamSpeed;
+    [SerializeField] float slamSphereRad;
 
     [Header("----- Groove Stats -----")]
     [Range(1, 30)][SerializeField] float groovePlayerSpeed;
@@ -314,11 +316,16 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckHeadHit()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, 0.8f, defaultMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.up, headSphereRad, defaultMask);
         foreach (Collider collider in colliders)
         {            
             if (collider.transform != transform)
             {
+                jumpVelocity = Vector3.zero;
+                boopVelocity = Vector3.zero;
+                jumpElapsedTime = 1;
+                boopElapsedTime = 1;
+
                 playerVelocity.y = gravityValue;
             }
         }
@@ -687,7 +694,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void SlamImpact()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, 1f, defaultMask);
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, slamSphereRad, defaultMask);
         foreach (Collider collider in colliders)
         {
             IBoop boopable = collider.GetComponent<IBoop>();
@@ -702,8 +709,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position + Vector3.down, 1f);
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, 0.8f);
+        Gizmos.DrawWireSphere(transform.position + Vector3.down, slamSphereRad);
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, headSphereRad);
     }
 
     void CheckGroove()

@@ -11,6 +11,11 @@ public class LevelEndTrigger : MonoBehaviour
     [SerializeField] Image silverbadge;
     [SerializeField] Image goldbadge;
     [SerializeField] Image diamondbadge;
+    [SerializeField] float bronzetime;
+    [SerializeField] float silvertime;
+    [SerializeField] float goldtime;
+    [SerializeField] float diamondtime;
+    Image yourbadge;
 
     void OnTriggerEnter(Collider other)
     {
@@ -28,22 +33,23 @@ public class LevelEndTrigger : MonoBehaviour
         {
             GameManager.instance.PopupWin();
             timer = GameManager.instance.elapsedTime;
-            if(timer < 15.000000)
+            if(timer < diamondtime)
             {
                 diamondbadge.enabled = true;
             }
-            else if(timer < 30.000000)
+            else if(timer < goldtime)
             {
                 goldbadge.enabled = true;
             }
-            else if(timer < 45.000000)
+            else if(timer < silvertime)
             {
                 silverbadge.enabled = true;
             }
-            else if(timer > 60.000000)
+            else if(timer > bronzetime)
             {
                 bronzebadge.enabled = true;
             }
+            PlayerPrefs.SetFloat("Badge", timer);
         }
 
         UnlockNewLevel();

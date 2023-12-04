@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelEndTrigger : MonoBehaviour
 {
-    float timer;
+    public float timer;
     [SerializeField] Image bronzebadge;
     [SerializeField] Image silverbadge;
     [SerializeField] Image goldbadge;
@@ -15,7 +15,6 @@ public class LevelEndTrigger : MonoBehaviour
     [SerializeField] float silvertime;
     [SerializeField] float goldtime;
     [SerializeField] float diamondtime;
-    Image yourbadge;
 
     void OnTriggerEnter(Collider other)
     {
@@ -49,7 +48,7 @@ public class LevelEndTrigger : MonoBehaviour
             {
                 bronzebadge.enabled = true;
             }
-            PlayerPrefs.SetFloat("Badge", timer);
+            PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + " Time", timer);
         }
 
         UnlockNewLevel();

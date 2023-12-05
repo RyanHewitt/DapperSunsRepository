@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [SerializeField] float speedFadeSpeed;
     [SerializeField] float speedFadeIn;
     [SerializeField] float speedFadeOut;
+    [SerializeField] float groundSphereRad;
     [SerializeField] float headSphereRad;
 
     [Header("----- Dash Stats -----")]
@@ -160,7 +161,9 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        DebugRaycastCone();
+        CheckGround();
+
+        //DebugRaycastCone();
     }
 
     void LateUpdate()
@@ -194,6 +197,19 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         Color materialColor = speedLineMat.color;
         materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
         speedLineMat.color = materialColor;
+    }
+
+    void CheckGround()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, groundSphereRad, defaultMask);
+        if (colliders.Length > 0)
+        {
+            Ground(null);
+        }
+        else
+        {
+            Unground();
+        }
     }
 
     public void Ground(Transform ground)
@@ -711,6 +727,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void OnDrawGizmos()
     {
+        Gizmos.DrawWireSphere(transform.position + Vector3.down, groundSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.down, slamSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.up, headSphereRad);
     }

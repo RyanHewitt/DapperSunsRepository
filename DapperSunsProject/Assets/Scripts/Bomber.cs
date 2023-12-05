@@ -130,6 +130,10 @@ public class Bomber : EnemyAi
                 IBoop boopable = colliders[i].GetComponent<IBoop>();
                 if (boopable != null)
                 {
+                    //if (colliders[i].CompareTag("Player"))
+                    //{
+                    //    GameManager.instance.playerScript.Unground();
+                    //}
                     boopable.DoBoop(transform.position - (Vector3.up * 1f), explosionForce);
                 }
             }

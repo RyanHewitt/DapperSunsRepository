@@ -89,26 +89,16 @@ public class Bomber : EnemyAi
 
     protected override void BeatAction()
     {
-        
-        if (playerInRange && CheckLineOfSight(GameManager.instance.player.transform))
+        if (startCountdown)
         {
-            if (startCountdown)
-            {
-                counter++;
-                AudioManager.instance.Play3D(countSound, transform.position);
-                StartCoroutine(Flash());
+            counter++;
+            AudioManager.instance.Play3D(countSound, transform.position);
+            StartCoroutine(Flash());
 
-                if (counter >= countdown)
-                {
-                    StartCoroutine(Death());
-                }
+            if (counter >= countdown)
+            {
+                StartCoroutine(Death());
             }
-        }
-        else
-        {
-            
-            startCountdown = false;
-            counter = 0;
         }
     }
 
@@ -116,6 +106,14 @@ public class Bomber : EnemyAi
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         rb.AddForce(-(origin - transform.position) * force * boopMultiplier, ForceMode.Impulse);
+        base.BoopImpulse(origin, force, slam);
+
+        if (!startCountdown)
+        {
+            startCountdown = true;
+            counter = 0;
+            AudioManager.instance.Play3D(countSound, transform.position);
+        }
     }
 
     void Explode()

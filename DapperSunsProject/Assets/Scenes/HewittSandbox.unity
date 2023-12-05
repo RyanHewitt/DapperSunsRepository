@@ -1445,7 +1445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11519389009400509, guid: 60a44fb833f5ded4eb801395981329c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 33.260647
+      value: 35.260647
       objectReference: {fileID: 0}
     - target: {fileID: 11519389009400509, guid: 60a44fb833f5ded4eb801395981329c6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1922,10 +1922,6 @@ PrefabInstance:
     - target: {fileID: 1151776413619494356, guid: 38bb61721acdd944a9861d224100bf01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5422076506720381026, guid: 38bb61721acdd944a9861d224100bf01, type: 3}
-      propertyPath: explosionForce
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5586600880452654849, guid: 38bb61721acdd944a9861d224100bf01, type: 3}
       propertyPath: m_Name
@@ -3982,6 +3978,10 @@ PrefabInstance:
     - target: {fileID: 5163301293539588003, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
+      propertyPath: groundSphereRad
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8351637192957294273, guid: a5566c4115c88da4b934746255913f40, type: 3}
       propertyPath: m_Name

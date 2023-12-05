@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class RythmIndicator : MonoBehaviour
 {
-    private Vector3 startsize;
     [SerializeField] float pulse = 1.15f;
     [SerializeField] float returnspeed = 5f;
+    [SerializeField] private Vector2 modVector = Vector2.one;
+
+    Vector3 startsize;
 
     void Start()
     {
@@ -19,13 +21,12 @@ public class RythmIndicator : MonoBehaviour
     {
         float newScaleY = Mathf.Lerp(transform.localScale.y, startsize.y, Time.deltaTime * returnspeed);
         float newScaleX = Mathf.Lerp(transform.localScale.x, startsize.x, Time.deltaTime * returnspeed);
-        transform.localScale = new Vector3(startsize.x, newScaleY, startsize.z);
+
         transform.localScale = new Vector3(newScaleX, newScaleY, startsize.z);
-        transform.localScale = new Vector3(startsize.y, newScaleX, startsize.z);
-        transform.localScale = new Vector3(newScaleY, newScaleY, startsize.z);
     }
+
     void DoBeat()
     {
-        transform.localScale = new Vector3(startsize.x, startsize.y * pulse, startsize.z);
+        transform.localScale = new Vector3(startsize.x * pulse * modVector.x, startsize.y * pulse * modVector.y, startsize.z);
     }
 }

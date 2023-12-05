@@ -64,8 +64,6 @@ GameObject:
   - component: {fileID: 2240142291873431773}
   - component: {fileID: 5195212304211711865}
   - component: {fileID: 2222093860279155064}
-  - component: {fileID: 4596694188971235677}
-  - component: {fileID: 2302504149941240300}
   m_Layer: 0
   m_Name: PlatformCenter
   m_TagString: Untagged
@@ -139,37 +137,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4596694188971235677
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8223984674131529677}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.5, y: 0.5, z: 3.5}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &2302504149941240300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8223984674131529677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3611908df7a4a4d984bd440ac759ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldParent: 0

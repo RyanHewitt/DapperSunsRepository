@@ -161,9 +161,15 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        CheckGround();
-
         //DebugRaycastCone();
+    }
+
+    void FixedUpdate()
+    {
+        if (!GameManager.instance.isPaused)
+        {
+            CheckGround();
+        }
     }
 
     void LateUpdate()
@@ -201,8 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckGround()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, groundSphereRad, defaultMask);
-        if (colliders.Length > 0)
+        if (Physics.CheckSphere(transform.position + Vector3.down * 0.8f, groundSphereRad, defaultMask))
         {
             Ground(null);
         }
@@ -214,8 +219,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     public void Ground(Transform ground)
     {
-        timesGrounded++;
-
         ghost.transform.parent = ground;
         ghost.transform.position = transform.position;
 
@@ -225,17 +228,10 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     public void Unground()
     {
-        timesGrounded--;
-        
         ghost.transform.parent = null;
-        
-        if (timesGrounded <= 0)
-        {
-            timesGrounded = 0;
-            
-            groundedPlayer = false;
-            frictionForce = frictionAir; 
-        }
+
+        groundedPlayer = false;
+        frictionForce = frictionAir;
     }
 
     void Restart()
@@ -727,7 +723,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position + Vector3.down, groundSphereRad);
+        Gizmos.DrawWireSphere(transform.position + Vector3.down * 0.8f, groundSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.down, slamSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.up, headSphereRad);
     }

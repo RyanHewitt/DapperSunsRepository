@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     public float elapsedTime = 0f;
     public bool isCountingTimer;
     float originalBpm;
-    bool isCountdownActive = false;
+    bool isCountdownActive;
     float countdownTimer = 0f;
     int countdownNumber = 3;
     
@@ -94,15 +94,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
         audioSource = AudioManager.instance.audioSource;
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
-        bpm = bpm > 0 ? bpm : 120;
         RestartTimer();
-        
+
     }
 
     void Update()
@@ -151,7 +149,6 @@ public class GameManager : MonoBehaviour
         {
             lastSelectedButton = EventSystem.current.currentSelectedGameObject;
         }
-
         if (isCountdownActive)
         {
             countdownTimer -= Time.deltaTime;
@@ -161,19 +158,18 @@ public class GameManager : MonoBehaviour
                 {
                     countdownText.text = "Go!";
                     isCountdownActive = false;
-
-                    // Unpause the game here
                     StateUnpause();
+                    ClearCountdownText();
                     
                 }
                 else
                 {
                     countdownNumber--;
-                    countdownTimer = 60f / bpm;
                     countdownText.text = countdownNumber.ToString();
                 }
             }
         }
+
 
     }
 
@@ -181,6 +177,7 @@ public class GameManager : MonoBehaviour
     void CheckBeat()
     {
         float beatInterval = 60f / bpm;
+
         float sampledTime = (AudioManager.instance.MusicSource.timeSamples / (AudioManager.instance.MusicSource.clip.frequency * beatInterval)) - 0.25f;
         int floor = Mathf.FloorToInt(sampledTime);
         if (floor != lastSampledTime)
@@ -189,6 +186,7 @@ public class GameManager : MonoBehaviour
             if (OnBeatEvent != null)
             {
                 OnBeatEvent();
+                DoBeat();
                 //StatePause();
             }
         }
@@ -203,6 +201,13 @@ public class GameManager : MonoBehaviour
         {
             beatWindow = false;
         }
+    }
+
+    void DoBeat()
+    {
+        countdownTimer = 60f / bpm;
+        float beatInterval = 60f / bpm;
+        countdownTimer = beatInterval;
     }
 
     public GameObject GetPlayerSpawn()
@@ -570,11 +575,9 @@ public class GameManager : MonoBehaviour
 
     public void RestartTimer()
     {
-        float beatInterval = 60f / bpm; 
         isPaused = true;
         isCountdownActive = true;
         countdownNumber = 3;
-        countdownTimer = beatInterval;
         countdownText.text = countdownNumber.ToString();
     }
 

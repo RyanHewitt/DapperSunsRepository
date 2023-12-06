@@ -21,7 +21,7 @@ public class DoorToggle : MonoBehaviour
         turnontoggle = false;
         trigger.SetActive(false);
         Door.GetComponent<Renderer>().material.globalIlluminationFlags = MaterialGlobalIlluminationFlags.EmissiveIsBlack;
-        Door.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green * 0);
+        Door.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * EmissiveOn);
 
         GameManager.instance.OnBeatEvent += DoBeat;
 
@@ -50,6 +50,6 @@ public class DoorToggle : MonoBehaviour
     {
         turnontoggle = false;
         trigger.SetActive(false);
-        Door.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green * 0);
+        Door.GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red * EmissiveOn);
     }
 }

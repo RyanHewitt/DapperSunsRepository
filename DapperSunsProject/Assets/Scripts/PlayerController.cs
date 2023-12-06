@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     bool hitPenalty = false;
     bool slamming = false;
     bool dashing = false;
+    bool parented;
     int HP = 1;
     int dashCounter;
     int grooveMeter;
@@ -209,7 +211,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     {
         if (Physics.CheckSphere(transform.position + Vector3.down * 0.8f, groundSphereRad, defaultMask))
         {
-            Ground(null);
+            Ground();
         }
         else
         {
@@ -217,21 +219,32 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    public void Ground(Transform ground)
+    void Ground()
     {
-        ghost.transform.parent = ground;
-        ghost.transform.position = transform.position;
-
         groundedPlayer = true;
         frictionForce = frictionGround;
     }
 
-    public void Unground()
+    void Unground()
     {
-        ghost.transform.parent = null;
-
         groundedPlayer = false;
         frictionForce = frictionAir;
+    }
+
+    public void ParentMovement(Transform ground)
+    {
+        parented = true;
+        ghost.transform.parent = ground;
+        ghost.transform.position = transform.position;
+    }
+
+    public void UnparentMovement(Transform ground)
+    {
+        if (parented && ground == ghost.transform.parent)
+        {
+            parented = false;
+            ghost.transform.parent = null;
+        }
     }
 
     void Restart()

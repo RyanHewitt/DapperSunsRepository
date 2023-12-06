@@ -6,6 +6,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 {
     [Header("---Movement---")]
     [SerializeField] protected float stopDistance = 2.0f;
+    [SerializeField] protected bool parented;
 
     [Header("---Components---")]
     [SerializeField] protected Rigidbody rb;
@@ -27,6 +28,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [SerializeField] protected AudioClip ShootAudio;
     [SerializeField] protected AudioClip deathAudio;
 
+    protected Transform parentTransform;
     protected Vector3 startPos;
     protected Quaternion startRot;
     protected Vector3 playerDirection;
@@ -54,6 +56,11 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         startPos = transform.position;
         startRot = transform.rotation;
         startHP = HP;
+
+        if (parented)
+        {
+            parentTransform = gameObject.transform.parent; 
+        }
     }
 
     protected virtual void Update()
@@ -65,9 +72,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
                 playerDirection = GameManager.instance.player.transform.position - transform.position;
                 Rotate();
                 Move();
-                
             }
-
         }
     }
 
@@ -85,6 +90,12 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         enemyCol.enabled = true;
 
         playerInRange = false;
+
+        if (parented)
+        {
+            gameObject.transform.parent = parentTransform;
+            rb.useGravity = false;
+        }
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -162,6 +173,11 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)
     {
+        if (parented)
+        {
+            gameObject.transform.parent = null;
+            rb.useGravity = true;
+        }
         BoopImpulse(origin, force, slam);
     }
 

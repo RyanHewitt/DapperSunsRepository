@@ -15,9 +15,6 @@ public class Spike : MonoBehaviour
 
     Material mat;
 
-    Vector3 upPos;
-    Vector3 downPos;
-
     bool isUp = false;
 
     int beatCounter;
@@ -28,12 +25,8 @@ public class Spike : MonoBehaviour
 
         beatCounter = 0;
 
-        upPos = spikeObj.transform.position;
-        downPos = new Vector3(upPos.x, upPos.y - 3, upPos.z);
-
         coll = GetComponent<Collider>();
         coll.enabled = false;
-        spikeObj.transform.position = downPos;
 
         mat = GetComponent<Renderer>().material;
         mat.color = down;
@@ -69,7 +62,6 @@ public class Spike : MonoBehaviour
             if (isUp)
             {
                 beatCounter = 0;
-                spikeObj.transform.position = downPos;
                 coll.enabled = false;
                 isUp = false;
                 mat.color = down;
@@ -79,7 +71,6 @@ public class Spike : MonoBehaviour
             }
             else
             {
-                spikeObj.transform.position = upPos;
                 coll.enabled = true;
                 isUp = true;
                 mat.color = up;

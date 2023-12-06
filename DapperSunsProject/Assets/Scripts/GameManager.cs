@@ -50,8 +50,7 @@ public class GameManager : MonoBehaviour
     public float elapsedTime = 0f;
     public bool isCountingTimer;
     float originalBpm;
-    bool isCountdownActive;
-    private float countdownTimer;
+    public bool isCountdownActive;
     int countdownNumber;
     public AudioClip audioClip;
     AudioSource audioSource;
@@ -87,8 +86,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Respawn");
- 
-
     }
 
     void Start()
@@ -98,8 +95,7 @@ public class GameManager : MonoBehaviour
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
-        RestartTimer();
-
+        Restart();
     }
 
     void Update()
@@ -109,7 +105,7 @@ public class GameManager : MonoBehaviour
             CheckBeat();
         }
 
-        if (Input.GetButtonDown("Cancel") && !playerDead)
+        if (Input.GetButtonDown("Cancel") && !playerDead && !isCountdownActive)
         {
             if (menuStack.Count > 0)
             {
@@ -132,7 +128,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Restart"))
+        if (Input.GetButtonDown("Restart") && !isCountdownActive)
         {
             Restart();
             AudioManager.instance.Unmuffle();
@@ -147,7 +143,6 @@ public class GameManager : MonoBehaviour
         {
             lastSelectedButton = EventSystem.current.currentSelectedGameObject;
         }
-
     }
 
     void CheckBeat()
@@ -183,12 +178,16 @@ public class GameManager : MonoBehaviour
     {
         if (isCountdownActive)
         {
-            if (countdownNumber < 1)
+            if (countdownNumber == 0)
             {
                 countdownText.text = "Go!";
-                isCountdownActive = false;
                 isPaused = false;
-                ClearCountdownText();
+                countdownNumber--;
+            }
+            else if (countdownNumber < 0)
+            {
+                isCountdownActive = false;
+                countdownText.text = " ";
             }
             else
             {
@@ -360,6 +359,7 @@ public class GameManager : MonoBehaviour
     {
         elapsedTime = 0;
         playerDead = false;
+        RestartTimer();
 
         if (OnRestartEvent != null)
         {
@@ -375,7 +375,6 @@ public class GameManager : MonoBehaviour
         {
             DeactivateDoubleTimePowerUp();
         }
-        RestartTimer();
     }
 
     public void ToMainMenu()
@@ -563,24 +562,10 @@ public class GameManager : MonoBehaviour
 
     public void RestartTimer()
     {
-        float beatInterval = 60f / bpm;
         isPaused = true;
         isCountdownActive = true;
         countdownNumber = 3;
-        countdownTimer = 0f;
         countdownText.text = countdownNumber.ToString();
-    }
-
-    public void ClearCountdownText()
-    {
-
-        StartCoroutine(ClearCountdownTextAfterDelay(3f));
-    }
-
-    private IEnumerator ClearCountdownTextAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        countdownText.text = " ";
     }
 
     public event BeatEvent OnBeatEvent;

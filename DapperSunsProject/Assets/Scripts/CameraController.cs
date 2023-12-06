@@ -13,7 +13,7 @@ public class cameraController : MonoBehaviour
 
     void Start()
     {
-        
+        GameManager.instance.OnRestartEvent += Restart;
     }
 
     void Update()
@@ -44,5 +44,9 @@ public class cameraController : MonoBehaviour
             // rotate the player on the Y-axis
             transform.parent.Rotate(Vector3.up * mouseX);
         }
+    }
+    void Restart()
+    {
+        xRot = Camera.main.transform.localRotation.y;
     }
 }

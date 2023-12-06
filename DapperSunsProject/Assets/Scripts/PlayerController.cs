@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         ghost.transform.position = startPos.position;
 
         GameManager.instance.playerDead = false;
-        SpawnPlayer();
 
         speedLines = Instantiate(speedLinesPrefab, transform.position, Quaternion.Euler(Vector3.zero));
         speedLineMat = speedLines.GetComponent<Renderer>().material;
@@ -121,6 +120,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         currentPlayerSpeed = playerSpeed;
 
         ogMusicVol = AudioManager.instance.MusicSource.volume;
+
+        SpawnPlayer();
     }
 
     void Update()
@@ -192,20 +193,29 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     void UpdateSpeedLines()
     {
         speedLines.transform.position = transform.position;
-        Vector3 direction = ((controller.velocity) + (dashVelocity) + (move * currentPlayerSpeed));
-        if (direction != Vector3.zero)
+        if (!GameManager.instance.isPaused)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
-            speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+            Vector3 direction = ((controller.velocity) + (dashVelocity) + (move * currentPlayerSpeed));
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
+                speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+            }
+
+            float magnitude = direction.magnitude;
+
+            float targetAlpha = Mathf.InverseLerp(speedFadeIn, speedFadeOut, magnitude);
+
+            Color materialColor = speedLineMat.color;
+            materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
+            speedLineMat.color = materialColor;
         }
-
-        float magnitude = direction.magnitude;
-
-        float targetAlpha = Mathf.InverseLerp(speedFadeIn, speedFadeOut, magnitude);
-
-        Color materialColor = speedLineMat.color;
-        materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
-        speedLineMat.color = materialColor;
+        else
+        {
+            Color materialColor = speedLineMat.color;
+            materialColor.a = 0f;
+            speedLineMat.color = materialColor;
+        }
     }
 
     void CheckGround()
@@ -252,8 +262,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     {
         Destroy(ghost);
         ghost = new GameObject("ghost");
-        SpawnPlayer();
-
+        
         playerVelocity = Vector3.zero;
         jumpVelocity = Vector3.zero;
         boopVelocity = Vector3.zero;
@@ -266,6 +275,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         gravityValue = originalGravity;
 
         BoopPenalty();
+        SpawnPlayer();
     }
 
     void MovePlayer()
@@ -619,10 +629,13 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         ghost.transform.position = startPos.position;
         transform.position = startPos.position;
         transform.rotation = startPos.rotation;
+        Camera.main.transform.rotation = startPos.rotation;
 
         controller.enabled = true;
 
         HP = 1;
+
+        UpdateSpeedLines();
     }
 
     void DashInput()

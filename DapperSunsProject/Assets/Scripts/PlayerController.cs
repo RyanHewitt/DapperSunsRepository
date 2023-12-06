@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     bool hitPenalty = false;
     bool slamming = false;
     bool dashing = false;
+    bool parented;
     int HP = 1;
     int dashCounter;
     int grooveMeter;
@@ -98,6 +100,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     float dashElapsedTime;
     float currentPlayerSpeed;
     float ogMusicVol;
+    float pitch = 1f;
 
     void Start()
     {
@@ -109,7 +112,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         ghost.transform.position = startPos.position;
 
         GameManager.instance.playerDead = false;
-        SpawnPlayer();
 
         speedLines = Instantiate(speedLinesPrefab, transform.position, Quaternion.Euler(Vector3.zero));
         speedLineMat = speedLines.GetComponent<Renderer>().material;
@@ -118,6 +120,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         currentPlayerSpeed = playerSpeed;
 
         ogMusicVol = AudioManager.instance.MusicSource.volume;
+
+        SpawnPlayer();
     }
 
     void Update()
@@ -161,9 +165,15 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-        CheckGround();
-
         //DebugRaycastCone();
+    }
+
+    void FixedUpdate()
+    {
+        if (!GameManager.instance.isPaused)
+        {
+            CheckGround();
+        }
     }
 
     void LateUpdate()
@@ -183,28 +193,36 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     void UpdateSpeedLines()
     {
         speedLines.transform.position = transform.position;
-        Vector3 direction = ((controller.velocity) + (dashVelocity) + (move * currentPlayerSpeed));
-        if (direction != Vector3.zero)
+        if (!GameManager.instance.isPaused)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
-            speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+            Vector3 direction = ((controller.velocity) + (dashVelocity) + (move * currentPlayerSpeed));
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(direction) * Quaternion.Euler(-90f, 0f, 0f);
+                speedLines.transform.rotation = Quaternion.Slerp(speedLines.transform.rotation, targetRot, speedLineRotSpeed * Time.deltaTime);
+            }
+
+            float magnitude = direction.magnitude;
+
+            float targetAlpha = Mathf.InverseLerp(speedFadeIn, speedFadeOut, magnitude);
+
+            Color materialColor = speedLineMat.color;
+            materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
+            speedLineMat.color = materialColor;
         }
-
-        float magnitude = direction.magnitude;
-
-        float targetAlpha = Mathf.InverseLerp(speedFadeIn, speedFadeOut, magnitude);
-
-        Color materialColor = speedLineMat.color;
-        materialColor.a = Mathf.Lerp(materialColor.a, targetAlpha, speedLineRotSpeed * Time.deltaTime);
-        speedLineMat.color = materialColor;
+        else
+        {
+            Color materialColor = speedLineMat.color;
+            materialColor.a = 0f;
+            speedLineMat.color = materialColor;
+        }
     }
 
     void CheckGround()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position + Vector3.down, groundSphereRad, defaultMask);
-        if (colliders.Length > 0)
+        if (Physics.CheckSphere(transform.position + Vector3.down * 0.8f, groundSphereRad, defaultMask))
         {
-            Ground(null);
+            Ground();
         }
         else
         {
@@ -212,29 +230,31 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         }
     }
 
-    public void Ground(Transform ground)
+    void Ground()
     {
-        timesGrounded++;
-
-        ghost.transform.parent = ground;
-        ghost.transform.position = transform.position;
-
         groundedPlayer = true;
         frictionForce = frictionGround;
     }
 
-    public void Unground()
+    void Unground()
     {
-        timesGrounded--;
-        
-        ghost.transform.parent = null;
-        
-        if (timesGrounded <= 0)
+        groundedPlayer = false;
+        frictionForce = frictionAir;
+    }
+
+    public void ParentMovement(Transform ground)
+    {
+        parented = true;
+        ghost.transform.parent = ground;
+        ghost.transform.position = transform.position;
+    }
+
+    public void UnparentMovement(Transform ground)
+    {
+        if (parented && ground == ghost.transform.parent)
         {
-            timesGrounded = 0;
-            
-            groundedPlayer = false;
-            frictionForce = frictionAir; 
+            parented = false;
+            ghost.transform.parent = null;
         }
     }
 
@@ -242,8 +262,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     {
         Destroy(ghost);
         ghost = new GameObject("ghost");
-        SpawnPlayer();
-
+        
         playerVelocity = Vector3.zero;
         jumpVelocity = Vector3.zero;
         boopVelocity = Vector3.zero;
@@ -256,6 +275,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         gravityValue = originalGravity;
 
         BoopPenalty();
+        SpawnPlayer();
     }
 
     void MovePlayer()
@@ -268,7 +288,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             if (!hitBeat && !hitPenalty)
             {
                 hitBeat = true;
-                AudioManager.instance.audioSource.PlayOneShot(jumpSFX);
+                AudioManager.instance.Play3D(jumpSFX, transform.position, pitch, 0f, 0.3f);
 
                 jumpVelocity.y += jumpHeight;
                 jumpVelocityOg = jumpVelocity;
@@ -369,7 +389,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void Boop()
     {
-        AudioManager.instance.audioSource.PlayOneShot(boopSFX);
+        AudioManager.instance.Play3D(boopSFX, transform.position, pitch, 0f, 0.3f);
 
         List<Vector3> points = new List<Vector3>();
         List<IBoop> targets = new List<IBoop>();
@@ -571,6 +591,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         hitPenalty = true;
         grooveMeter = 0;
         grooveTimer = 0;
+        pitch = 1f;
 
         currentPlayerSpeed = playerSpeed;
         GameManager.instance.ToggleGrooveEdge(false);
@@ -608,10 +629,13 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         ghost.transform.position = startPos.position;
         transform.position = startPos.position;
         transform.rotation = startPos.rotation;
+        Camera.main.transform.rotation = startPos.rotation;
 
         controller.enabled = true;
 
         HP = 1;
+
+        UpdateSpeedLines();
     }
 
     void DashInput()
@@ -627,8 +651,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
                 }
 
                 hitBeat = true;
-                AudioManager.instance.playOnce(dashSFX);
-                //StartCoroutine(GameManager.instance.FlashLines(dashDuration));
+                AudioManager.instance.Play3D(dashSFX, transform.position, pitch, 0f, 0.3f);
                 StartCoroutine(DoDash());
 
                 CheckGroove();
@@ -667,7 +690,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             if (!hitBeat && !hitPenalty)
             {
                 hitBeat = true;
-                AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
+                AudioManager.instance.Play3D(slamStartSFX, transform.position, pitch, 0f, 0.3f);
                 StartCoroutine(DoSlam());
 
                 CheckGroove();
@@ -727,7 +750,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position + Vector3.down, groundSphereRad);
+        Gizmos.DrawWireSphere(transform.position + Vector3.down * 0.8f, groundSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.down, slamSphereRad);
         Gizmos.DrawWireSphere(transform.position + Vector3.up, headSphereRad);
     }
@@ -737,6 +760,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         if (grooveMeter < 4)
         {
             grooveMeter++;
+            pitch += 0.25f;
             if (grooveMeter == 4) // Is Grooving
             {
                 // Apply Groove Effects

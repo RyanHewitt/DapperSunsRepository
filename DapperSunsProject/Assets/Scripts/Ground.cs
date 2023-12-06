@@ -11,62 +11,64 @@ public class Ground : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (colliding)
+        if (shouldParent && colliding)
         {
             counter++;
             if (counter == 3)
             {
                 colliding = false;
-                GameManager.instance.playerScript.Unground();
+                GameManager.instance.playerScript.UnparentMovement(transform);
             }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger)
+        if (shouldParent)
         {
-            return;
-        }
-
-        if (other.CompareTag("Player"))
-        {
-            if (shouldParent)
+            if (other.isTrigger)
             {
-                GameManager.instance.playerScript.Ground(transform.parent.transform); 
+                return;
             }
-            else
+
+            if (other.CompareTag("Player"))
             {
-                GameManager.instance.playerScript.Ground(null);
+                GameManager.instance.playerScript.ParentMovement(transform);
             }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.isTrigger)
+        if (shouldParent)
         {
-            return;
-        }
+            if (other.isTrigger)
+            {
+                return;
+            }
 
-        if (other.CompareTag("Player"))
-        {
-            colliding = true;
-            counter = 0;
+            if (other.CompareTag("Player"))
+            {
+                colliding = true;
+                counter = 0;
+            } 
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.isTrigger)
+        if (shouldParent)
         {
-            return;
-        }
+            if (other.isTrigger)
+            {
+                return;
+            }
 
-        if (other.CompareTag("Player"))
-        {
-            colliding = false;
-            GameManager.instance.playerScript.Unground();
+            if (other.CompareTag("Player"))
+            {
+                colliding = false;
+                GameManager.instance.playerScript.UnparentMovement(transform);
+            }
         }
     }
 }

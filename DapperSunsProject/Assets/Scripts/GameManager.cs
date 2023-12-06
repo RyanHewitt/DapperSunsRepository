@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject SpeedLines;
     [SerializeField] GameObject grooveEdge;
     [SerializeField] TMP_Text timerText;
+    [SerializeField] TMP_Text countdownText;
     [SerializeField] GameObject menuEndGame;
     [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
@@ -45,12 +46,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] Slider FOV;
 
     public bool doubleTimeActive = false;
-    public AudioClip originalSong; 
+    public AudioClip originalSong;
     public float elapsedTime = 0f;
     public bool isCountingTimer;
-    float originalBpm; 
- 
-
+    float originalBpm;
+    bool isCountdownActive = false;
+    float countdownTimer = 0f;
+    int countdownNumber = 3;
+    
     public AudioClip audioClip;
     AudioSource audioSource;
 
@@ -85,16 +88,21 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Respawn");
+ 
+
     }
 
     void Start()
     {
-        audioSource = AudioManager.instance.audioSource;
 
+        audioSource = AudioManager.instance.audioSource;
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
+        bpm = bpm > 0 ? bpm : 120;
+        RestartTimer();
+        
     }
 
     void Update()
@@ -143,7 +151,32 @@ public class GameManager : MonoBehaviour
         {
             lastSelectedButton = EventSystem.current.currentSelectedGameObject;
         }
+
+        if (isCountdownActive)
+        {
+            countdownTimer -= Time.deltaTime;
+            if (countdownTimer <= 0f)
+            {
+                if (countdownNumber <= 0)
+                {
+                    countdownText.text = "Go!";
+                    isCountdownActive = false;
+
+                    // Unpause the game here
+                    StateUnpause();
+                    
+                }
+                else
+                {
+                    countdownNumber--;
+                    countdownTimer = 60f / bpm;
+                    countdownText.text = countdownNumber.ToString();
+                }
+            }
+        }
+
     }
+
 
     void CheckBeat()
     {
@@ -349,6 +382,7 @@ public class GameManager : MonoBehaviour
         {
             DeactivateDoubleTimePowerUp();
         }
+        RestartTimer();
     }
 
     public void ToMainMenu()
@@ -424,6 +458,7 @@ public class GameManager : MonoBehaviour
     {
         isCountingTimer = true;
         elapsedTime = 0;
+        
     }
 
     public void SyncBeats(float _bpm)
@@ -531,6 +566,21 @@ public class GameManager : MonoBehaviour
     {
         Camera.main.fieldOfView = FOV.value;
         PlayerPrefs.SetInt("FOV", (int)FOV.value);
+    }
+
+    public void RestartTimer()
+    {
+        float beatInterval = 60f / bpm; 
+        isPaused = true;
+        isCountdownActive = true;
+        countdownNumber = 3;
+        countdownTimer = beatInterval;
+        countdownText.text = countdownNumber.ToString();
+    }
+
+    public void ClearCountdownText()
+    {
+        countdownText.text = "";
     }
 
     public event BeatEvent OnBeatEvent;

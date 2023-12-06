@@ -30,15 +30,17 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void Play3D(AudioClip clip, Vector3 pos)
+    public void Play3D(AudioClip clip, Vector3 pos, float pitch = 1f, float spatial = 1f, float vol = 1f)
     {
         GameObject audioSourceObject = new GameObject("3DAudio");
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = SFX;
+        audioSource.pitch = pitch;
+        audioSource.volume = vol;
 
         audioSourceObject.transform.position = pos;
         audioSource.clip = clip;
-        audioSource.spatialBlend = 1.0f;
+        audioSource.spatialBlend = spatial;
         audioSource.Play();
 
         Destroy(audioSourceObject, clip.length);

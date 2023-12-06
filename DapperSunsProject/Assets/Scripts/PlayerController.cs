@@ -100,6 +100,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     float dashElapsedTime;
     float currentPlayerSpeed;
     float ogMusicVol;
+    float pitch = 1f;
 
     void Start()
     {
@@ -277,7 +278,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             if (!hitBeat && !hitPenalty)
             {
                 hitBeat = true;
-                AudioManager.instance.audioSource.PlayOneShot(jumpSFX);
+                AudioManager.instance.Play3D(jumpSFX, transform.position, pitch, 0f, 0.3f);
 
                 jumpVelocity.y += jumpHeight;
                 jumpVelocityOg = jumpVelocity;
@@ -378,7 +379,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void Boop()
     {
-        AudioManager.instance.audioSource.PlayOneShot(boopSFX);
+        AudioManager.instance.Play3D(boopSFX, transform.position, pitch, 0f, 0.3f);
 
         List<Vector3> points = new List<Vector3>();
         List<IBoop> targets = new List<IBoop>();
@@ -580,6 +581,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         hitPenalty = true;
         grooveMeter = 0;
         grooveTimer = 0;
+        pitch = 1f;
 
         currentPlayerSpeed = playerSpeed;
         GameManager.instance.ToggleGrooveEdge(false);
@@ -636,8 +638,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
                 }
 
                 hitBeat = true;
-                AudioManager.instance.playOnce(dashSFX);
-                //StartCoroutine(GameManager.instance.FlashLines(dashDuration));
+                AudioManager.instance.Play3D(dashSFX, transform.position, pitch, 0f, 0.3f);
                 StartCoroutine(DoDash());
 
                 CheckGroove();
@@ -676,7 +677,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             if (!hitBeat && !hitPenalty)
             {
                 hitBeat = true;
-                AudioManager.instance.audioSource.PlayOneShot(slamStartSFX);
+                AudioManager.instance.Play3D(slamStartSFX, transform.position, pitch, 0f, 0.3f);
                 StartCoroutine(DoSlam());
 
                 CheckGroove();
@@ -746,6 +747,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         if (grooveMeter < 4)
         {
             grooveMeter++;
+            pitch += 0.25f;
             if (grooveMeter == 4) // Is Grooving
             {
                 // Apply Groove Effects

@@ -9,6 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5209011525240457610}
+  - component: {fileID: 3044197672438215488}
+  - component: {fileID: 3433045433698395352}
+  - component: {fileID: 6268948858145846377}
+  - component: {fileID: 2807062947476318338}
   m_Layer: 0
   m_Name: FragilePlatform3x3
   m_TagString: Untagged
@@ -24,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6157288365859271275}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2, z: 60.00003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40,6 +44,83 @@ Transform:
   - {fileID: 4172486045983085507}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3044197672438215488
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157288365859271275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11, y: 0.6, z: 11}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3433045433698395352
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157288365859271275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11, y: 0.5, z: 11}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &6268948858145846377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157288365859271275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebea8c671c0496c49aec61851ea206fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: {fileID: 3433045433698395352}
+  col: {fileID: 3044197672438215488}
+  models: []
+  outlines: []
+  connectedPlats: []
+  _breakTime: 3
+  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  countdown: 0
+  BreakSound: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
+  countSound: {fileID: 8300000, guid: 8367bae1f48ccb74184ef276ebcbd759, type: 3}
+--- !u!114 &2807062947476318338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6157288365859271275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3611908df7a4a4d984bd440ac759ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldParent: 0
 --- !u!1001 &2985215813979693956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48,6 +129,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -128,7 +221,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4775600983252992645, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 1813051696276029509, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 5231876560171921263, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -196,6 +292,18 @@ PrefabInstance:
       value: FragilePlatformCenter
       objectReference: {fileID: 0}
     - target: {fileID: 9011031588507954368, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011031588507954368, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011031588507954368, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9011031588507954368, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -231,7 +339,10 @@ PrefabInstance:
       propertyPath: connectedPlats.Array.data[7]
       value: 
       objectReference: {fileID: 4534669861537254986}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2504198505939529763, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
+    - {fileID: 442187204089829280, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
+    - {fileID: 1410350426629963319, guid: 12bc411e0d5fbd74a96f3a2596dd44b6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -254,6 +365,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -334,7 +457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatformCorner (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1430064269670450023, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 1725449393123969706, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 2351079329898478945, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -357,6 +483,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -437,7 +575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatformCorner
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1430064269670450023, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 1725449393123969706, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 2351079329898478945, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -460,6 +601,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -540,7 +693,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatformCorner (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1430064269670450023, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 1725449393123969706, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 2351079329898478945, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -563,6 +719,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5030872364779981037, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -643,7 +811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatformCorner (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1430064269670450023, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 1725449393123969706, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
+    - {fileID: 2351079329898478945, guid: c4719958f886d394bbfe66e0f900b09f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -666,6 +837,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -746,7 +929,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4775600983252992645, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 1813051696276029509, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 5231876560171921263, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -769,6 +955,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -849,7 +1047,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4775600983252992645, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 1813051696276029509, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 5231876560171921263, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -872,6 +1073,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5209011525240457610}
     m_Modifications:
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: col
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: trigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4745439185944833908, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
       propertyPath: connectedPlats.Array.size
       value: 8
@@ -952,7 +1165,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4775600983252992645, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 1813051696276029509, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
+    - {fileID: 5231876560171921263, guid: 53a3fca1ad1d5244385b0821019f7c3a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

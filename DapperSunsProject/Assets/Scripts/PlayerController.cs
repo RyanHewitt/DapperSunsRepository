@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
                 canBeat = false;
             }
         }
-        else if (HP <= 0)
+        else if (HP <= 0 || GameManager.instance.isCountdownActive)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

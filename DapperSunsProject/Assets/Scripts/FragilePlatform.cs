@@ -12,6 +12,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
     [SerializeField] GameObject outline;
     [SerializeField] GameObject[] connectedPlats;
     [SerializeField] float _breakTime = 3f;
+    FragilePlatform[] FlashingOutlines;
 
     int breakCount;
 
@@ -20,7 +21,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
     protected Color baseColor;
     protected Color baseEmission;
     [SerializeField] int countdown;
-    //[SerializeField] AudioClip BreakSound;
+    [SerializeField] AudioClip BreakSound;
     [SerializeField] AudioClip countSound;
 
     bool startCountdown;
@@ -34,6 +35,11 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     void Start()
     {
+        FlashingOutlines = new FragilePlatform[connectedPlats.Length];
+        for (int i = 0; i < connectedPlats.Length; i++)
+        {
+            FlashingOutlines[i] = connectedPlats[i].GetComponent<FragilePlatform>();
+        }
         GameManager.instance.OnRestartEvent += Restart;
         GameManager.instance.OnBeatEvent += BeatAction;
 
@@ -92,6 +98,10 @@ public class FragilePlatform : MonoBehaviour, IBoop
         outlineMat.color = baseColor;
         outlineMat.SetColor("_EmissionColor", baseEmission);
     }
+    public void FlashCall()
+    {
+        StartCoroutine(Flash());
+    }
     private void OnTriggerEnter(Collider other)
     {
         startCountdown = true;
@@ -101,10 +111,11 @@ public class FragilePlatform : MonoBehaviour, IBoop
         if (startCountdown)
         {
             counter++;
-            foreach (var obj in connectedPlats)
+            AudioManager.instance.Play3D(countSound, transform.position);
+            FlashCall();
+            foreach (var obj in FlashingOutlines)
             {
-                AudioManager.instance.Play3D(countSound, obj.transform.position);
-                StartCoroutine(Flash());
+                obj.FlashCall();
             }
 
             if (counter >= countdown)
@@ -113,6 +124,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
                 if (connectedPlats.Length > 0)
                 {
+                    AudioManager.instance.Play3D(BreakSound, transform.position);
                     foreach (GameObject obj in connectedPlats)
                     {
                         IBoop boopable = obj.GetComponent<IBoop>();

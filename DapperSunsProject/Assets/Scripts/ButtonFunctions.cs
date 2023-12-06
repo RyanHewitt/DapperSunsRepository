@@ -64,4 +64,8 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.VideoMenuPopup();
     }
+    public void Credits()
+    {
+        GameManager.instance.CreditsMenu();
+    }
 }

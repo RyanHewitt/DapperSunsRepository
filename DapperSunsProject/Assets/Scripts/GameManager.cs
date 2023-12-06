@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Videostart;
     [SerializeField] GameObject levelSelectMenu;
     [SerializeField] GameObject levelSelectStart;
+    [SerializeField] GameObject menuCredits;
+    [SerializeField] GameObject menuCreditsBack;
+
 
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
@@ -566,6 +569,16 @@ public class GameManager : MonoBehaviour
         isCountdownActive = true;
         countdownNumber = 3;
         countdownText.text = countdownNumber.ToString();
+    }
+    public void CreditsMenu()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(menuCredits);
+        menuCredits.SetActive(true);
+        buttonStack.Push(menuCreditsBack);
     }
 
     public event BeatEvent OnBeatEvent;

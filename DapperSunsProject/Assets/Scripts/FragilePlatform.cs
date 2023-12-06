@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class FragilePlatform : MonoBehaviour, IBoop
 {
@@ -14,6 +15,17 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     int breakCount;
 
+    [SerializeField] protected Color flashColor;
+    protected Material outlineMat;
+    protected Color baseColor;
+    protected Color baseEmission;
+    [SerializeField] int countdown;
+    //[SerializeField] AudioClip BreakSound;
+    [SerializeField] AudioClip countSound;
+
+    bool startCountdown;
+    int counter;
+
     public float breakTime
     {
         get { return _breakTime; }
@@ -23,6 +35,11 @@ public class FragilePlatform : MonoBehaviour, IBoop
     void Start()
     {
         GameManager.instance.OnRestartEvent += Restart;
+        GameManager.instance.OnBeatEvent += BeatAction;
+
+        outlineMat = outline.GetComponent<Renderer>().material;
+        baseColor = outlineMat.color;
+        baseEmission = outlineMat.GetColor("_EmissionColor");
     }
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)
@@ -65,12 +82,59 @@ public class FragilePlatform : MonoBehaviour, IBoop
             breakCount--;
         }
     }
+    protected IEnumerator Flash()
+    {
+        outlineMat.color = flashColor;
+        outlineMat.SetColor("_EmissionColor", flashColor);
+
+        yield return new WaitForSeconds(0.1f);
+
+        outlineMat.color = baseColor;
+        outlineMat.SetColor("_EmissionColor", baseEmission);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        startCountdown = true;
+    }
+    void BeatAction()
+    {
+        if (startCountdown)
+        {
+            counter++;
+            foreach (var obj in connectedPlats)
+            {
+                AudioManager.instance.Play3D(countSound, obj.transform.position);
+                StartCoroutine(Flash());
+            }
+
+            if (counter >= countdown)
+            {
+                StartCoroutine(Break());
+
+                if (connectedPlats.Length > 0)
+                {
+                    foreach (GameObject obj in connectedPlats)
+                    {
+                        IBoop boopable = obj.GetComponent<IBoop>();
+                        if (boopable != null)
+                        {
+                            boopable.DoBoop(Vector3.zero, 1);
+                            startCountdown = false;
+                            counter = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     void Restart()
     {
+        startCountdown = false;
         col.enabled = true;
         trigger.enabled = true;
         model.enabled = true;
         outline.SetActive(true);
+        counter = 0;
     }
 }

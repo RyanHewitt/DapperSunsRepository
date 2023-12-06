@@ -7,12 +7,15 @@ public class Sniper : Shooter
     public LineRenderer laserLineRenderer;
     public Transform LazerPosition;
     public GameObject lazer;
-
+    private Vector3 startSize;
+    [SerializeField] float pulse = 1.15f;
+    [SerializeField] float returnSpeed = 5f;
     protected override void Start()
     {
         base.Start();
         lazer.SetActive(true);
         laserLineRenderer.enabled = true;
+        startSize = laserLineRenderer.startWidth * Vector3.one;
     }
 
     protected override void Update()
@@ -36,6 +39,9 @@ public class Sniper : Shooter
             laserLineRenderer.SetPosition(0, transform.position);
             laserLineRenderer.SetPosition(1, transform.position + transform.forward * 9999);
         }
+        laserLineRenderer.startWidth = Mathf.Lerp(laserLineRenderer.startWidth, startSize.x, Time.deltaTime * returnSpeed);
+        laserLineRenderer.endWidth = Mathf.Lerp(laserLineRenderer.endWidth, startSize.x, Time.deltaTime * returnSpeed);
+
     }
 
     protected override void Restart()
@@ -62,5 +68,7 @@ public class Sniper : Shooter
     protected override void BeatAction()
     {
         base.BeatAction();
+        laserLineRenderer.startWidth = startSize.x * pulse;
+        laserLineRenderer.endWidth = startSize.x * pulse;
     }
 }

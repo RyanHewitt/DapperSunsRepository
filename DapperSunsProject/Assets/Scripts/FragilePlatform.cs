@@ -8,8 +8,8 @@ public class FragilePlatform : MonoBehaviour, IBoop
 {
     [SerializeField] Collider trigger;
     [SerializeField] Collider col;
-    [SerializeField] Renderer model;
-    [SerializeField] GameObject outline;
+    [SerializeField] Renderer[] models;
+    [SerializeField] GameObject[] outlines;
     [SerializeField] GameObject[] connectedPlats;
     [SerializeField] float _breakTime = 3f;
     FragilePlatform[] FlashingOutlines;
@@ -43,7 +43,7 @@ public class FragilePlatform : MonoBehaviour, IBoop
         GameManager.instance.OnRestartEvent += Restart;
         GameManager.instance.OnBeatEvent += BeatAction;
 
-        outlineMat = outline.GetComponent<Renderer>().material;
+        //outlineMat = outline.GetComponent<Renderer>().material;
         baseColor = outlineMat.color;
         baseEmission = outlineMat.GetColor("_EmissionColor");
     }
@@ -73,8 +73,16 @@ public class FragilePlatform : MonoBehaviour, IBoop
         breakCount++;
         col.enabled = false;
         trigger.enabled = false;
-        model.enabled = false;
-        outline.SetActive(false);
+
+        foreach (Renderer model in models)
+        {
+            model.enabled = false;
+        }
+
+        foreach (GameObject outline in outlines)
+        {
+            outline.SetActive(false); 
+        }
 
         yield return new WaitForSeconds(breakTime);
 
@@ -145,8 +153,17 @@ public class FragilePlatform : MonoBehaviour, IBoop
         startCountdown = false;
         col.enabled = true;
         trigger.enabled = true;
-        model.enabled = true;
-        outline.SetActive(true);
+
+        foreach (Renderer model in models)
+        {
+            model.enabled = true;
+        }
+
+        foreach (GameObject outline in outlines)
+        {
+            outline.SetActive(true);
+        }
+
         counter = 0;
     }
 }

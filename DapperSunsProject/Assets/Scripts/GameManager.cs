@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
         }
 
         CheckTimer();
+
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             EventSystem.current.SetSelectedGameObject(lastSelectedButton);
@@ -366,24 +367,24 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0;
         playerDead = false;
 
-        if (OnRestartEvent != null)
-        {
-            OnRestartEvent();
-        }
-
         while (menuStack.Count > 0)
         {
             Back();
         }
 
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            RestartTimer();
+        }
+
+        if (OnRestartEvent != null)
+        {
+            OnRestartEvent();
+        }
+
         if (doubleTimeActive)
         {
             DeactivateDoubleTimePowerUp();
-        }
-
-        if (SceneManager.GetActiveScene().name != "MainMenu")
-        {
-            RestartTimer(); 
         }
     }
 
@@ -394,8 +395,6 @@ public class GameManager : MonoBehaviour
             Back();
         }
         SceneManager.LoadScene("MainMenu");
-        UnityEngine.Cursor.visible = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         isPaused = true;
     }
 
@@ -427,7 +426,6 @@ public class GameManager : MonoBehaviour
     {
         isCountingTimer = true;
         elapsedTime = 0;
-        
     }
 
     public void SyncBeats(float _bpm)

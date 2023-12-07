@@ -760,7 +760,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         if (grooveMeter < 4)
         {
             grooveMeter++;
-            pitch += 0.25f;
+            pitch += 0.2f;
+
             if (grooveMeter == 4) // Is Grooving
             {
                 // Apply Groove Effects

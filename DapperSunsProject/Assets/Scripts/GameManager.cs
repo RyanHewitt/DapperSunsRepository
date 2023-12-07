@@ -24,11 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text countdownText;
     [SerializeField] GameObject menuEndGame;
-    [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject optionsstart;
     [SerializeField] GameObject mainmenustart;
-    [SerializeField] GameObject tutorialstart;
     [SerializeField] GameObject controlsstart;
     [SerializeField] GameObject quitstart;
     [SerializeField] GameObject pausestart;
@@ -98,6 +96,7 @@ public class GameManager : MonoBehaviour
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
+
         Restart();
     }
 
@@ -134,7 +133,6 @@ public class GameManager : MonoBehaviour
         if (Input.GetButtonDown("Restart") && !isCountdownActive)
         {
             Restart();
-            AudioManager.instance.Unmuffle();
         }
 
         CheckTimer();
@@ -330,7 +328,10 @@ public class GameManager : MonoBehaviour
 
     public void ToggleGrooveEdge(bool isGroove)
     {
-        grooveEdge.SetActive(isGroove);
+        if (grooveEdge != null)
+        {
+            grooveEdge.SetActive(isGroove); 
+        }
     }
 
     public void Back()
@@ -360,9 +361,10 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
+        AudioManager.instance.Unmuffle();
+
         elapsedTime = 0;
         playerDead = false;
-        RestartTimer();
 
         if (OnRestartEvent != null)
         {
@@ -377,6 +379,11 @@ public class GameManager : MonoBehaviour
         if (doubleTimeActive)
         {
             DeactivateDoubleTimePowerUp();
+        }
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            RestartTimer(); 
         }
     }
 
@@ -399,39 +406,6 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-
-    public void TutorialQuestion()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        menuStack.Push(tutorialMenu);
-        menuStack.Peek().SetActive(true);
-        EventSystem.current.SetSelectedGameObject(tutorialstart);
-        buttonStack.Push(tutorialstart);
-    }
-
-    public void ToTutorial()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        SceneManager.LoadScene("Tutorial");
-        StateUnpause();
-    }
-
-    public void RejectTutorial()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        SceneManager.LoadScene("Level 1");
-        StateUnpause();
-    }
-
 
     public void CheckTimer()
     {
@@ -498,8 +472,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Coroutine to end double-time
-    public IEnumerator EndDoubleTimeAfterDuration(float duration)
+    public IEnumerator EndDoubleTimeAfterDuration(float duration) // Coroutine to end double-time
     {
         yield return new WaitForSeconds(duration);
         if (doubleTimeCount == 1)
@@ -513,8 +486,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Method to deactivate double-time
-    public void DeactivateDoubleTimePowerUp()
+    public void DeactivateDoubleTimePowerUp() // Method to deactivate double-time
     {
         if (doubleTimeActive)
         {
@@ -523,6 +495,7 @@ public class GameManager : MonoBehaviour
             SyncBeats(originalBpm);
         }
     }
+
     public void Set1080P()
     {
 
@@ -534,6 +507,7 @@ public class GameManager : MonoBehaviour
         //Screen.SetResolution(width, height, fullscreen);
         Screen.SetResolution(1920, 1080, true);
     }
+
     public void Set1440P()
     {
         Screen.SetResolution(2560, 1440, true);
@@ -570,6 +544,7 @@ public class GameManager : MonoBehaviour
         countdownNumber = 3;
         countdownText.text = countdownNumber.ToString();
     }
+
     public void CreditsMenu()
     {
         if (menuStack.Count > 0)

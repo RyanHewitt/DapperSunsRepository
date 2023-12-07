@@ -39,31 +39,23 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.ToMainMenu();
     }
+
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         GameManager.instance.StateUnpause();
     }
-    public void TutorialMenu()
-    {
-        GameManager.instance.TutorialQuestion();
-    }
-    public void YesTutorial()
-    {
-        GameManager.instance.ToTutorial();
-    }
-    public void NoTutorial()
-    {
-        GameManager.instance.RejectTutorial();
-    }
+
     public void AudioMenu()
     {
         GameManager.instance.AudioMenuPopup();
     }
+
     public void VideoMenu()
     {
         GameManager.instance.VideoMenuPopup();
     }
+
     public void Credits()
     {
         GameManager.instance.CreditsMenu();

@@ -757,7 +757,11 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckGroove()
     {
-        if (grooveMeter < 4)
+        if (!canBeat)
+        {
+            BoopPenalty();
+        }
+        else if (grooveMeter < 4)
         {
             grooveMeter++;
             pitch += 0.2f;
@@ -774,11 +778,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         }
 
         grooveTimer = 0;
-
-        if (!canBeat)
-        {
-            BoopPenalty();
-        }
     }
 
     void DoBeat()

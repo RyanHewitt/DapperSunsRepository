@@ -44,34 +44,38 @@ public class Bomber : EnemyAi
 
     protected override void Move()
     {
-        
-        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
-
-        
-        if (distanceToPlayer > stopDistance)
+        if (enemyCol.enabled)
         {
-            Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
-            transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+            float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
+
+            if (distanceToPlayer > stopDistance)
+            {
+                Vector3 directionToPlayer = (GameManager.instance.player.transform.position - transform.position).normalized;
+                transform.position += directionToPlayer * moveSpeed * Time.deltaTime;
+            } 
         }
     }
 
 
     protected override void Rotate()
     {
-        Vector3 targetDirection = playerDirection;
-        if (targetDirection != Vector3.zero)
+        if (enemyCol.enabled)
         {
-            // Horizontal rotation (side to side)
-            Quaternion horizontalRotation = Quaternion.LookRotation(targetDirection);
+            Vector3 targetDirection = playerDirection;
+            if (targetDirection != Vector3.zero)
+            {
+                // Horizontal rotation (side to side)
+                Quaternion horizontalRotation = Quaternion.LookRotation(targetDirection);
 
-            // Vertical rotation (up and down)
-            float angle = Mathf.Atan2(targetDirection.y, targetDirection.magnitude) * Mathf.Rad2Deg;
-            angle = Mathf.Clamp(angle, -maxVerticalAngle, maxVerticalAngle);
+                // Vertical rotation (up and down)
+                float angle = Mathf.Atan2(targetDirection.y, targetDirection.magnitude) * Mathf.Rad2Deg;
+                angle = Mathf.Clamp(angle, -maxVerticalAngle, maxVerticalAngle);
 
-            Quaternion verticalRotation = Quaternion.Euler(-angle, 0, 0);
+                Quaternion verticalRotation = Quaternion.Euler(-angle, 0, 0);
 
-            // Combine both rotations
-            transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
+                // Combine both rotations
+                transform.rotation = Quaternion.Slerp(transform.rotation, horizontalRotation * verticalRotation, Time.deltaTime * PlayerFaceSpeed);
+            } 
         }
     }
 
@@ -128,10 +132,6 @@ public class Bomber : EnemyAi
                 IBoop boopable = colliders[i].GetComponent<IBoop>();
                 if (boopable != null)
                 {
-                    //if (colliders[i].CompareTag("Player"))
-                    //{
-                    //    GameManager.instance.playerScript.Unground();
-                    //}
                     boopable.DoBoop(transform.position - (Vector3.up * 1f), explosionForce);
                 }
             }

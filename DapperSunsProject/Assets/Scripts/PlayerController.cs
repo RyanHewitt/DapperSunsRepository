@@ -724,7 +724,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         if (slamming)
         {
             AudioManager.instance.audioSource.PlayOneShot(slamSFX);
-            SlamImpact(); 
+            SlamImpact();
         }
 
         // Reset gravity influence

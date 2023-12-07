@@ -42,7 +42,10 @@ public class Heavy : EnemyAi
     {
         yield return base.Death();
 
-        groundTrigger.enabled = false;
+        if (groundTrigger != null)
+        {
+            groundTrigger.enabled = false; 
+        }
     }
 
     protected override void BeatAction()

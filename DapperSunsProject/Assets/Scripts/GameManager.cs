@@ -95,7 +95,10 @@ public class GameManager : MonoBehaviour
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
 
-        Restart();
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            Restart();
+        }
     }
 
     void Update()
@@ -363,6 +366,8 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.Unmuffle();
 
         elapsedTime = 0;
+        CheckTimer();
+
         playerDead = false;
 
         while (menuStack.Count > 0)
@@ -372,12 +377,12 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name != "MainMenu")
         {
-            RestartTimer();
-        }
+            StartCountdown();
 
-        if (OnRestartEvent != null)
-        {
-            OnRestartEvent();
+            if (OnRestartEvent != null)
+            {
+                OnRestartEvent();
+            }
         }
 
         if (doubleTimeActive)
@@ -533,7 +538,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("FOV", (int)FOV.value);
     }
 
-    public void RestartTimer()
+    public void StartCountdown()
     {
         isPaused = true;
         isCountdownActive = true;

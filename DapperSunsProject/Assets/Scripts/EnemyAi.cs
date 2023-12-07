@@ -63,9 +63,9 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         }
         else
         {
-            startPos = transform.position;
-            startLocalPos = transform.localPosition;
             parentTransform = gameObject.transform.parent;
+            startPos = transform.parent.position;
+            //startLocalPos = transform.localPosition;
         }
         
         startHP = HP;
@@ -94,7 +94,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         }
         else
         {
-            transform.localPosition = startLocalPos;
+            //transform.localPosition = startLocalPos;
             transform.position = startPos;
             gameObject.transform.parent = parentTransform;
             rb.useGravity = false;

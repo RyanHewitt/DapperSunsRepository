@@ -53,14 +53,17 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         baseColor = outlineMat.color;
         baseEmission = outlineMat.GetColor("_EmissionColor");
 
-        startPos = transform.position;
-        startRot = transform.rotation;
-        startHP = HP;
-
-        if (parented)
+        if (!parented)
         {
-            parentTransform = gameObject.transform.parent; 
+            startPos = transform.position;
+            startRot = transform.rotation;
         }
+        else
+        {
+            parentTransform = gameObject.transform.parent;
+        }
+
+        startHP = HP;
     }
 
     protected virtual void Update()
@@ -78,8 +81,17 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual void Restart()
     {
-        transform.position = startPos;
-        transform.rotation = startRot;
+        if (!parented)
+        {
+            transform.position = startPos;
+            transform.rotation = startRot; 
+        }
+        else
+        {
+            gameObject.transform.parent = parentTransform;
+            rb.useGravity = false;
+        }
+
         rb.velocity = Vector3.zero;
 
         HP = startHP;
@@ -90,12 +102,6 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         enemyCol.enabled = true;
 
         playerInRange = false;
-
-        if (parented)
-        {
-            gameObject.transform.parent = parentTransform;
-            rb.useGravity = false;
-        }
     }
 
     protected virtual void OnTriggerEnter(Collider other)

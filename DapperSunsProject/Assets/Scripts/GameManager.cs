@@ -41,8 +41,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject levelSelectStart;
     [SerializeField] GameObject menuCredits;
     [SerializeField] GameObject menuCreditsBack;
-
-
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
 

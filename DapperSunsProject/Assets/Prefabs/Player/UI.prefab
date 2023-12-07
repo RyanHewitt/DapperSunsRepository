@@ -3415,8 +3415,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11791,11 +11791,9 @@ MonoBehaviour:
   timerText: {fileID: 2440317367790356902}
   countdownText: {fileID: 8508180504129512936}
   menuEndGame: {fileID: 3531149627015644098}
-  tutorialMenu: {fileID: 0}
   sensitivitySlider: {fileID: 4664377096969265997}
   optionsstart: {fileID: 6419157465999146265}
   mainmenustart: {fileID: 0}
-  tutorialstart: {fileID: 0}
   controlsstart: {fileID: 5429677489757556314}
   quitstart: {fileID: 940276565571866322}
   pausestart: {fileID: 3986725931023163304}
@@ -11808,6 +11806,8 @@ MonoBehaviour:
   Videostart: {fileID: 6010485172702778197}
   levelSelectMenu: {fileID: 0}
   levelSelectStart: {fileID: 0}
+  menuCredits: {fileID: 0}
+  menuCreditsBack: {fileID: 0}
   FPS: {fileID: 4690270407721548161}
   FOV: {fileID: 7519369852972217443}
   doubleTimeActive: 0

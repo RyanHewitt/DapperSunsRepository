@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
         {
             if (countdownNumber == 0)
             {
-                countdownText.text = "Go!";
+                countdownText.text = "BOOP-IT!";
                 isPaused = false;
                 countdownNumber--;
             }

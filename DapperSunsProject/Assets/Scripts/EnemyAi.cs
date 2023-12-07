@@ -30,7 +30,6 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected Transform parentTransform;
     protected Vector3 startPos;
-    protected Vector3 startLocalPos;
     protected Quaternion startRot;
     protected Vector3 playerDirection;
     protected int startHP;
@@ -63,9 +62,8 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         }
         else
         {
-            parentTransform = gameObject.transform.parent;
-            startPos = transform.parent.position;
-            //startLocalPos = transform.localPosition;
+            parentTransform = transform.parent;
+            startPos = transform.localPosition;
         }
         
         startHP = HP;
@@ -94,9 +92,8 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
         }
         else
         {
-            //transform.localPosition = startLocalPos;
-            transform.position = startPos;
             gameObject.transform.parent = parentTransform;
+            transform.position = parentTransform.position + parentTransform.TransformDirection(startPos);
             rb.useGravity = false;
         }
 

@@ -8034,7 +8034,7 @@ GameObject:
   - component: {fileID: 621866603493537669}
   - component: {fileID: 8104882999688637009}
   - component: {fileID: 876866818696350374}
-  - component: {fileID: 7620289068920652355}
+  - component: {fileID: 8494859465093280879}
   m_Layer: 5
   m_Name: GrooveEdgeHighlight
   m_TagString: Untagged
@@ -8120,7 +8120,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7620289068920652355
+--- !u!114 &8494859465093280879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8129,12 +8129,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4751769736617425096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc4b6980092b1840ba0ddc8bfae7079, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bbb616e869ed264b9a464df5b0a0da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pulse: 1.05
+  pulseVector: {x: 0.05, y: 0.05, z: 0}
   returnspeed: 5
-  modVector: {x: 1, y: 1}
+  steps: 0
+  reverseScale: 1
 --- !u!1 &4843225519072596835
 GameObject:
   m_ObjectHideFlags: 0

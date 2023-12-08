@@ -543,8 +543,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -576,7 +576,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 4096
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3415,8 +3415,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8034,7 +8034,7 @@ GameObject:
   - component: {fileID: 621866603493537669}
   - component: {fileID: 8104882999688637009}
   - component: {fileID: 876866818696350374}
-  - component: {fileID: 7620289068920652355}
+  - component: {fileID: 8494859465093280879}
   m_Layer: 5
   m_Name: GrooveEdgeHighlight
   m_TagString: Untagged
@@ -8120,7 +8120,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7620289068920652355
+--- !u!114 &8494859465093280879
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8129,12 +8129,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4751769736617425096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc4b6980092b1840ba0ddc8bfae7079, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bbb616e869ed264b9a464df5b0a0da3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pulse: 1.05
+  pulseVector: {x: 0.05, y: 0.05, z: 0}
   returnspeed: 5
-  modVector: {x: 1, y: 1}
+  steps: 0
+  reverseScale: 1
 --- !u!1 &4843225519072596835
 GameObject:
   m_ObjectHideFlags: 0
@@ -11791,11 +11792,9 @@ MonoBehaviour:
   timerText: {fileID: 2440317367790356902}
   countdownText: {fileID: 8508180504129512936}
   menuEndGame: {fileID: 3531149627015644098}
-  tutorialMenu: {fileID: 0}
   sensitivitySlider: {fileID: 4664377096969265997}
   optionsstart: {fileID: 6419157465999146265}
   mainmenustart: {fileID: 0}
-  tutorialstart: {fileID: 0}
   controlsstart: {fileID: 5429677489757556314}
   quitstart: {fileID: 940276565571866322}
   pausestart: {fileID: 3986725931023163304}
@@ -11808,6 +11807,8 @@ MonoBehaviour:
   Videostart: {fileID: 6010485172702778197}
   levelSelectMenu: {fileID: 0}
   levelSelectStart: {fileID: 0}
+  menuCredits: {fileID: 0}
+  menuCreditsBack: {fileID: 0}
   FPS: {fileID: 4690270407721548161}
   FOV: {fileID: 7519369852972217443}
   doubleTimeActive: 0

@@ -24,11 +24,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text countdownText;
     [SerializeField] GameObject menuEndGame;
-    [SerializeField] GameObject tutorialMenu;
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject optionsstart;
     [SerializeField] GameObject mainmenustart;
-    [SerializeField] GameObject tutorialstart;
     [SerializeField] GameObject controlsstart;
     [SerializeField] GameObject quitstart;
     [SerializeField] GameObject pausestart;
@@ -41,7 +39,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Videostart;
     [SerializeField] GameObject levelSelectMenu;
     [SerializeField] GameObject levelSelectStart;
-
+    [SerializeField] GameObject menuCredits;
+    [SerializeField] GameObject menuCreditsBack;
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
 
@@ -95,7 +94,11 @@ public class GameManager : MonoBehaviour
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
         playerScript.sensitivity = sensitivitySlider.value;
-        Restart();
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            Restart();
+        }
     }
 
     void Update()
@@ -131,10 +134,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetButtonDown("Restart") && !isCountdownActive)
         {
             Restart();
-            AudioManager.instance.Unmuffle();
         }
 
         CheckTimer();
+
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             EventSystem.current.SetSelectedGameObject(lastSelectedButton);
@@ -180,7 +183,7 @@ public class GameManager : MonoBehaviour
         {
             if (countdownNumber == 0)
             {
-                countdownText.text = "Go!";
+                countdownText.text = "BOOP-IT!";
                 isPaused = false;
                 countdownNumber--;
             }
@@ -327,7 +330,10 @@ public class GameManager : MonoBehaviour
 
     public void ToggleGrooveEdge(bool isGroove)
     {
-        grooveEdge.SetActive(isGroove);
+        if (grooveEdge != null)
+        {
+            grooveEdge.SetActive(isGroove); 
+        }
     }
 
     public void Back()
@@ -357,18 +363,26 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        elapsedTime = 0;
-        playerDead = false;
-        RestartTimer();
+        AudioManager.instance.Unmuffle();
 
-        if (OnRestartEvent != null)
-        {
-            OnRestartEvent();
-        }
+        elapsedTime = 0;
+        CheckTimer();
+
+        playerDead = false;
 
         while (menuStack.Count > 0)
         {
             Back();
+        }
+
+        if (SceneManager.GetActiveScene().name != "MainMenu")
+        {
+            StartCountdown();
+
+            if (OnRestartEvent != null)
+            {
+                OnRestartEvent();
+            }
         }
 
         if (doubleTimeActive)
@@ -384,8 +398,6 @@ public class GameManager : MonoBehaviour
             Back();
         }
         SceneManager.LoadScene("MainMenu");
-        UnityEngine.Cursor.visible = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         isPaused = true;
     }
 
@@ -396,39 +408,6 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-
-    public void TutorialQuestion()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        menuStack.Push(tutorialMenu);
-        menuStack.Peek().SetActive(true);
-        EventSystem.current.SetSelectedGameObject(tutorialstart);
-        buttonStack.Push(tutorialstart);
-    }
-
-    public void ToTutorial()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        SceneManager.LoadScene("Tutorial");
-        StateUnpause();
-    }
-
-    public void RejectTutorial()
-    {
-        while (menuStack.Count > 0)
-        {
-            Back();
-        }
-        SceneManager.LoadScene("Level 1");
-        StateUnpause();
-    }
-
 
     public void CheckTimer()
     {
@@ -450,7 +429,6 @@ public class GameManager : MonoBehaviour
     {
         isCountingTimer = true;
         elapsedTime = 0;
-        
     }
 
     public void SyncBeats(float _bpm)
@@ -495,8 +473,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Coroutine to end double-time
-    public IEnumerator EndDoubleTimeAfterDuration(float duration)
+    public IEnumerator EndDoubleTimeAfterDuration(float duration) // Coroutine to end double-time
     {
         yield return new WaitForSeconds(duration);
         if (doubleTimeCount == 1)
@@ -510,8 +487,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Method to deactivate double-time
-    public void DeactivateDoubleTimePowerUp()
+    public void DeactivateDoubleTimePowerUp() // Method to deactivate double-time
     {
         if (doubleTimeActive)
         {
@@ -520,6 +496,7 @@ public class GameManager : MonoBehaviour
             SyncBeats(originalBpm);
         }
     }
+
     public void Set1080P()
     {
 
@@ -531,6 +508,7 @@ public class GameManager : MonoBehaviour
         //Screen.SetResolution(width, height, fullscreen);
         Screen.SetResolution(1920, 1080, true);
     }
+
     public void Set1440P()
     {
         Screen.SetResolution(2560, 1440, true);
@@ -560,12 +538,23 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("FOV", (int)FOV.value);
     }
 
-    public void RestartTimer()
+    public void StartCountdown()
     {
         isPaused = true;
         isCountdownActive = true;
         countdownNumber = 3;
         countdownText.text = countdownNumber.ToString();
+    }
+
+    public void CreditsMenu()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(menuCredits);
+        menuCredits.SetActive(true);
+        buttonStack.Push(menuCreditsBack);
     }
 
     public event BeatEvent OnBeatEvent;

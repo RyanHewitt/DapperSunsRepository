@@ -30,25 +30,31 @@ public class Mover : MonoBehaviour
 
     void Update()
     {
-        elapsedtime += speed * Time.deltaTime;
-        box.transform.position = Vector3.Lerp(startPos, endPos, elapsedtime);
+        if (!GameManager.instance.isPaused)
+        {
+            elapsedtime += speed * Time.deltaTime;
+            box.transform.position = Vector3.Lerp(startPos, endPos, elapsedtime); 
+        }
     }
 
     void DoBeat()
     {
-        elapsedtime = 0;
+        if (!GameManager.instance.isPaused)
+        {
+            elapsedtime = 0;
 
-        if (nextIndex + 1 >= positions.Length)
-        {
-            nextIndex = 0;
-            startPos = endPos;
-            endPos = positions[nextIndex].transform.position;
-        }
-        else
-        {
-            nextIndex++;
-            startPos = endPos;
-            endPos = positions[nextIndex].transform.position;
+            if (nextIndex + 1 >= positions.Length)
+            {
+                nextIndex = 0;
+                startPos = endPos;
+                endPos = positions[nextIndex].transform.position;
+            }
+            else
+            {
+                nextIndex++;
+                startPos = endPos;
+                endPos = positions[nextIndex].transform.position;
+            } 
         }
     }
 

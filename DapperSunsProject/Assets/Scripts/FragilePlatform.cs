@@ -2,50 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using UnityEngine.UI;
 
 public class FragilePlatform : MonoBehaviour, IBoop
 {
     [SerializeField] Collider trigger;
     [SerializeField] Collider col;
-    [SerializeField] Renderer model;
-    [SerializeField] GameObject outline;
-    [SerializeField] GameObject[] connectedPlats;
-    [SerializeField] float _breakTime = 3f;
-    FragilePlatform[] FlashingOutlines;
+    [SerializeField] Renderer[] models;
+    [SerializeField] GameObject[] outlines;
 
-    int breakCount;
-
-    [SerializeField] protected Color flashColor;
-    protected Material outlineMat;
-    protected Color baseColor;
-    protected Color baseEmission;
-    [SerializeField] int countdown;
     [SerializeField] AudioClip BreakSound;
     [SerializeField] AudioClip countSound;
 
+    [SerializeField] Color flashColor;
+
+    [SerializeField] private float breakTime = 3f;
+    [SerializeField] int countdown;
+
     bool startCountdown;
     int counter;
-
-    public float breakTime
-    {
-        get { return _breakTime; }
-        set { _breakTime = value; }
-    }
+    int breakCount;
 
     void Start()
     {
-        FlashingOutlines = new FragilePlatform[connectedPlats.Length];
-        for (int i = 0; i < connectedPlats.Length; i++)
-        {
-            FlashingOutlines[i] = connectedPlats[i].GetComponent<FragilePlatform>();
-        }
         GameManager.instance.OnRestartEvent += Restart;
         GameManager.instance.OnBeatEvent += BeatAction;
-
-        outlineMat = outline.GetComponent<Renderer>().material;
-        baseColor = outlineMat.color;
-        baseEmission = outlineMat.GetColor("_EmissionColor");
     }
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)
@@ -53,28 +34,26 @@ public class FragilePlatform : MonoBehaviour, IBoop
         if (col.enabled)
         {
             StartCoroutine(Break());
-
-            if (connectedPlats.Length > 0)
-            {
-                foreach (GameObject obj in connectedPlats)
-                {
-                    IBoop boopable = obj.GetComponent<IBoop>();
-                    if (boopable != null)
-                    {
-                        boopable.DoBoop(Vector3.zero, force);
-                    }
-                }
-            }
         }
     }
 
     IEnumerator Break()
     {
+        AudioManager.instance.Play3D(BreakSound, transform.position);
+
         breakCount++;
         col.enabled = false;
         trigger.enabled = false;
-        model.enabled = false;
-        outline.SetActive(false);
+
+        foreach (Renderer model in models)
+        {
+            model.enabled = false;
+        }
+
+        foreach (GameObject outline in outlines)
+        {
+            outline.SetActive(false); 
+        }
 
         yield return new WaitForSeconds(breakTime);
 
@@ -88,54 +67,55 @@ public class FragilePlatform : MonoBehaviour, IBoop
             breakCount--;
         }
     }
-    protected IEnumerator Flash()
+
+    IEnumerator Flash()
     {
-        outlineMat.color = flashColor;
-        outlineMat.SetColor("_EmissionColor", flashColor);
+        Color baseColor;
+        Color baseEmission;
+
+        baseColor = outlines[0].GetComponent<Renderer>().material.color;
+        baseEmission = outlines[0].GetComponent<Renderer>().material.GetColor("_EmissionColor");
+
+        foreach (GameObject outline in outlines)
+        {
+            Material outlineMat = outline.GetComponent<Renderer>().material;
+            
+            outlineMat.color = flashColor;
+            outlineMat.SetColor("_EmissionColor", flashColor);
+        }
 
         yield return new WaitForSeconds(0.1f);
 
-        outlineMat.color = baseColor;
-        outlineMat.SetColor("_EmissionColor", baseEmission);
+        foreach (GameObject outline in outlines)
+        {
+            Material outlineMat = outline.GetComponent<Renderer>().material;
+            outlineMat.color = baseColor;
+            outlineMat.SetColor("_EmissionColor", baseEmission);
+        }
     }
-    public void FlashCall()
+
+    void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(Flash());
+        if (other.CompareTag("Player"))
+        {
+            startCountdown = true; 
+        }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        startCountdown = true;
-    }
+
     void BeatAction()
     {
         if (startCountdown)
         {
             counter++;
             AudioManager.instance.Play3D(countSound, transform.position);
-            FlashCall();
-            foreach (var obj in FlashingOutlines)
-            {
-                obj.FlashCall();
-            }
+            StartCoroutine(Flash());
 
             if (counter >= countdown)
             {
                 StartCoroutine(Break());
 
-                if (connectedPlats.Length > 0)
-                {
-                    AudioManager.instance.Play3D(BreakSound, transform.position);
-                    foreach (GameObject obj in connectedPlats)
-                    {
-                        IBoop boopable = obj.GetComponent<IBoop>();
-                        if (boopable != null)
-                        {
-                            boopable.DoBoop(Vector3.zero, 1);
-                            startCountdown = false;
-                            counter = 0;
-                        }
-                    }
-                }
+                startCountdown = false;
+                counter = 0;
             }
         }
     }
@@ -145,8 +125,17 @@ public class FragilePlatform : MonoBehaviour, IBoop
         startCountdown = false;
         col.enabled = true;
         trigger.enabled = true;
-        model.enabled = true;
-        outline.SetActive(true);
+
+        foreach (Renderer model in models)
+        {
+            model.enabled = true;
+        }
+
+        foreach (GameObject outline in outlines)
+        {
+            outline.SetActive(true);
+        }
+
         counter = 0;
     }
 }

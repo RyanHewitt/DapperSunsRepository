@@ -724,7 +724,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         if (slamming)
         {
             AudioManager.instance.audioSource.PlayOneShot(slamSFX);
-            SlamImpact(); 
+            SlamImpact();
         }
 
         // Reset gravity influence
@@ -757,10 +757,15 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
     void CheckGroove()
     {
-        if (grooveMeter < 4)
+        if (!canBeat)
+        {
+            BoopPenalty();
+        }
+        else if (grooveMeter < 4)
         {
             grooveMeter++;
-            pitch += 0.25f;
+            pitch += 0.2f;
+
             if (grooveMeter == 4) // Is Grooving
             {
                 // Apply Groove Effects
@@ -773,11 +778,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         }
 
         grooveTimer = 0;
-
-        if (!canBeat)
-        {
-            BoopPenalty();
-        }
     }
 
     void DoBeat()

@@ -7,6 +7,7 @@ public class Bomb : EnemyAi
 {
     [Header("---Bomb Stats---")]
     [SerializeField] Collision collision;
+    [SerializeField] Renderer fuseModel;
     [SerializeField] float explosionRadius; // Radius of explosion
     [SerializeField] int explosionForce;    // Force inflicted by the explosion
     [SerializeField] int countdown;
@@ -41,6 +42,7 @@ public class Bomb : EnemyAi
 
         startCountdown = false;
         counter = 0;
+        fuseModel.enabled = true;
     }
 
     protected override void Damage(int amount)
@@ -54,6 +56,7 @@ public class Bomb : EnemyAi
         
         Explode();
         startCountdown = true;
+        fuseModel.enabled = false;
     }
 
     protected override void BeatAction()

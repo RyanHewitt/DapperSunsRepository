@@ -7,10 +7,9 @@ using UnityEngine;
 public class SuperHeavy : Heavy
 {
     [Header("---Teleport Positions---")]
-    [SerializeField] private Transform teleportPosition1; 
-    [SerializeField] private Transform teleportPosition2; 
+    [SerializeField] Transform[] teleportPos;
 
-    private bool lastTeleportWasPos1 = false;
+    int teleportIndex = 0;
 
     protected override void Start()
     {
@@ -40,6 +39,8 @@ public class SuperHeavy : Heavy
     protected override void Restart()
     {
         base.Restart();
+
+        teleportIndex = 0;
     }
 
     protected override void Damage(int amount)
@@ -52,16 +53,18 @@ public class SuperHeavy : Heavy
     protected override IEnumerator Death()
     {
         yield return base.Death();
-
-        gameObject.SetActive(false);
     }
 
     void TeleportAwayFromPlayer()
     {
-        Transform targetTeleportPosition = lastTeleportWasPos1 ? teleportPosition2 : teleportPosition1;
-       
-        transform.position = targetTeleportPosition.position;
-
-        lastTeleportWasPos1 = !lastTeleportWasPos1;
+        transform.position = teleportPos[teleportIndex].position;
+        if (teleportIndex < teleportPos.Length - 1)
+        {
+            teleportIndex++; 
+        }
+        else
+        {
+            teleportIndex = 0;
+        }
     }
 }

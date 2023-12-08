@@ -323,12 +323,12 @@ MonoBehaviour:
   - {fileID: 8156607963138062359}
   - {fileID: 2842931850185206861}
   - {fileID: 7041765093214287093}
-  steps: 4
+  steps: 8
   currentStep: 0
   groundTrigger: {fileID: 0}
-  trackingRate: 1
-  teleportPosition1: {fileID: 0}
-  teleportPosition2: {fileID: 0}
+  teleportPos:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!33 &7373943552665944827
 MeshFilter:
   m_ObjectHideFlags: 0

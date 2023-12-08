@@ -6,13 +6,6 @@ using UnityEngine;
 
 public class SuperHeavy : Heavy
 {
-    [Header("---SuperHeavy---")]
-    [SerializeField] private int superHeavyHitPoints = 3; // Takes three hits to kill
-    //[SerializeField] private float knockbackForce = 10f; // Force to knock the player back
-    [SerializeField] private float trackingBulletSpeed = 2f; // Speed for tracking bullets
-    [SerializeField] private float trackingRate = 1f; // Tracking rate for bullets
-    public static event Action OnBossDefeated;
-
     [Header("---Teleport Positions---")]
     [SerializeField] private Transform teleportPosition1; 
     [SerializeField] private Transform teleportPosition2; 
@@ -21,9 +14,7 @@ public class SuperHeavy : Heavy
 
     protected override void Start()
     {
-        base.Start();
-        HP = superHeavyHitPoints;
-        
+        base.Start();        
     }
     protected override void Update()
     {
@@ -32,17 +23,16 @@ public class SuperHeavy : Heavy
 
     protected override void BeatAction()
     {
-        base.BeatAction();
-        if (playerInRange && !GameManager.instance.playerDead && enemyCol.enabled)
+        if (!GameManager.instance.playerDead && enemyCol.enabled)
         {
-            if (CheckLineOfSight(GameManager.instance.player.transform)) // Check line of sight
+            currentStep++;
+            if (steps <= currentStep)
             {
-                currentStep++;
-                if (steps <= currentStep)
+                foreach (Transform pos in shootPositions)
                 {
-                    ShootTrackingBullets();
-                    currentStep = 0;
+                    Instantiate(bullet, pos.position, pos.rotation);
                 }
+                currentStep = 0;
             }
         }
     }
@@ -50,23 +40,7 @@ public class SuperHeavy : Heavy
     protected override void Restart()
     {
         base.Restart();
-
     }
-
-    private void ShootTrackingBullets()
-    {
-        foreach (Transform shootPosition in shootPositions)
-        {
-            GameObject bulletObject = Instantiate(bullet, shootPosition.position, shootPosition.rotation);
-            Rigidbody bulletRb = bulletObject.GetComponent<Rigidbody>();
-            bulletRb.velocity = shootPosition.forward * trackingBulletSpeed;
-
-            TrackingBullet tracker = bulletObject.AddComponent<TrackingBullet>();
-            tracker.target = GameManager.instance.player.transform;
-            tracker.trackingRate = trackingRate;
-        }
-    }
-
 
     protected override void Damage(int amount)
     {
@@ -79,30 +53,15 @@ public class SuperHeavy : Heavy
     {
         yield return base.Death();
 
-        OnBossDefeated?.Invoke();
-       
         gameObject.SetActive(false);
-
     }
 
-    protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
+    void TeleportAwayFromPlayer()
     {
-       base.BoopImpulse(origin, force, slam);
-    }
-
-    private void TeleportAwayFromPlayer()
-    {
-        
         Transform targetTeleportPosition = lastTeleportWasPos1 ? teleportPosition2 : teleportPosition1;
-
        
         transform.position = targetTeleportPosition.position;
 
-        
         lastTeleportWasPos1 = !lastTeleportWasPos1;
     }
-
- 
 }
-
-

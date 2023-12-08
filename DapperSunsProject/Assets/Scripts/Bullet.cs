@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] int damage;
-    [SerializeField] Rigidbody rb;
-    [SerializeField] float bulletSpeed;
-    [SerializeField] float life = 3;
+    [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float bulletSpeed;
+    [SerializeField] protected float life = 3;
 
     protected virtual void Start()
     {

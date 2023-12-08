@@ -6,12 +6,12 @@ public class Barrier : MonoBehaviour
 {
     private void OnEnable()
     {
-        SuperHeavy.OnBossDefeated += DisableBarrier;
+        //SuperHeavy.OnBossDefeated += DisableBarrier;
     }
 
     private void OnDisable()
     {
-        SuperHeavy.OnBossDefeated -= DisableBarrier;
+        //SuperHeavy.OnBossDefeated -= DisableBarrier;
     }
 
     private void DisableBarrier()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pulse2D : MonoBehaviour
+public class Pulse3D : MonoBehaviour
 {
     [SerializeField] private Vector3 pulseVector = Vector3.one;
     [SerializeField] float returnspeed = 5f;
@@ -49,10 +49,5 @@ public class Pulse2D : MonoBehaviour
         {
             currentStep++;
         }
-    }
-
-    void OnDestroy()
-    {
-        GameManager.instance.OnBeatEvent -= DoBeat;
     }
 }

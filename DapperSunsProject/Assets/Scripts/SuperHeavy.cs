@@ -27,6 +27,7 @@ public class SuperHeavy : Heavy
             currentStep++;
             if (steps <= currentStep)
             {
+                AudioManager.instance.Play3D(ShootAudio, transform.position, 1, 0.5f, 3);
                 foreach (Transform pos in shootPositions)
                 {
                     Instantiate(bullet, pos.position, pos.rotation);

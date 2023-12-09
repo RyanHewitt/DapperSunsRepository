@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 970162057561854622}
   - component: {fileID: 8254983111788122704}
   - component: {fileID: 8979811772899136405}
+  - component: {fileID: 4464963252338417542}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 30, z: 35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab106d546499c7044aea52ece23a3a55, type: 2}
+  - {fileID: 2100000, guid: e1f40a94092bed94fa236d5c9bd07dcd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,3 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4464963252338417542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161483833822439678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbb616e869ed264b9a464df5b0a0da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseVector: {x: 0.2, y: 0.2, z: 0.2}
+  returnspeed: 5
+  steps: 0
+  reverseScale: 0

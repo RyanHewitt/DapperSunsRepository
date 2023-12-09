@@ -166,13 +166,27 @@ public class GameManager : MonoBehaviour
 
         beatTime = sampledTime - floor;
 
-        if (beatTime < 0.25f || beatTime > 0.75f)
+        if (!doubleTimeActive)
         {
-            beatWindow = true;
+            if (beatTime < 0.25f || beatTime > 0.75f)
+            {
+                beatWindow = true;
+            }
+            else
+            {
+                beatWindow = false;
+            } 
         }
         else
         {
-            beatWindow = false;
+            if (beatTime < 0.4 || beatTime > 0.6f)
+            {
+                beatWindow = true;
+            }
+            else
+            {
+                beatWindow = false;
+            }
         }
     }
 

@@ -2947,9 +2947,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 893282367}
     m_Modifications:
+    - target: {fileID: 285681200437985420, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2507568084432142328, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2507568084432142328, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 4536371398854639436, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
       propertyPath: m_Name
       value: HeavyBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030977565152030701, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7030977565152030701, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7208243844912530116, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
       propertyPath: teleportPos.Array.data[0]
@@ -2997,6 +3017,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8355915731028622106, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692789940514912602, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692789940514912602, guid: 1cfa8ca1afa1c3047837ffaf40716cef, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

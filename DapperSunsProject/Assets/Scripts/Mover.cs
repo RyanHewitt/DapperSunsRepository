@@ -9,7 +9,6 @@ public class Mover : MonoBehaviour
     [SerializeField] GameObject box;
     [SerializeField] GameObject[] positions;
     [SerializeField] float speed;
-    [SerializeField] float moveAmount;
 
     int nextIndex;
     float elapsedtime;

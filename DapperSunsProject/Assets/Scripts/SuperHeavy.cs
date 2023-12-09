@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SuperHeavy : Heavy
 {
+    [SerializeField] AudioClip hurtSound;
     [Header("---Teleport Positions---")]
     [SerializeField] Transform[] teleportPos;
 
@@ -48,6 +49,7 @@ public class SuperHeavy : Heavy
     {
         base.Damage(amount);
 
+        AudioManager.instance.Play3D(hurtSound, transform.position, 1, 0.5f, 1);
         TeleportAwayFromPlayer();
     }
 

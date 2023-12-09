@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 2212650581220050757}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710605, z: -0, w: -0.7071076}
-  m_LocalPosition: {x: -5, y: -1, z: 0}
+  m_LocalPosition: {x: -6, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 3001345284838999364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 5}
+  m_LocalPosition: {x: 0, y: -1, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -247,7 +247,7 @@ MonoBehaviour:
   boopMultiplier: 0
   bullet: {fileID: 5226062936138798103, guid: 4f2c8c81604d30949b5a9a708b9fd0c8, type: 3}
   ShootAudio: {fileID: 8300000, guid: b910255ecf298f3458c1099edc2876c6, type: 3}
-  deathAudio: {fileID: 8300000, guid: 3478efeae0ba59049b295a4483f51dae, type: 3}
+  deathAudio: {fileID: 8300000, guid: 832388a16ac7014468ad454fac03d18c, type: 3}
   shootPositions:
   - {fileID: 285681200437985420}
   - {fileID: 2507568084432142328}
@@ -256,6 +256,7 @@ MonoBehaviour:
   steps: 8
   currentStep: 0
   groundTrigger: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 5a5b06d74830bc948942d2903d39ef6f, type: 3}
   teleportPos:
   - {fileID: 0}
   - {fileID: 0}
@@ -403,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 6735183872449259584}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710754, z: -0, w: -0.7071061}
-  m_LocalPosition: {x: 5, y: -1, z: 0}
+  m_LocalPosition: {x: 6, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -434,7 +435,7 @@ Transform:
   m_GameObject: {fileID: 8053872798479485242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: 0, y: -1, z: -5}
+  m_LocalPosition: {x: 0, y: -1, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

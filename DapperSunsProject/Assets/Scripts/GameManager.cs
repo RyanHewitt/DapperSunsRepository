@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
     {
         float beatInterval = 60f / bpm;
 
-        float sampledTime = (AudioManager.instance.MusicSource.timeSamples / (AudioManager.instance.MusicSource.clip.frequency * beatInterval)) - 0.25f;
+        float sampledTime = (AudioManager.instance.MusicSource.timeSamples / (AudioManager.instance.MusicSource.clip.frequency * beatInterval)) - 0.25f; // GUN
         int floor = Mathf.FloorToInt(sampledTime);
         if (floor != lastSampledTime)
         {
@@ -461,7 +461,7 @@ public class GameManager : MonoBehaviour
         {
             doubleTimeCount++;
 
-            originalSong = AudioManager.instance.audioSource.clip; // Store the current song
+            originalSong = AudioManager.instance.MusicSource.clip; // Store the current song
             audioClip = doubleTimeSong; // Set the double-time song
             AudioManager.instance.ChangeSong(audioClip); // Change to the double-time song
 

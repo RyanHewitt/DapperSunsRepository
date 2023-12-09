@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
     public AudioSource audioSource;
     public AudioSource MusicSource;
     public AudioLowPassFilter lowPassFilter;
@@ -105,6 +104,7 @@ public class AudioManager : MonoBehaviour
         MusicSource.Play();
         musicPlaying = true;
     }
+
     void LoadVolume()
     {
         float MasterVolume = PlayerPrefs.GetFloat(VolumeSettings.MixerMaster, 1f);

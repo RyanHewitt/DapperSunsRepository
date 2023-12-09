@@ -96,11 +96,12 @@ public class AudioManager : MonoBehaviour
         yield break;
     }
 
-    public void ChangeSong(AudioClip newSong)
+    public void ChangeSong(AudioClip newSong, float time = 0f)
     {
         MusicSource.outputAudioMixerGroup = Music;
         MusicSource.Stop();
         MusicSource.clip = newSong;
+        MusicSource.time = time;
         MusicSource.Play();
         musicPlaying = true;
     }

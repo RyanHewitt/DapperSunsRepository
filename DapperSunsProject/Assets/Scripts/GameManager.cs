@@ -46,13 +46,13 @@ public class GameManager : MonoBehaviour
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong;
+    float ogSongTime;
     public float elapsedTime = 0f;
     public bool isCountingTimer;
     float originalBpm;
     public bool isCountdownActive;
     int countdownNumber;
     public AudioClip audioClip;
-    AudioSource audioSource;
 
     float bpm;
     int lastSampledTime;
@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        audioSource = AudioManager.instance.audioSource;
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
@@ -431,7 +430,7 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0;
     }
 
-    public void SyncBeats(float _bpm)
+    public void SyncBeats(float _bpm, float time = 0f)
     {
         originalBpm = bpm;
         bpm = _bpm;
@@ -439,7 +438,7 @@ public class GameManager : MonoBehaviour
         {
             StartTimer();
         }
-        AudioManager.instance.ChangeSong(audioClip);
+        AudioManager.instance.ChangeSong(audioClip, time);
     }
 
     public IEnumerator FlashLines(float duration)
@@ -461,9 +460,9 @@ public class GameManager : MonoBehaviour
         {
             doubleTimeCount++;
 
+            ogSongTime = AudioManager.instance.MusicSource.time;
             originalSong = AudioManager.instance.MusicSource.clip; // Store the current song
             audioClip = doubleTimeSong; // Set the double-time song
-            AudioManager.instance.ChangeSong(audioClip); // Change to the double-time song
 
             doubleTimeActive = true;
             SyncBeats(doubleBpm);
@@ -493,7 +492,7 @@ public class GameManager : MonoBehaviour
         {
             doubleTimeActive = false;
             audioClip = originalSong;
-            SyncBeats(originalBpm);
+            SyncBeats(originalBpm, ogSongTime);
         }
     }
 

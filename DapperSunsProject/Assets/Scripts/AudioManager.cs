@@ -96,6 +96,11 @@ public class AudioManager : MonoBehaviour
         yield break;
     }
 
+    public void MuffleQuick()
+    {
+        lowPassFilter.cutoffFrequency = 800;
+    }
+
     public void ChangeSong(AudioClip newSong, float time = 0f)
     {
         MusicSource.outputAudioMixerGroup = Music;

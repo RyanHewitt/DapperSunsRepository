@@ -206,17 +206,19 @@ public class GameManager : MonoBehaviour
 
     public void StatePause()
     {
+        AudioManager.instance.MuffleQuick();
         isPaused = true;
         Time.timeScale = 0f;
-        AudioManager.instance.audioSource.Pause();
+        // AudioManager.instance.audioSource.Pause();
         AudioManager.instance.musicPlaying = false;
     }
 
     public void StateUnpause()
     {
+        AudioManager.instance.Unmuffle();
         isPaused = false;
         Time.timeScale = timeScaleOg;
-        AudioManager.instance.audioSource.UnPause();
+        // AudioManager.instance.audioSource.UnPause();
         AudioManager.instance.musicPlaying = true;
     }
 

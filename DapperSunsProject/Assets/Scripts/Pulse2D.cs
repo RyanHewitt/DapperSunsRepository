@@ -50,4 +50,9 @@ public class Pulse2D : MonoBehaviour
             currentStep++;
         }
     }
+
+    void OnDestroy()
+    {
+        GameManager.instance.OnBeatEvent -= DoBeat;
+    }
 }

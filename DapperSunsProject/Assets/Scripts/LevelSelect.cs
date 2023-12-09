@@ -35,6 +35,8 @@ public class LevelSelect : MonoBehaviour
 
     public void OpenLevel(int levelid)
     {
+        PlayerPrefs.SetFloat("ogSongTime", AudioManager.instance.MusicSource.time);
+        PlayerPrefs.SetString("ogSongClip", AudioManager.instance.MusicSource.clip.name);
         SceneManager.LoadScene(levelid);
     }
 

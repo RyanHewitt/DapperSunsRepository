@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong;
-    float ogSongTime;
+    public float ogSongTime;
     public float elapsedTime = 0f;
     public bool isCountingTimer;
     float originalBpm;
@@ -396,6 +396,8 @@ public class GameManager : MonoBehaviour
         {
             Back();
         }
+        PlayerPrefs.SetFloat("ogSongTime", AudioManager.instance.MusicSource.time);
+        PlayerPrefs.SetString("ogSongClip", AudioManager.instance.MusicSource.clip.name);
         SceneManager.LoadScene("MainMenu");
         isPaused = true;
     }
@@ -434,6 +436,7 @@ public class GameManager : MonoBehaviour
     {
         originalBpm = bpm;
         bpm = _bpm;
+        
         if (!isCountingTimer)
         {
             StartTimer();

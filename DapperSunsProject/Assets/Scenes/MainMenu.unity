@@ -1425,7 +1425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &186419807
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14358,15 +14358,15 @@ MonoBehaviour:
   m_text: "Boop-IT\n\nGame Developers\n\nRyan Hewitt\nSean Szalasny\nEvan King\nRyan
     Curphey\n\n Music creator\n\nTy Hernandez\n\nThanks For Playing!"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294967040
+  m_fontColor: {r: 0, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -16503,6 +16503,7 @@ MonoBehaviour:
   FOV: {fileID: 743282064}
   doubleTimeActive: 0
   originalSong: {fileID: 0}
+  ogSongTime: 0
   elapsedTime: 0
   isCountingTimer: 0
   isCountdownActive: 0

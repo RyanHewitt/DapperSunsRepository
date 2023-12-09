@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 132843154756215832}
   - component: {fileID: 7090933044348215371}
   - component: {fileID: 7799338437185707911}
+  - component: {fileID: 4558791410704976886}
   m_Layer: 0
   m_Name: LaunchRing
   m_TagString: Untagged
@@ -121,6 +122,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 200
   launchSFX: {fileID: 8300000, guid: 8859dadd25f673040a369826333442a9, type: 3}
+--- !u!114 &4558791410704976886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5233857713382749434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbb616e869ed264b9a464df5b0a0da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseVector: {x: 0.5, y: 0.5, z: 0}
+  returnspeed: 4
+  steps: 0
+  reverseScale: 0
 --- !u!1 &5510570737850045592
 GameObject:
   m_ObjectHideFlags: 0

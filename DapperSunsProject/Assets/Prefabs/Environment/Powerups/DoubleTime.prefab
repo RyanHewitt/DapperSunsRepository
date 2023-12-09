@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8602108255402165140}
   - component: {fileID: 5271878468733318612}
   - component: {fileID: 5976018950243124088}
+  - component: {fileID: 2551025476494879748}
   m_Layer: 0
   m_Name: DoubleTime
   m_TagString: Untagged
@@ -52,6 +53,7 @@ MonoBehaviour:
   col: {fileID: 5976018950243124088}
   duration: 10
   bpm: 250
+  rotationSpeed: 10
 --- !u!33 &8602108255402165140
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123,3 +125,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2551025476494879748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625103977445913577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbb616e869ed264b9a464df5b0a0da3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseVector: {x: 0.1, y: 0.1, z: 0.1}
+  returnspeed: 2
+  steps: 0
+  reverseScale: 0

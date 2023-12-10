@@ -515,33 +515,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Set1080P()
+    public void SetResolution(int index)
     {
 
-        //List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
-        //List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
-        //bool fullscreen = Screen.fullScreen;
-        //int width = widths[index];
-        //int height = heights[index];
-        //Screen.SetResolution(width, height, fullscreen);
-        Screen.SetResolution(1920, 1080, true);
+        List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
+        List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
+        bool fullscreen = Screen.fullScreen;
+        int width = widths[index];
+        int height = heights[index];
+        Screen.SetResolution(width, height, fullscreen);
     }
 
-    public void Set1440P()
+    public void SetFullscreen(bool fullscreen)
     {
-        Screen.SetResolution(2560, 1440, true);
-    }
-
-    public void SetFullscreen()
-    {
-        //if (Fullscreen.enabled)
-        //{
-        //    Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-        //}
-        //else
-        //{
-        //    Screen.fullScreenMode = FullScreenMode.Windowed;
-        //}
+        Screen.fullScreen = fullscreen;
     }
 
     public void SetmFPS()

@@ -19,6 +19,9 @@ public class FragilePlatform : MonoBehaviour, IBoop
     [SerializeField] private float breakTime = 3f;
     [SerializeField] int countdown;
 
+    Color baseColor;
+    Color baseEmission;
+
     bool startCountdown;
     int counter;
     int breakCount;
@@ -27,6 +30,9 @@ public class FragilePlatform : MonoBehaviour, IBoop
     {
         GameManager.instance.OnRestartEvent += Restart;
         GameManager.instance.OnBeatEvent += BeatAction;
+
+        baseColor = outlines[0].GetComponent<Renderer>().material.color;
+        baseEmission = outlines[0].GetComponent<Renderer>().material.GetColor("_EmissionColor");
     }
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)
@@ -70,12 +76,6 @@ public class FragilePlatform : MonoBehaviour, IBoop
 
     IEnumerator Flash()
     {
-        Color baseColor;
-        Color baseEmission;
-
-        baseColor = outlines[0].GetComponent<Renderer>().material.color;
-        baseEmission = outlines[0].GetComponent<Renderer>().material.GetColor("_EmissionColor");
-
         foreach (GameObject outline in outlines)
         {
             Material outlineMat = outline.GetComponent<Renderer>().material;
@@ -134,6 +134,9 @@ public class FragilePlatform : MonoBehaviour, IBoop
         foreach (GameObject outline in outlines)
         {
             outline.SetActive(true);
+            Material outlineMat = outline.GetComponent<Renderer>().material;
+            outlineMat.color = baseColor;
+            outlineMat.SetColor("_EmissionColor", baseEmission);
         }
 
         counter = 0;

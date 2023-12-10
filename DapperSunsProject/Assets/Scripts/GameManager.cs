@@ -86,9 +86,16 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Respawn");
     }
-
+    
     void Start()
     {
+        if (!PlayerPrefs.HasKey("ResolutionWidth") && !PlayerPrefs.HasKey("ResolutionHeight"))
+        {
+            Screen.SetResolution(1920, 1080, Screen.fullScreen);
+        }
+        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth"), PlayerPrefs.GetInt("ResolutionHeight"), (PlayerPrefs.GetInt("fullscreen") != 0));
+        PlayerPrefs.GetInt("ResolutionWidth");
+        PlayerPrefs.GetInt("ResolutionHeight");
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
@@ -524,11 +531,14 @@ public class GameManager : MonoBehaviour
         int width = widths[index];
         int height = heights[index];
         Screen.SetResolution(width, height, fullscreen);
+        PlayerPrefs.SetInt("ResolutionWidth", width);
+        PlayerPrefs.SetInt("ResolutionHeight", height);
     }
 
     public void SetFullscreen(bool fullscreen)
     {
         Screen.fullScreen = fullscreen;
+        PlayerPrefs.SetInt("fullscreen", (fullscreen ? 1 : 0));
     }
 
     public void SetmFPS()

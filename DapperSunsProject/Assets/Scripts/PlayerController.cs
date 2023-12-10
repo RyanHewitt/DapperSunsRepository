@@ -498,7 +498,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             target.DoBoop(transform.position, boopForce);
         }
 
-        Instantiate(boopCard, shootPos.position, shootPos.rotation);
+        Instantiate(boopCard, shootPos.position, shootPos.rotation, transform);
     }
 
     void DebugRaycastCone()

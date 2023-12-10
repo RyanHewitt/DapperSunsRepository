@@ -25,11 +25,13 @@ public class Laser : MonoBehaviour
         beatCounter = 0;
 
         coll = GetComponent<Collider>();
-        coll.enabled = false;
 
-        warningLazer.SetActive(false);
-        LAZER.SetActive(false);
-
+        if (!IsAlwaysOn)
+        {
+            coll.enabled = false;
+            warningLazer.SetActive(false);
+            LAZER.SetActive(false); 
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -48,10 +50,6 @@ public class Laser : MonoBehaviour
 
     void DoBeat()
     {
-        if (IsAlwaysOn)
-        {
-            LAZER.SetActive(true);
-        }
         if (!IsAlwaysOn)
         {
             beatCounter++;

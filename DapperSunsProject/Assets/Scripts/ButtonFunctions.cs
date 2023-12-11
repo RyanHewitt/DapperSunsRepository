@@ -44,8 +44,15 @@ public class ButtonFunctions : MonoBehaviour
     {
         PlayerPrefs.SetFloat("ogSongTime", AudioManager.instance.MusicSource.time);
         PlayerPrefs.SetString("ogSongClip", AudioManager.instance.MusicSource.clip.name);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        GameManager.instance.StateUnpause();
+        if (SceneManager.sceneCountInBuildSettings > SceneManager.GetActiveScene().buildIndex + 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            GameManager.instance.StateUnpause();
+        }
+        else
+        {
+            GameManager.instance.ToMainMenu();
+        }
     }
 
     public void AudioMenu()

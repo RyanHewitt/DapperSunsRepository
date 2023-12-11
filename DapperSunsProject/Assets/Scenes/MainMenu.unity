@@ -9018,6 +9018,7 @@ GameObject:
   - component: {fileID: 1045462809}
   - component: {fileID: 1045462808}
   - component: {fileID: 1045462811}
+  - component: {fileID: 1045462812}
   m_Layer: 5
   m_Name: Resolution
   m_TagString: Untagged
@@ -9218,6 +9219,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1045462812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045462806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee7a59f251ef28469eea4b6b75988bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1046195443
 GameObject:
   m_ObjectHideFlags: 0
@@ -12608,6 +12621,7 @@ GameObject:
   - component: {fileID: 1373958698}
   - component: {fileID: 1373958699}
   - component: {fileID: 1373958700}
+  - component: {fileID: 1373958701}
   m_Layer: 5
   m_Name: Fulscreen Toggle
   m_TagString: Untagged
@@ -12753,6 +12767,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1373958701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373958697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee7a59f251ef28469eea4b6b75988bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1407596372
 GameObject:
   m_ObjectHideFlags: 0
@@ -19015,6 +19041,7 @@ GameObject:
   - component: {fileID: 2108869846}
   - component: {fileID: 2108869848}
   - component: {fileID: 2108869847}
+  - component: {fileID: 2108869849}
   m_Layer: 5
   m_Name: Resolution Header
   m_TagString: Untagged
@@ -19138,6 +19165,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108869845}
   m_CullTransparentMesh: 1
+--- !u!114 &2108869849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108869845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee7a59f251ef28469eea4b6b75988bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2112218289
 GameObject:
   m_ObjectHideFlags: 0

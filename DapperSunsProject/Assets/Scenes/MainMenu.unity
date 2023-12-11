@@ -15599,8 +15599,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 12.394165, y: -77.45227}
-  m_SizeDelta: {x: -184.7883, y: 148.0705}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2083905838
 MonoBehaviour:
@@ -16501,6 +16501,7 @@ MonoBehaviour:
   menuCreditsBack: {fileID: 1304756615}
   FPS: {fileID: 345053667}
   FOV: {fileID: 743282064}
+  res: {fileID: 0}
   doubleTimeActive: 0
   originalSong: {fileID: 0}
   ogSongTime: 0

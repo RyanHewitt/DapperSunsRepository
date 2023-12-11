@@ -133,6 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopDistance: 2
+  parented: 0
+  canBoop: 1
   rb: {fileID: 3976200498668591125}
   enemyCol: {fileID: 1176995583198294938}
   outline: {fileID: 8223959516217949126}
@@ -148,6 +150,7 @@ MonoBehaviour:
   shootPos: {fileID: 7924191599045808311}
   _bomberPref: {fileID: 5586600880452654849, guid: 47351407afad20c479e033a30e3d53fa, type: 3}
   ShootForce: 150
+  DeathTrigger: {fileID: 0}
   shootDelay: 3
 --- !u!65 &1176995583198294938
 BoxCollider:

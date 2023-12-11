@@ -353,6 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stopDistance: 2
+  parented: 0
+  canBoop: 1
   rb: {fileID: 5498310029680218629}
   enemyCol: {fileID: 3555354920939665292}
   outline: {fileID: 2352843230286955552}
@@ -369,9 +371,6 @@ MonoBehaviour:
   laserLineRenderer: {fileID: 139004462142854653}
   LazerPosition: {fileID: 9049765405127938749}
   lazer: {fileID: 1280213739008123632}
-  thingToTurnOn:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!65 &3555354920939665292
 BoxCollider:
   m_ObjectHideFlags: 0

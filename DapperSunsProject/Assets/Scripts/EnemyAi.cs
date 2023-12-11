@@ -7,6 +7,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
     [Header("---Movement---")]
     [SerializeField] protected float stopDistance = 2.0f;
     [SerializeField] protected bool parented;
+    [SerializeField] protected bool canBoop;
 
     [Header("---Components---")]
     [SerializeField] protected Rigidbody rb;
@@ -189,7 +190,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)
     {
-        if (parented)
+        if (parented && canBoop)
         {
             gameObject.transform.parent = null;
             rb.useGravity = true;

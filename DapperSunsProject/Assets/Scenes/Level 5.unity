@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.29936957, g: 0.1169452, b: 0.1169452, a: 1}
+  m_IndirectSpecularColor: {r: 0.29936957, g: 0.29936957, b: 0.29936957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12216,6 +12216,18 @@ PrefabInstance:
     - target: {fileID: 935189569872930096, guid: ccfca7e377f65f14fa6db13f37930835, type: 3}
       propertyPath: m_Name
       value: UnpoweredExitDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649243137800165333, guid: ccfca7e377f65f14fa6db13f37930835, type: 3}
+      propertyPath: goldTime
+      value: 81
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649243137800165333, guid: ccfca7e377f65f14fa6db13f37930835, type: 3}
+      propertyPath: silverTime
+      value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 3649243137800165333, guid: ccfca7e377f65f14fa6db13f37930835, type: 3}
+      propertyPath: diamondTime
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

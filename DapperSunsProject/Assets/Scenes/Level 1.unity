@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.29936957, g: 0.1169452, b: 0.1169452, a: 1}
+  m_IndirectSpecularColor: {r: 0.29936957, g: 0.29936957, b: 0.29936957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2906,6 +2906,18 @@ PrefabInstance:
     - target: {fileID: 1855848370861395655, guid: 18d4d089b6b720347b0d30f7cafdb23c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038281699674570591, guid: 18d4d089b6b720347b0d30f7cafdb23c, type: 3}
+      propertyPath: goldTime
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038281699674570591, guid: 18d4d089b6b720347b0d30f7cafdb23c, type: 3}
+      propertyPath: silverTime
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7038281699674570591, guid: 18d4d089b6b720347b0d30f7cafdb23c, type: 3}
+      propertyPath: diamondTime
+      value: 8.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

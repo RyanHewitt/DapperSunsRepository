@@ -30,7 +30,12 @@ public class CannonBoss : Shooter, IDamage
         ShootSteps = stepsOriginal + shootDelay;
         foreach (var bomber in Bombers)
         {
-            bomber.SetActive(false);
+            IDamage damageable = bomber.GetComponent<IDamage>();
+
+            if (damageable != null)
+            {
+                damageable.takeDamage(1);
+            }
         }
         DeathTrigger.SetActive(true);
     }
@@ -64,21 +69,22 @@ public class CannonBoss : Shooter, IDamage
                 _bomberPref.transform.localScale = new Vector3(0.09199633f, 0.09199633f, 0.09199633f);
 
                 // Check if there's an inactive bomber in the list
-                GameObject inactiveBomber = Bombers.Find(bomber => !bomber.activeSelf);
-                if (inactiveBomber != null)
-                {
-                    // Reuse the inactive bomber
-                    bomberB = inactiveBomber;
-                    bomberB.transform.position = shootPos.position;
-                    bomberB.transform.rotation = shootPos.rotation;
-                    bomberB.transform.parent = transform; // Set the bomber as a child of the Cannon Boss
-                    bomberB.SetActive(true);
-                }
-                else
-                {
-                    bomberB = Instantiate(_bomberPref, shootPos.position, shootPos.rotation, transform);
-                    Bombers.Add(bomberB);
-                }
+                //GameObject inactiveBomber = Bombers.Find(bomber => !bomber.GetComponent<Collider>().enabled);
+                //if (inactiveBomber != null)
+                //{
+                //    // Reuse the inactive bomber
+                //    bomberB = inactiveBomber;
+                //    bomberB.transform.position = shootPos.position;
+                //    bomberB.transform.rotation = shootPos.rotation;
+                //    bomberB.transform.parent = transform; // Set the bomber as a child of the Cannon Boss
+                //}
+                //else
+                //{
+                //    bomberB = Instantiate(_bomberPref, shootPos.position, shootPos.rotation, transform);
+                //    Bombers.Add(bomberB);
+                //}
+                bomberB = Instantiate(_bomberPref, shootPos.position, shootPos.rotation, transform);
+                Bombers.Add(bomberB);
             }
             if (ShootSteps <= 0)
             {

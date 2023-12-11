@@ -567,6 +567,7 @@ public class GameManager : MonoBehaviour
         }
         menuStack.Push(menuCredits);
         menuCredits.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(menuCreditsBack);
         buttonStack.Push(menuCreditsBack);
     }
 

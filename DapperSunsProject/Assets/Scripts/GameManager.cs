@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuCreditsBack;
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
+    [SerializeField] TMP_Dropdown res;
 
     public bool doubleTimeActive = false;
     public AudioClip originalSong;
@@ -86,16 +87,12 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<PlayerController>();
         playerSpawn = GameObject.FindWithTag("Respawn");
     }
-    
+
     void Start()
     {
-        if (!PlayerPrefs.HasKey("ResolutionWidth") && !PlayerPrefs.HasKey("ResolutionHeight"))
-        {
-            Screen.SetResolution(1920, 1080, Screen.fullScreen);
-        }
-        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth"), PlayerPrefs.GetInt("ResolutionHeight"), (PlayerPrefs.GetInt("fullscreen") != 0));
-        PlayerPrefs.GetInt("ResolutionWidth");
-        PlayerPrefs.GetInt("ResolutionHeight");
+        PlayerPrefs.GetInt("fullscreen", 1);
+        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth", 1920), PlayerPrefs.GetInt("ResolutionHeight", 1080), (FullScreenMode)PlayerPrefs.GetInt("fullscreen", 1));
+        res.value = PlayerPrefs.GetInt("ResolutionIndex", 1);
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);
@@ -182,7 +179,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 beatWindow = false;
-            } 
+            }
         }
         else
         {
@@ -217,7 +214,7 @@ public class GameManager : MonoBehaviour
                 countdownText.text = countdownNumber.ToString();
                 countdownNumber--;
             }
-        } 
+        }
     }
 
     public GameObject GetPlayerSpawn()
@@ -354,7 +351,7 @@ public class GameManager : MonoBehaviour
     {
         if (grooveEdge != null)
         {
-            grooveEdge.SetActive(isGroove); 
+            grooveEdge.SetActive(isGroove);
         }
     }
 
@@ -365,7 +362,7 @@ public class GameManager : MonoBehaviour
 
         if (buttonStack.Count > 0)
         {
-            buttonStack.Pop(); 
+            buttonStack.Pop();
         }
 
         if (buttonStack.Count > 0)
@@ -459,7 +456,7 @@ public class GameManager : MonoBehaviour
     {
         originalBpm = bpm;
         bpm = _bpm;
-        
+
         if (!isCountingTimer)
         {
             StartTimer();
@@ -492,7 +489,7 @@ public class GameManager : MonoBehaviour
 
             doubleTimeActive = true;
             SyncBeats(doubleBpm);
-            
+
             // Start a coroutine to end double-time after its duration
             StartCoroutine(EndDoubleTimeAfterDuration(duration));
         }
@@ -533,6 +530,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(width, height, fullscreen);
         PlayerPrefs.SetInt("ResolutionWidth", width);
         PlayerPrefs.SetInt("ResolutionHeight", height);
+        PlayerPrefs.SetInt("ResolutionIndex", index);
     }
 
     public void SetFullscreen(bool fullscreen)

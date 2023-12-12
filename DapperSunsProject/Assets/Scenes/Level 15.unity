@@ -2477,9 +2477,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3976200498668591125, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976200498668591125, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4488238136829907157, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
       propertyPath: m_Name
       value: Cannon Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879653576597859229, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
+      propertyPath: canBoop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7879653576597859229, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
+      propertyPath: parented
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7879653576597859229, guid: 1bdaeb76f80008f4c9deaf949e7bbb42, type: 3}
       propertyPath: DeathTrigger

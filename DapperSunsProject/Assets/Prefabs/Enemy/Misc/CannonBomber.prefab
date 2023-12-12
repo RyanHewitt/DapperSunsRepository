@@ -115,7 +115,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -23.91, y: 0.35, z: -5.37}
-  m_LocalScale: {x: 0.09199633, y: 0.09199633, z: 0.09199633}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4949723340127873137}
@@ -189,7 +189,7 @@ MonoBehaviour:
   rb: {fileID: 6962668514728748831}
   enemyCol: {fileID: 4925576456295371840}
   outline: {fileID: 323882058508271950}
-  flashColor: {r: 1, g: 1, b: 1, a: 0}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
   HP: 1
   PlayerFaceSpeed: 8
   maxVerticalAngle: 0

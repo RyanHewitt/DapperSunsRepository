@@ -48,7 +48,7 @@ public class SuperHeavy : Heavy
     protected override void Damage(int amount)
     {
         base.Damage(amount);
-
+        StartCoroutine(Flash());
         AudioManager.instance.Play3D(hurtSound, transform.position, 1, 0.5f, 1);
         TeleportAwayFromPlayer();
     }

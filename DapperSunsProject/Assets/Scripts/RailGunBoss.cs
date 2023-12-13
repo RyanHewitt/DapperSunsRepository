@@ -6,6 +6,7 @@ using UnityEngine;
 public class RailGunBoss : Shooter
 {
     [SerializeField] LineRenderer laserLineRenderer;
+    [SerializeField] AudioClip hurtSound;
     [SerializeField] Transform LazerPosition;
     [SerializeField] GameObject lazer;
     private Transform currentTarget;
@@ -66,6 +67,8 @@ public class RailGunBoss : Shooter
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         takeDamage(1);
+        AudioManager.instance.Play3D(hurtSound, transform.position, 1, 0.5f, 1);
+        StartCoroutine(Flash());
     }
 
     protected override void Rotate()

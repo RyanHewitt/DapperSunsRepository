@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     int dashCounter;
     int grooveMeter;
     int grooveTimer;
-    int timesGrounded;
     float originalGravity;
     float frictionForce;
     float boopElapsedTime;

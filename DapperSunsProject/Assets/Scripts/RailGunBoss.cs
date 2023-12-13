@@ -66,6 +66,7 @@ public class RailGunBoss : Shooter
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         takeDamage(1);
+        StartCoroutine(Flash());
     }
 
     protected override void Rotate()

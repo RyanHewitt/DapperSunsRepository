@@ -18,8 +18,6 @@ public class Spike : MonoBehaviour
 
     Material mat;
 
-    bool isUp = false;
-
     int beatCounter;
 
     void Start()
@@ -64,7 +62,6 @@ public class Spike : MonoBehaviour
         {
             beatCounter = 0;
             coll.enabled = false;
-            isUp = false;
             mat.color = down;
             mat.SetColor("_EmissionColor", down);
 
@@ -73,7 +70,6 @@ public class Spike : MonoBehaviour
         else if (beatCounter == onBeat)
         {
             coll.enabled = true;
-            isUp = true;
             mat.color = up;
             mat.SetColor("_EmissionColor", up);
 

@@ -20,7 +20,9 @@ public class RailGunBoss : Shooter
 
     protected override void Update()
     {
-        base.Update();
+        playerDirection = GameManager.instance.player.transform.position - transform.position;
+        Rotate();
+        Move();
 
         Vector3 aimDirection = LazerPosition.forward;
 
@@ -60,10 +62,12 @@ public class RailGunBoss : Shooter
             currentTarget = null;
         }
     }
+
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         takeDamage(1);
     }
+
     protected override void Rotate()
     {
         if (currentTarget != null)
@@ -85,6 +89,7 @@ public class RailGunBoss : Shooter
         }
 
     }
+
     public void SetPlayerInRange(bool inRange)
     {
         _playerInRange = inRange;

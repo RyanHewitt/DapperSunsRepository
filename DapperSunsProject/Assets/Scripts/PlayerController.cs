@@ -186,10 +186,11 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             DashInput();
             SlamInput();
             UpdateSpeedLines();
-            UpdateGunCone();
 
             ghost.transform.position = transform.position;
         }
+
+        UpdateGunCone();
     }
 
     void UpdateSpeedLines()

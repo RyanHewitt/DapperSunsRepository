@@ -543,6 +543,7 @@ public class GameManager : MonoBehaviour
     {
         Application.targetFrameRate = (int)FPS.value;
         PlayerPrefs.SetInt("MaxFPS", (int)FPS.value);
+        QualitySettings.vSyncCount = 0;
     }
 
     public void SetFOV()

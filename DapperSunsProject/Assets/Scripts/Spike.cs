@@ -10,7 +10,10 @@ public class Spike : MonoBehaviour
     [SerializeField] Color down;
     [SerializeField] Color warning;
     [SerializeField] GameObject spikeObj;
-    
+    [SerializeField] int warnBeat;
+    [SerializeField] int onBeat;
+    [SerializeField] int offBeat;
+
     Collider coll;
 
     Material mat;
@@ -52,32 +55,29 @@ public class Spike : MonoBehaviour
     void DoBeat()
     {
         beatCounter++;
-        if (beatCounter == 2) // Warn on second beat
+        if (beatCounter == warnBeat) // Warn on second beat
         {
             mat.color = warning;
             mat.SetColor("_EmissionColor", warning);
         }
-        else if (beatCounter % 4 == 0) // Go up or down every fourth beat
+        else if (beatCounter == offBeat)
         {
-            if (isUp)
-            {
-                beatCounter = 0;
-                coll.enabled = false;
-                isUp = false;
-                mat.color = down;
-                mat.SetColor("_EmissionColor", down);
+            beatCounter = 0;
+            coll.enabled = false;
+            isUp = false;
+            mat.color = down;
+            mat.SetColor("_EmissionColor", down);
 
-                spikeObj.SetActive(false);
-            }
-            else
-            {
-                coll.enabled = true;
-                isUp = true;
-                mat.color = up;
-                mat.SetColor("_EmissionColor", up);
+            spikeObj.SetActive(false);
+        }
+        else if (beatCounter == onBeat)
+        {
+            coll.enabled = true;
+            isUp = true;
+            mat.color = up;
+            mat.SetColor("_EmissionColor", up);
 
-                spikeObj.SetActive(true);
-            }
+            spikeObj.SetActive(true);
         }
     }
 }

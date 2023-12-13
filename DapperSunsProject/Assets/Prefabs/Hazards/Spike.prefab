@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056521816664910902}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5528259, y: -4.0285645, z: -12.0654745}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -120,12 +120,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49ee6d6879cffe9459f6ff2eff0f352d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _steps: 1
   SpikeDMG: 1
   up: {r: 1, g: 0, b: 0, a: 0}
   down: {r: 1, g: 1, b: 1, a: 0}
   warning: {r: 1, g: 1, b: 0, a: 0}
   spikeObj: {fileID: 6200991334271541832}
+  warnBeat: 2
+  onBeat: 3
+  offBeat: 4
 --- !u!1 &4008821613996397098
 GameObject:
   m_ObjectHideFlags: 0

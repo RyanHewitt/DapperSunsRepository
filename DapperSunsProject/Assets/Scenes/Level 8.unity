@@ -2009,6 +2009,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2302256092142181456, guid: fba651ce255f1fe4e860c212a4fdbfd7, type: 3}
   m_PrefabInstance: {fileID: 231001875}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &481306747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1056521816664910902, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
+  m_PrefabInstance: {fileID: 1652195009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &488590424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2061,9 +2066,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: FragilePlatform3x3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6268948858145846377, guid: b8082c6bf306421408f36bdd3766961c, type: 3}
+      propertyPath: outlines.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6268948858145846377, guid: b8082c6bf306421408f36bdd3766961c, type: 3}
+      propertyPath: outlines.Array.data[9]
+      value: 
+      objectReference: {fileID: 481306747}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5209011525240457610, guid: b8082c6bf306421408f36bdd3766961c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 543588716}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8082c6bf306421408f36bdd3766961c, type: 3}
 --- !u!1001 &500739905
@@ -5271,7 +5287,6 @@ Transform:
   - {fileID: 123705381}
   - {fileID: 1412736292}
   - {fileID: 1579565143}
-  - {fileID: 543588716}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1378715115 stripped
@@ -6066,7 +6081,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1360396054}
+    m_TransformParent: {fileID: 573572615}
     m_Modifications:
     - target: {fileID: 1056521816664910902, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
       propertyPath: m_Name
@@ -6074,15 +6089,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4510282066636549627, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.017688751
+      value: -0.019685745
       objectReference: {fileID: 0}
     - target: {fileID: 4510282066636549627, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 78.5
+      value: 0.30000305
       objectReference: {fileID: 0}
     - target: {fileID: 4510282066636549627, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 268.28296
+      value: 0.07296753
       objectReference: {fileID: 0}
     - target: {fileID: 4510282066636549627, guid: 36106860dfa3cfa45bf09bafafd81022, type: 3}
       propertyPath: m_LocalRotation.w

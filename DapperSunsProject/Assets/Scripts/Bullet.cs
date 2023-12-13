@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] protected Rigidbody rb;
+    [SerializeField] protected LayerMask layerMask;
     [SerializeField] protected int damage;
     [SerializeField] protected float bulletSpeed;
     [SerializeField] protected float life = 3;
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
         }
 
         IDamage damageable = other.GetComponent<IDamage>();
-        if (damageable != null && other.CompareTag("Player"))
+        if (damageable != null && (layerMask & (1 << other.gameObject.layer)) != 0)
         {
             damageable.takeDamage(damage);
         }

@@ -144,8 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0d9431fa034a043a6dd52acb47261b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
   rb: {fileID: 3288600831564893372}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 0
   bulletSpeed: 100
   life: 3
   _RailGunTrail: {fileID: 7812096193875168536, guid: 4f30bfe187613234a930cf1f7881071a, type: 3}

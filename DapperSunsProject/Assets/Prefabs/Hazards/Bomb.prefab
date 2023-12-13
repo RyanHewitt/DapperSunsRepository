@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7498613393833602257}
   - component: {fileID: 228921851517742806}
   - component: {fileID: 7104441110733301162}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BombFuse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2163929610658314871}
   - component: {fileID: 4091777317837343891}
   - component: {fileID: 8642440556505120302}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stopDistance: 2
   parented: 0
+  canBoop: 0
   rb: {fileID: 8642440556505120302}
   enemyCol: {fileID: 4091777317837343891}
   outline: {fileID: 5557353221210761273}
@@ -262,7 +263,7 @@ GameObject:
   - component: {fileID: 8524138569068382708}
   - component: {fileID: 1284281653688958847}
   - component: {fileID: 2836029086978735323}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

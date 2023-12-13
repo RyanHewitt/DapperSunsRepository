@@ -14,6 +14,7 @@ public class CannonBoss : Shooter, IDamage
     private List<GameObject> Bombers = new List<GameObject>();
 
     [SerializeField] int shootDelay;
+    [SerializeField] AudioClip hurtSound;
     private int ShootSteps;
     private GameObject bomberB;
 
@@ -47,6 +48,8 @@ public class CannonBoss : Shooter, IDamage
     protected override void BoopImpulse(Vector3 origin, float force, bool slam = false)
     {
         Damage(1);
+        AudioManager.instance.Play3D(hurtSound, transform.position, 1, 0.5f, 1);
+        StartCoroutine(Flash());
     }
     protected override IEnumerator Death()
     {

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [Header("----- Components -----")]
     [SerializeField] CharacterController controller;
     [SerializeField] GameObject speedLinesPrefab;
+    [SerializeField] Renderer gunConeModel;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
 
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [SerializeField] int coneOuterAngle;
     [SerializeField] int coneInnerAngle;
     [SerializeField] int coneOuterInnerAngle;
+    [SerializeField] float gunConeLerp;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip boopSFX;
@@ -184,6 +186,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             DashInput();
             SlamInput();
             UpdateSpeedLines();
+            UpdateGunCone();
 
             ghost.transform.position = transform.position;
         }
@@ -215,6 +218,12 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             materialColor.a = 0f;
             speedLineMat.color = materialColor;
         }
+    }
+
+    void UpdateGunCone()
+    {
+        float currentAlpha = gunConeModel.material.GetFloat("_MaskAlpha");
+        gunConeModel.material.SetFloat("_MaskAlpha", Mathf.Lerp(currentAlpha, 0f, gunConeLerp * Time.deltaTime));
     }
 
     void CheckGround()
@@ -795,6 +804,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             grooveMeter = 0;
             grooveTimer = 0;
         }
+
+        gunConeModel.material.SetFloat("_MaskAlpha", 1f);
     }
 
     public void DoBoop(Vector3 origin, float force, bool slam = false)

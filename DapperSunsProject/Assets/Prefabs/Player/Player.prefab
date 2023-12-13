@@ -1003,6 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 5283020408901821959}
   speedLinesPrefab: {fileID: 5477644315042940242, guid: fc245f58189d1c0468718eaae798a8e9, type: 3}
+  gunConeModel: {fileID: 1794220167300771528}
   shootPos: {fileID: 230813569849710475}
   headPos: {fileID: 1451994654362099324}
   playerSpeed: 8
@@ -1037,6 +1038,7 @@ MonoBehaviour:
   coneOuterAngle: 60
   coneInnerAngle: 70
   coneOuterInnerAngle: 80
+  gunConeLerp: 2
   boopSFX: {fileID: 8300000, guid: 0a09cd45c3352084ab029cb7ca1dbb79, type: 3}
   blastPenaltySFX: {fileID: 8300000, guid: c056ef1c51dd3b2458eec392d0e026a8, type: 3}
   jumpSFX: {fileID: 8300000, guid: 298f834f7f478fc408c8aa6cb07d4619, type: 3}

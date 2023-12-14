@@ -48,7 +48,6 @@ public class RailGunBoss : Shooter
     {
         base.Restart();
         laserLineRenderer.enabled = true;
-
     }
 
     public void SetTarget(Transform target)

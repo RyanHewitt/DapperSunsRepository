@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_ScrollingLines
-  m_Shader: {fileID: -6465566751694194690, guid: 59f77a84a1eabc04287d3da4a550c9b0, type: 3}
+  m_Name: GunConeOff
+  m_Shader: {fileID: -6465566751694194690, guid: 9c706d38a916879449fc0825732b2a6b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,7 +37,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 03e2ab227de2a684e87df60c84d63064, type: 3}
+        m_Texture: {fileID: 2800000, guid: aa012e630ac2aa546b10fa7204cf1fc2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
@@ -66,11 +66,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Emission: 2
+    - _Emission: 0.5
     - _MaskAlpha: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.24757092, g: 0.735849, b: 0.2256141, a: 0}
-    - _Direction: {r: 0, g: 0.2, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Direction: {r: 0, g: -1, b: 0, a: 0}
   m_BuildTextureStacks: []

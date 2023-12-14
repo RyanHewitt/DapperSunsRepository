@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Slider FOV;
     [SerializeField] TMP_Dropdown res;
 
+    [Header("----- Stats -----")]
+    [SerializeField] int countdownLength;
+
     public bool doubleTimeActive = false;
     public AudioClip originalSong;
     public float ogSongTime;
@@ -198,21 +201,15 @@ public class GameManager : MonoBehaviour
     {
         if (isCountdownActive)
         {
-            if (countdownNumber == 0)
+            if (countdownNumber > 0)
             {
-                countdownText.text = "BOOP-IT!";
-                isPaused = false;
                 countdownNumber--;
-            }
-            else if (countdownNumber < 0)
-            {
-                isCountdownActive = false;
-                countdownText.text = " ";
             }
             else
             {
-                countdownText.text = countdownNumber.ToString();
-                countdownNumber--;
+                isPaused = false;
+                isCountdownActive = false;
+                countdownText.text = " ";
             }
         }
     }
@@ -556,8 +553,8 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         isCountdownActive = true;
-        countdownNumber = 3;
-        countdownText.text = countdownNumber.ToString();
+        countdownNumber = countdownLength;
+        countdownText.text = "BOOP-IT!";
     }
 
     public void CreditsMenu()

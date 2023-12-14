@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7150618557821560317}
   - component: {fileID: 4763234871606295285}
   - component: {fileID: 300292218327825819}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: UnpoweredExitDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 9190468154584236990}
   - component: {fileID: 8228234069701844050}
   - component: {fileID: 3649243137800165333}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LevelEndTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -235,9 +235,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 60d4a2638a87a77418d75764942664bf, type: 3}
   - {fileID: 21300000, guid: 965695ca8d47eaf4fbe33bfe9740f487, type: 3}
   - {fileID: 21300000, guid: 0fe82595cea875f489ff67d1d43c42b0, type: 3}
-  silverTime: 50
-  goldTime: 40
-  diamondTime: 30
+  silverTime: 84
+  goldTime: 81
+  diamondTime: 60
 --- !u!1 &7778366767964835780
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 809612778576702788}
   - component: {fileID: 1380362172250846560}
   - component: {fileID: 7179950250739354571}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DoorBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}

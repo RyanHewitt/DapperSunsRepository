@@ -3,20 +3,32 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SkipNonInteractable : MonoBehaviour, ISelectHandler
+public class SkipNonInteractable : MonoBehaviour, ISelectHandler, IPointerEnterHandler
 {
-    private Selectable m_Selectable;
+    [SerializeField] AudioClip selectAudio;
+    Selectable m_Selectable;
 
-    // Use this for initialization
     void Awake()
     {
         m_Selectable = GetComponent<Selectable>();
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (m_Selectable != null && m_Selectable.interactable)
+        {
+            AudioManager.instance.playOnce(selectAudio);
+        }
+    }
+
     public void OnSelect(BaseEventData evData)
     {
         // Don't apply skipping unless we are not interactable.
-        if (m_Selectable.interactable) return;
+        if (m_Selectable.interactable)
+        {
+            AudioManager.instance.playOnce(selectAudio);
+            return;
+        }
 
         // Check if the user navigated to this selectable.
         if (Input.GetAxis("Horizontal") < 0)

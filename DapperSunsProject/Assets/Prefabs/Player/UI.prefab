@@ -13302,6 +13302,25 @@ MonoBehaviour:
   FOV: {fileID: 7519369852972217443}
   res: {fileID: 1364731841146605076}
   countdownLength: 1
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
+  levelStats:
+  - {fileID: 11400000, guid: a77f27ce7766ee64396a2e51576cbd33, type: 2}
+  - {fileID: 11400000, guid: 9589a8a676fd5104586be4a67dba3767, type: 2}
+  - {fileID: 11400000, guid: 42e1de949dd5b9c44831f34f735ba170, type: 2}
+  - {fileID: 11400000, guid: 2c4b20328db41dc4a819e8f907a522a7, type: 2}
+  - {fileID: 11400000, guid: fe28cd1398643ba4e8448f42846687f5, type: 2}
+  - {fileID: 11400000, guid: bc5fb05c813589a488fd003dd26b683f, type: 2}
+  - {fileID: 11400000, guid: 29cb8dda06831bb41815ce6d58b7d808, type: 2}
+  - {fileID: 11400000, guid: 25a71c8511ffe7d4db402748eee3ed6e, type: 2}
+  - {fileID: 11400000, guid: dd1edf02e46957543a4960deb2496c5f, type: 2}
+  - {fileID: 11400000, guid: 3421a58f9f2f78d42b113ead3bb8a189, type: 2}
+  - {fileID: 11400000, guid: 6d3f8bab0d1b3454c8a6fdfa55372517, type: 2}
+  - {fileID: 11400000, guid: 6ecafa9fbcb4ed84880a83189dfe8d4f, type: 2}
+  - {fileID: 11400000, guid: 11abf13e73b9a9641b4de1e2761f8c62, type: 2}
+  - {fileID: 11400000, guid: 8a182d4cdbc29ed43b2bbd87572a6603, type: 2}
+  - {fileID: 11400000, guid: 33fe9e268d3259049a78559fa8a3b703, type: 2}
+  - {fileID: 11400000, guid: 4309efda8a369a2408bf498285504684, type: 2}
   doubleTimeActive: 0
   originalSong: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
   ogSongTime: 0
@@ -13309,8 +13328,6 @@ MonoBehaviour:
   isCountingTimer: 0
   isCountdownActive: 0
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
-  player: {fileID: 0}
-  playerScript: {fileID: 0}
   winMedalImage: {fileID: 5570370438391731335}
   isPaused: 0
   playerDead: 0

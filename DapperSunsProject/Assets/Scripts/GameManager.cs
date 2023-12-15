@@ -46,6 +46,11 @@ public class GameManager : MonoBehaviour
     [Header("----- Stats -----")]
     [SerializeField] int countdownLength;
 
+    [Header("----- Public -----")]
+    public GameObject player;
+    public PlayerController playerScript;
+    public List<LevelStats> levelStats = new List<LevelStats>();
+
     public bool doubleTimeActive = false;
     public AudioClip originalSong;
     public float ogSongTime;
@@ -65,12 +70,6 @@ public class GameManager : MonoBehaviour
     GameObject playerSpawn;
     GameObject lastSelectedButton;
 
-    public delegate void BeatEvent();
-
-    [Header("----- Public -----")]
-    public GameObject player;
-    public PlayerController playerScript;
-
     public Image winMedalImage;
 
     public bool isPaused;
@@ -79,6 +78,8 @@ public class GameManager : MonoBehaviour
 
     public float beatTime;
     public float timeScaleOg;
+
+    public delegate void BeatEvent();
 
     void Awake()
     {
@@ -565,6 +566,12 @@ public class GameManager : MonoBehaviour
         menuCredits.SetActive(true);
         EventSystem.current.SetSelectedGameObject(menuCreditsBack);
         buttonStack.Push(menuCreditsBack);
+    }
+
+    public LevelStats FindLevelStats(string _name)
+    {
+        LevelStats result = levelStats.Find(level => level.name == _name);
+        return result;
     }
 
     public event BeatEvent OnBeatEvent;

@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,6 +44,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Dropdown res;
 
     [Header("----- Stats -----")]
+    //[SerializeField] Dictionary<string, float>
     [SerializeField] int countdownLength;
 
     public bool doubleTimeActive = false;

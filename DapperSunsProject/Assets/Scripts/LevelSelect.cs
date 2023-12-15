@@ -14,7 +14,7 @@ public class LevelSelect : MonoBehaviour
 
     GameObject lastSelectedButton;
 
-    void Start()
+    private void OnEnable()
     {
         int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
         for (int i = 0; i < buttons.Length; i++) // This is bad you should just do one for loop
@@ -26,7 +26,7 @@ public class LevelSelect : MonoBehaviour
             buttons[i].interactable = true;
         }
 
-        for (int i = 0;i < medalButtonImages.Length; i++)
+        for (int i = 0; i < medalButtonImages.Length; i++)
         {
             int badgeIndex = GameManager.instance.FindLevelStats("Level " + (i + 1)).badgeIndex;
             medalButtonImages[i].sprite = medalSprites[badgeIndex];

@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     [SerializeField] int coneInnerAngle;
     [SerializeField] int coneOuterInnerAngle;
     [SerializeField] float gunConeLerp;
+    [SerializeField] float gunConeColorLerp;
 
     [Header("----- Audio -----")]
     [SerializeField] AudioClip boopSFX;
@@ -226,7 +227,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         float currentAlpha = gunConeModel.material.GetFloat("_MaskAlpha");
         gunConeModel.material.SetFloat("_MaskAlpha", Mathf.Lerp(currentAlpha, 0f, gunConeLerp * Time.deltaTime));
         Color color = gunConeModel.material.GetColor("_Color");
-        gunConeModel.material.SetColor("_Color", Color.Lerp(color, Color.white, gunConeLerp * Time.deltaTime));
+        gunConeModel.material.SetColor("_Color", Color.Lerp(color, Color.white, gunConeColorLerp * Time.deltaTime));
     }
 
     void CheckGround()
@@ -510,7 +511,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
 
         //Instantiate(boopCard, shootPos.position, shootPos.rotation, transform);
 
-        gunConeModel.material.SetColor("_Color", Color.green * 4f);
+        gunConeModel.material.SetColor("_Color", new Color(20f, 100f, 20f));
         gunConeModel.material.SetFloat("_MaskAlpha", 1f);
     }
 

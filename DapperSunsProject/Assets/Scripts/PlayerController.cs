@@ -225,6 +225,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
     {
         float currentAlpha = gunConeModel.material.GetFloat("_MaskAlpha");
         gunConeModel.material.SetFloat("_MaskAlpha", Mathf.Lerp(currentAlpha, 0f, gunConeLerp * Time.deltaTime));
+        Color color = gunConeModel.material.GetColor("_Color");
+        gunConeModel.material.SetColor("_Color", Color.Lerp(color, Color.white, gunConeLerp * Time.deltaTime));
     }
 
     void CheckGround()
@@ -386,7 +388,6 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             {
                 hitBeat = true;
                 Boop();
-
                 CheckGroove();
             }
             else
@@ -507,7 +508,10 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             target.DoBoop(transform.position, boopForce);
         }
 
-        Instantiate(boopCard, shootPos.position, shootPos.rotation, transform);
+        //Instantiate(boopCard, shootPos.position, shootPos.rotation, transform);
+
+        gunConeModel.material.SetColor("_Color", Color.green * 4f);
+        gunConeModel.material.SetFloat("_MaskAlpha", 1f);
     }
 
     void DebugRaycastCone()

@@ -69,4 +69,8 @@ public class ButtonFunctions : MonoBehaviour
     {
         GameManager.instance.CreditsMenu();
     }
+    public void ClearSaveMenu()
+    {
+        GameManager.instance.ClearSave();
+    }
 }

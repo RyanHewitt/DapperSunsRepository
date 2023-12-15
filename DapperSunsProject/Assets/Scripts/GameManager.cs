@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject levelSelectStart;
     [SerializeField] GameObject menuCredits;
     [SerializeField] GameObject menuCreditsBack;
+    [SerializeField] GameObject Clearsavemenu;
+    [SerializeField] GameObject clearsavemenustart;
     [SerializeField] Slider FPS;
     [SerializeField] Slider FOV;
     [SerializeField] TMP_Dropdown res;
@@ -359,6 +361,17 @@ public class GameManager : MonoBehaviour
         {
             StateUnpause();
         }
+    }
+    public void ClearSave()
+    {
+        if (menuStack.Count > 0)
+        {
+            menuStack.Peek().SetActive(false);
+        }
+        menuStack.Push(Clearsavemenu);
+        menuStack.Peek().SetActive(true);
+        EventSystem.current.SetSelectedGameObject(clearsavemenustart);
+        buttonStack.Push(clearsavemenustart);
     }
 
     public void Restart()

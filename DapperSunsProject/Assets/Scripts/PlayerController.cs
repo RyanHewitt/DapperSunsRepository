@@ -804,6 +804,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         {
             grooveMeter = 0;
             grooveTimer = 0;
+            pitch = 1f;
         }
 
         gunConeModel.material.SetFloat("_MaskAlpha", 1f);

@@ -15153,6 +15153,7 @@ GameObject:
   - component: {fileID: 860701711381920}
   - component: {fileID: 5551877162596490140}
   - component: {fileID: 6433321780551553071}
+  - component: {fileID: 4301428957598369517}
   m_Layer: 5
   m_Name: WinMenu
   m_TagString: Untagged
@@ -15228,6 +15229,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4301428957598369517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8552336948432192178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3731db843e7f544fab2f5110a158e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  medal: {fileID: 5570370438391731335}
+  bronze: {fileID: 1771894080409359477}
+  silver: {fileID: 7481527516165513778}
+  gold: {fileID: 938415101655775628}
+  diamond: {fileID: 3836797560993725791}
+  silverText: {fileID: 7645857996679683194}
+  goldText: {fileID: 2949390058498745590}
+  diamondText: {fileID: 2470950610743857879}
+  yourTimeText: {fileID: 6644182483551856427}
+  bestTimeText: {fileID: 5117182358385573837}
+  medalSprites:
+  - {fileID: 21300000, guid: a8ea387e79e833e438926bcaa54b300e, type: 3}
+  - {fileID: 21300000, guid: bcd29870a1841694b81c6dd3c759706a, type: 3}
+  - {fileID: 21300000, guid: 60d4a2638a87a77418d75764942664bf, type: 3}
+  - {fileID: 21300000, guid: 965695ca8d47eaf4fbe33bfe9740f487, type: 3}
+  - {fileID: 21300000, guid: 0fe82595cea875f489ff67d1d43c42b0, type: 3}
 --- !u!1 &8554911387186914801
 GameObject:
   m_ObjectHideFlags: 0

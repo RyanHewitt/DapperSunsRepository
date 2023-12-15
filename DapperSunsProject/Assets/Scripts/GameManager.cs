@@ -416,15 +416,19 @@ public class GameManager : MonoBehaviour
         if (!isPaused && isCountingTimer && timerText != null)
         {
             elapsedTime += Time.deltaTime;
-
-            int minutes = (int)elapsedTime / 60;
-            int seconds = (int)elapsedTime % 60;
-            int milliseconds = (int)((elapsedTime * 100) % 100);
-
-            string timerString = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
-
-            timerText.text = timerString;
+            timerText.text = ConvertTime(elapsedTime);
         }
+    }
+
+    public string ConvertTime(float time)
+    {
+        int minutes = (int)time / 60;
+        int seconds = (int)time % 60;
+        int milliseconds = (int)((time * 100) % 100);
+
+        string timerString = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
+
+        return timerString;
     }
 
     public void StartTimer()

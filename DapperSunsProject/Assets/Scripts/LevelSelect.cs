@@ -28,7 +28,7 @@ public class LevelSelect : MonoBehaviour
 
         for (int i = 0;i < medalButtonImages.Length; i++)
         {
-            int badgeIndex = PlayerPrefs.GetInt("Level " + (i + 1) + " badgeIndex", 0);
+            int badgeIndex = GameManager.instance.FindLevelStats("Level " + (i + 1)).badgeIndex;
             medalButtonImages[i].sprite = medalSprites[badgeIndex];
         }
     }

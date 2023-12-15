@@ -2968,6 +2968,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 400539989}
   - {fileID: 1265077226}
   - {fileID: 1993123661}
   - {fileID: 1004679763}
@@ -3366,6 +3367,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391992649}
+  m_CullTransparentMesh: 1
+--- !u!1 &400539988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400539989}
+  - component: {fileID: 400539991}
+  - component: {fileID: 400539990}
+  m_Layer: 5
+  m_Name: InputCatcher
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &400539989
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400539988}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 384099384}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &400539990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400539988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &400539991
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400539988}
   m_CullTransparentMesh: 1
 --- !u!1 &415764741
 GameObject:
@@ -18601,14 +18677,12 @@ MonoBehaviour:
   grooveEdge: {fileID: 0}
   timerText: {fileID: 0}
   countdownText: {fileID: 0}
-  menuEndGame: {fileID: 0}
   sensitivitySlider: {fileID: 1839355484}
   optionsstart: {fileID: 2074540092}
   mainmenustart: {fileID: 165471775}
   controlsstart: {fileID: 1169217392}
   quitstart: {fileID: 940276564851929756}
   pausestart: {fileID: 0}
-  endgamestart: {fileID: 0}
   winstart: {fileID: 0}
   DoubleTimePrefab: {fileID: 0}
   AudioMenu: {fileID: 384099383}
@@ -18623,6 +18697,25 @@ MonoBehaviour:
   FOV: {fileID: 743282064}
   res: {fileID: 1045462808}
   countdownLength: 0
+  player: {fileID: 1083996024}
+  playerScript: {fileID: 1083996025}
+  levelStats:
+  - {fileID: 11400000, guid: a77f27ce7766ee64396a2e51576cbd33, type: 2}
+  - {fileID: 11400000, guid: 9589a8a676fd5104586be4a67dba3767, type: 2}
+  - {fileID: 11400000, guid: 42e1de949dd5b9c44831f34f735ba170, type: 2}
+  - {fileID: 11400000, guid: 2c4b20328db41dc4a819e8f907a522a7, type: 2}
+  - {fileID: 11400000, guid: fe28cd1398643ba4e8448f42846687f5, type: 2}
+  - {fileID: 11400000, guid: bc5fb05c813589a488fd003dd26b683f, type: 2}
+  - {fileID: 11400000, guid: 29cb8dda06831bb41815ce6d58b7d808, type: 2}
+  - {fileID: 11400000, guid: 25a71c8511ffe7d4db402748eee3ed6e, type: 2}
+  - {fileID: 11400000, guid: dd1edf02e46957543a4960deb2496c5f, type: 2}
+  - {fileID: 11400000, guid: 3421a58f9f2f78d42b113ead3bb8a189, type: 2}
+  - {fileID: 11400000, guid: 6d3f8bab0d1b3454c8a6fdfa55372517, type: 2}
+  - {fileID: 11400000, guid: 6ecafa9fbcb4ed84880a83189dfe8d4f, type: 2}
+  - {fileID: 11400000, guid: 11abf13e73b9a9641b4de1e2761f8c62, type: 2}
+  - {fileID: 11400000, guid: 8a182d4cdbc29ed43b2bbd87572a6603, type: 2}
+  - {fileID: 11400000, guid: 33fe9e268d3259049a78559fa8a3b703, type: 2}
+  - {fileID: 11400000, guid: 4309efda8a369a2408bf498285504684, type: 2}
   doubleTimeActive: 0
   originalSong: {fileID: 0}
   ogSongTime: 0
@@ -18630,8 +18723,6 @@ MonoBehaviour:
   isCountingTimer: 0
   isCountdownActive: 0
   audioClip: {fileID: 8300000, guid: d7558771152b7cf4ebc288fd45e4f0d3, type: 3}
-  player: {fileID: 1083996024}
-  playerScript: {fileID: 1083996025}
   winMedalImage: {fileID: 0}
   isPaused: 0
   playerDead: 0

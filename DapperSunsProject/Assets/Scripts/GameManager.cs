@@ -21,14 +21,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject grooveEdge;
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text countdownText;
-    [SerializeField] GameObject menuEndGame;
     [SerializeField] Slider sensitivitySlider;
     [SerializeField] GameObject optionsstart;
     [SerializeField] GameObject mainmenustart;
     [SerializeField] GameObject controlsstart;
     [SerializeField] GameObject quitstart;
     [SerializeField] GameObject pausestart;
-    [SerializeField] GameObject endgamestart;
     [SerializeField] GameObject winstart;
     [SerializeField] GameObject DoubleTimePrefab;
     [SerializeField] GameObject AudioMenu;
@@ -118,10 +116,6 @@ public class GameManager : MonoBehaviour
             if (menuStack.Count > 0)
             {
                 if (menuStack.Peek() == menuWin)
-                {
-                    return;
-                }
-                else if (menuStack.Peek() == menuEndGame)
                 {
                     return;
                 }
@@ -312,15 +306,6 @@ public class GameManager : MonoBehaviour
         menuStack.Peek().SetActive(true);
         EventSystem.current.SetSelectedGameObject(winstart);
         buttonStack.Push(winstart);
-    }
-
-    public void PopupEndGame()
-    {
-        StatePause();
-        menuStack.Push(menuEndGame);
-        menuStack.Peek().SetActive(true);
-        EventSystem.current.SetSelectedGameObject(endgamestart);
-        buttonStack.Push(endgamestart);
     }
 
     public void PopupLose()

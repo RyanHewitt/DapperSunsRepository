@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Dropdown res;
 
     [Header("----- Stats -----")]
-    //[SerializeField] Dictionary<string, float>
     [SerializeField] int countdownLength;
 
     public bool doubleTimeActive = false;

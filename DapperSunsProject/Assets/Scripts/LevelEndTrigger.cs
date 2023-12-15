@@ -7,19 +7,24 @@ using UnityEngine.UI;
 public class LevelEndTrigger : MonoBehaviour
 {
     [SerializeField] Sprite[] medalSprites;
-
-    [SerializeField] float silverTime;
-    [SerializeField] float goldTime;
-    [SerializeField] float diamondTime;
+    [SerializeField] LevelStats stats;
 
     Image medal;
 
+    float silverTime;
+    float goldTime;
+    float diamondTime;
     float timer;
+
     int badgeIndex;
 
     void Start()
     {
         medal = GameManager.instance.winMedalImage;
+
+        silverTime = stats.silverTime;
+        goldTime = stats.goldTime;
+        diamondTime = stats.diamondTime;
     }
 
     void OnTriggerEnter(Collider other)

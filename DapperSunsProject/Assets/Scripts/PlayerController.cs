@@ -738,7 +738,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         // Apply the slam impact logic (e.g., damage enemies, create an impact effect, etc.)
         if (slamming)
         {
-            AudioManager.instance.audioSource.PlayOneShot(slamSFX);
+            AudioManager.instance.Play3D(slamSFX, transform.position, 1f, 0f, 0.5f);
             SlamImpact();
         }
 

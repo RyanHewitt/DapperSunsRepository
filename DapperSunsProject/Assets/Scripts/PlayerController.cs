@@ -228,6 +228,8 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
         gunConeModel.material.SetFloat("_MaskAlpha", Mathf.Lerp(currentAlpha, 0f, gunConeLerp * Time.deltaTime));
         Color color = gunConeModel.material.GetColor("_Color");
         gunConeModel.material.SetColor("_Color", Color.Lerp(color, Color.white, gunConeColorLerp * Time.deltaTime));
+
+        boopCard.transform.localScale = Vector3.one * Mathf.Lerp(boopCard.transform.localScale.x, 0.1f, 2f * Time.deltaTime);
     }
 
     void CheckGround()
@@ -509,8 +511,7 @@ public class PlayerController : MonoBehaviour, IDamage, IBoop
             target.DoBoop(transform.position, boopForce);
         }
 
-        //Instantiate(boopCard, shootPos.position, shootPos.rotation, transform);
-
+        boopCard.transform.localScale = Vector3.one * 0.2f;
         gunConeModel.material.SetColor("_Color", new Color(20f, 100f, 20f));
         gunConeModel.material.SetFloat("_MaskAlpha", 1f);
     }

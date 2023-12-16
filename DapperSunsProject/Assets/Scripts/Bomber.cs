@@ -18,6 +18,7 @@ public class Bomber : EnemyAi
     [Header("---Explosion Effects---")]
     [SerializeField] AudioClip explosionSound;
     [SerializeField] AudioClip countSound;
+    [SerializeField] GameObject explosionEffect;
 
     protected override void Start()
     {
@@ -139,6 +140,8 @@ public class Bomber : EnemyAi
 
         startCountdown = false;
         counter = 0;
+
+        Instantiate(explosionEffect, transform.position, transform.rotation);
     }
 
     bool IsInLineOfSight(Collider other)

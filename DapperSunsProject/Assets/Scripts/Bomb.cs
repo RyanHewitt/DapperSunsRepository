@@ -18,6 +18,7 @@ public class Bomb : EnemyAi
     int counter;
 
     [Header("---Explosion Effects---")]
+    [SerializeField] GameObject explosionEffect;
     [SerializeField] AudioClip explosionSound;
     [SerializeField] AudioClip countSound;
 
@@ -111,6 +112,8 @@ public class Bomb : EnemyAi
 
         startCountdown = false;
         counter = 0;
+
+        Instantiate(explosionEffect, transform.position, transform.rotation);
     }
 
     void OnCollisionEnter(Collision collision)

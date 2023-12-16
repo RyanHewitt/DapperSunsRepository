@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour
         }
 
         IDamage damageable = other.GetComponent<IDamage>();
-        if (damageable != null && (layerMask & (1 << other.gameObject.layer)) != 0)
+        if (damageable != null && (layerMask & (1 << other.gameObject.layer)) != 0 && !other.GetComponent<EnemyAi>())
         {
             damageable.takeDamage(damage);
         }

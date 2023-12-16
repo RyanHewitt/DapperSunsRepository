@@ -164,7 +164,7 @@ public class EnemyAi : MonoBehaviour, IDamage, IBoop
 
     protected virtual IEnumerator Death()
     {
-        AudioManager.instance.Play3D(deathAudio, transform.position);
+        AudioManager.instance.Play3D(deathAudio, transform.position, 1f, 0.75f);
 
         yield return StartCoroutine(Flash());
 

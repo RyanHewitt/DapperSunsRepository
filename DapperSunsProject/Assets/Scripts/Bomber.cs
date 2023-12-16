@@ -16,7 +16,6 @@ public class Bomber : EnemyAi
     int counter;
 
     [Header("---Explosion Effects---")]
-    [SerializeField] AudioClip explosionSound;
     [SerializeField] AudioClip countSound;
     [SerializeField] GameObject explosionEffect;
 

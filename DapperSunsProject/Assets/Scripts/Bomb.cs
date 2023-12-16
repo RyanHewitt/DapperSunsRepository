@@ -19,7 +19,6 @@ public class Bomb : EnemyAi
 
     [Header("---Explosion Effects---")]
     [SerializeField] GameObject explosionEffect;
-    [SerializeField] AudioClip explosionSound;
     [SerializeField] AudioClip countSound;
 
     protected override void Start()
@@ -71,7 +70,6 @@ public class Bomb : EnemyAi
                 StartCoroutine(Flash());
                 if (counter == 0)
                 {
-
                     AudioManager.instance.Play3D(countSound, transform.position);
                 }
 

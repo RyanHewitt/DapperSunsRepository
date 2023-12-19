@@ -92,8 +92,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.GetInt("fullscreen", 1);
-        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth", 1920), PlayerPrefs.GetInt("ResolutionHeight", 1080), (FullScreenMode)PlayerPrefs.GetInt("fullscreen", 1));
+#if !UNITY_WEBGL
+        Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth", 1920), PlayerPrefs.GetInt("ResolutionHeight", 1080), (FullScreenMode)PlayerPrefs.GetInt("fullscreen", 1)); 
+#endif
+
         res.value = PlayerPrefs.GetInt("ResolutionIndex", 1);
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
@@ -519,7 +521,6 @@ public class GameManager : MonoBehaviour
 
     public void SetResolution(int index)
     {
-
         List<int> widths = new List<int>() { 1280, 1920, 2560, 3840, 5120 };
         List<int> heights = new List<int>() { 720, 1080, 1440, 1440, 1440 };
         bool fullscreen = Screen.fullScreen;

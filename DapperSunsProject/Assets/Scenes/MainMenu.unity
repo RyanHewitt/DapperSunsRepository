@@ -10042,22 +10042,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5566c4115c88da4b934746255913f40, type: 3}
---- !u!1 &1083996024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8351637192957294273, guid: a5566c4115c88da4b934746255913f40, type: 3}
-  m_PrefabInstance: {fileID: 1083996023}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1083996025 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5170128490206141379, guid: a5566c4115c88da4b934746255913f40, type: 3}
-  m_PrefabInstance: {fileID: 1083996023}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083996024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dd3fa57a8c79e144aaf66d3a478689a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1086190167
 GameObject:
   m_ObjectHideFlags: 0
@@ -19963,8 +19947,8 @@ MonoBehaviour:
   FOV: {fileID: 743282064}
   res: {fileID: 1045462808}
   countdownLength: 0
-  player: {fileID: 1083996024}
-  playerScript: {fileID: 1083996025}
+  player: {fileID: 0}
+  playerScript: {fileID: 0}
   levelStats:
   - {fileID: 11400000, guid: a77f27ce7766ee64396a2e51576cbd33, type: 2}
   - {fileID: 11400000, guid: 9589a8a676fd5104586be4a67dba3767, type: 2}

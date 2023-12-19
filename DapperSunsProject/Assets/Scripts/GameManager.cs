@@ -94,9 +94,9 @@ public class GameManager : MonoBehaviour
     {
 #if !UNITY_WEBGL
         Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth", 1920), PlayerPrefs.GetInt("ResolutionHeight", 1080), (FullScreenMode)PlayerPrefs.GetInt("fullscreen", 1)); 
+        res.value = PlayerPrefs.GetInt("ResolutionIndex", 1);
 #endif
 
-        res.value = PlayerPrefs.GetInt("ResolutionIndex", 1);
         FOV.value = PlayerPrefs.GetInt("FOV", 90);
         FPS.value = PlayerPrefs.GetInt("MaxFPS", 60);
         sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity", 1000f);

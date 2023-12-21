@@ -576,6 +576,7 @@ public class GameManager : MonoBehaviour
         LevelStats result = levelStats.Find(level => level.name == _name);
         return result;
     }
+
     public void ClearStats()
     {
         PlayerPrefs.SetInt("UnlockedLevel", 1);
@@ -585,15 +586,10 @@ public class GameManager : MonoBehaviour
             levelStats[i].badgeIndex = 0;
         }
     }
+
     public void ClearStatsPlusBack()
     {
-        PlayerPrefs.SetInt("UnlockedLevel", 1);
-        
-        for(int i = 0; i < levelStats.Count; ++i)
-        {
-            levelStats[i].bestTime = 9999;
-            levelStats[i].badgeIndex = 0;
-        }
+        ClearStats();
         Back();
     }
 
